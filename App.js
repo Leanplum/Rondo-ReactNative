@@ -24,12 +24,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import LeanPlumSdk from 'react-native-leanplum-sdk';
-
-const App: () => React$Node = () => {
+const App = () => {
   const [text, setText] = useState('Hello World');
- 
-  useEffect(() => LeanPlumSdk.sampleMethod('Omar', 10, setText));
 
   return (
     <>
