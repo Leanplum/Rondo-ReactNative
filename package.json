@@ -7,8 +7,10 @@
     "ios": "react-native run-ios",
     "start": "react-native start --reset-cache",
     "test": "jest",
-    "lint": "eslint .",
-    "tsc": "tsc"
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "tsc": "tsc",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"__{tests,mocks}__/**/*.{ts,tsx}\"",
+    "check-format": "prettier --check \"src/**/*.{ts,tsx}\" \"__{tests,mocks}__/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "react": "16.9.0",
@@ -30,6 +32,9 @@
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",
     "react-test-renderer": "16.9.0",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.1.0",
     "typescript": "^3.7.4"
   },
   "jest": {
@@ -38,7 +43,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "npm test",
+      "pre-commit": "npm test && npm run check-format",
       "pre-push": "npm test"
     }
   }
