@@ -27,7 +27,7 @@ const App = () => {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <View style={styles.body}>
-            <Text style={styles.sectionTitle}>Rondo</Text>
+            <Text style={styles.sectionTitle}>Welcome to Rondo</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
