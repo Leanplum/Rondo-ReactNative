@@ -12,14 +12,14 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		22656595CECDFD4F438AFF22 /* libPods-RondoAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E164B00C8B4B3DFF7EB227B7 /* libPods-RondoAppTests.a */; };
-		24C33918CBFF8EAA29129DF0 /* libPods-RondoApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1F8B2FCB7F005FEA823046 /* libPods-RondoApp-tvOSTests.a */; };
+		14CEEDF758C2E0A860264982 /* Pods_RondoApp_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A96C45FF7028C6A85858A92 /* Pods_RondoApp_tvOS.framework */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* RondoAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* RondoAppTests.m */; };
-		666D2F472C1F2BF9BBEA6774 /* libPods-RondoApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC1233122DA01EDEC7C43DB6 /* libPods-RondoApp-tvOS.a */; };
-		D0BDB10C973023E8D7F5D117 /* libPods-RondoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05CE1C34AED22360C835530C /* libPods-RondoApp.a */; };
+		7D6059CEA120DEE172E975C9 /* Pods_RondoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F75E4D77831F159738A613F /* Pods_RondoApp.framework */; };
+		96EC319FF3ED908927CD79D8 /* Pods_RondoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7011EE30C953604FD673D421 /* Pods_RondoAppTests.framework */; };
+		BDF218229ED7C2B24F40BCB6 /* Pods_RondoApp_tvOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0C4F74927C69D4AAE6FA64 /* Pods_RondoApp_tvOSTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,8 +44,8 @@
 		00E356EE1AD99517003FC87E /* RondoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RondoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* RondoAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RondoAppTests.m; sourceTree = "<group>"; };
-		05CE1C34AED22360C835530C /* libPods-RondoApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RondoApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		085C1A7D23EAC50561366318 /* Pods-RondoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RondoAppTests.debug.xcconfig"; path = "Target Support Files/Pods-RondoAppTests/Pods-RondoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0A96C45FF7028C6A85858A92 /* Pods_RondoApp_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RondoApp_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F62D84E64E13EC41120CC59 /* Pods-RondoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RondoApp.release.xcconfig"; path = "Target Support Files/Pods-RondoApp/Pods-RondoApp.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* RondoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RondoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = RondoApp/AppDelegate.h; sourceTree = "<group>"; };
@@ -59,14 +59,14 @@
 		2D02E4901E0B4A5D006451C7 /* RondoApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RondoApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		465BA3D367F2FD7EA18AC90F /* Pods-RondoApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RondoApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-RondoApp-tvOSTests/Pods-RondoApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5A4CECF125CD6C23D0FD769A /* Pods-RondoApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RondoApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-RondoApp-tvOS/Pods-RondoApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		AB1F8B2FCB7F005FEA823046 /* libPods-RondoApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RondoApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F75E4D77831F159738A613F /* Pods_RondoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RondoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7011EE30C953604FD673D421 /* Pods_RondoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RondoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B0C4F74927C69D4AAE6FA64 /* Pods_RondoApp_tvOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RondoApp_tvOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC94EEC2CE21A0A16EDC189F /* Pods-RondoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RondoAppTests.release.xcconfig"; path = "Target Support Files/Pods-RondoAppTests/Pods-RondoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		B34F9CFBD18B952135B2CD4A /* Pods-RondoApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RondoApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-RondoApp-tvOS/Pods-RondoApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		E164B00C8B4B3DFF7EB227B7 /* libPods-RondoAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RondoAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7799854ED6A81AAA6CBC846 /* Pods-RondoApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RondoApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-RondoApp-tvOSTests/Pods-RondoApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		FC1233122DA01EDEC7C43DB6 /* libPods-RondoApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RondoApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22656595CECDFD4F438AFF22 /* libPods-RondoAppTests.a in Frameworks */,
+				96EC319FF3ED908927CD79D8 /* Pods_RondoAppTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0BDB10C973023E8D7F5D117 /* libPods-RondoApp.a in Frameworks */,
+				7D6059CEA120DEE172E975C9 /* Pods_RondoApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				666D2F472C1F2BF9BBEA6774 /* libPods-RondoApp-tvOS.a in Frameworks */,
+				14CEEDF758C2E0A860264982 /* Pods_RondoApp_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24C33918CBFF8EAA29129DF0 /* libPods-RondoApp-tvOSTests.a in Frameworks */,
+				BDF218229ED7C2B24F40BCB6 /* Pods_RondoApp_tvOSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,10 +141,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				05CE1C34AED22360C835530C /* libPods-RondoApp.a */,
-				FC1233122DA01EDEC7C43DB6 /* libPods-RondoApp-tvOS.a */,
-				AB1F8B2FCB7F005FEA823046 /* libPods-RondoApp-tvOSTests.a */,
-				E164B00C8B4B3DFF7EB227B7 /* libPods-RondoAppTests.a */,
+				6F75E4D77831F159738A613F /* Pods_RondoApp.framework */,
+				0A96C45FF7028C6A85858A92 /* Pods_RondoApp_tvOS.framework */,
+				8B0C4F74927C69D4AAE6FA64 /* Pods_RondoApp_tvOSTests.framework */,
+				7011EE30C953604FD673D421 /* Pods_RondoAppTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -230,6 +230,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				80A89C68F9B8A74144680EC5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -250,6 +251,7 @@
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
 				2D02E4791E0B4A5D006451C7 /* Resources */,
 				2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */,
+				5A9749D94DC6007D6103E387 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -473,6 +475,86 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5A9749D94DC6007D6103E387 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RondoApp-tvOS/Pods-RondoApp-tvOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Leanplum-iOS-SDK/Leanplum.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Leanplum.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RondoApp-tvOS/Pods-RondoApp-tvOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		80A89C68F9B8A74144680EC5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RondoApp/Pods-RondoApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Leanplum-iOS-SDK/Leanplum.framework",
+				"${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework",
+				"${BUILT_PRODUCTS_DIR}/FBReactNativeSpec/FBReactNativeSpec.framework",
+				"${BUILT_PRODUCTS_DIR}/Folly/folly.framework",
+				"${BUILT_PRODUCTS_DIR}/RCTTypeSafety/RCTTypeSafety.framework",
+				"${BUILT_PRODUCTS_DIR}/React-Core/React.framework",
+				"${BUILT_PRODUCTS_DIR}/React-CoreModules/CoreModules.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTActionSheet/RCTActionSheet.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTAnimation/RCTAnimation.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTBlob/RCTBlob.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTImage/RCTImage.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTLinking/RCTLinking.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTNetwork/RCTNetwork.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTSettings/RCTSettings.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTText/RCTText.framework",
+				"${BUILT_PRODUCTS_DIR}/React-RCTVibration/RCTVibration.framework",
+				"${BUILT_PRODUCTS_DIR}/React-cxxreact/cxxreact.framework",
+				"${BUILT_PRODUCTS_DIR}/React-jsi/jsi.framework",
+				"${BUILT_PRODUCTS_DIR}/React-jsiexecutor/jsireact.framework",
+				"${BUILT_PRODUCTS_DIR}/React-jsinspector/jsinspector.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactCommon/ReactCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/Yoga/yoga.framework",
+				"${BUILT_PRODUCTS_DIR}/glog/glog.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Leanplum.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DoubleConversion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBReactNativeSpec.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/folly.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTTypeSafety.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreModules.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTActionSheet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTAnimation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTBlob.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTLinking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTNetwork.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTSettings.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTText.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RCTVibration.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/cxxreact.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/jsi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/jsireact.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/jsinspector.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RondoApp/Pods-RondoApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {

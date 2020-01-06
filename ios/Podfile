@@ -51,3 +51,11 @@ target 'RondoApp-tvOS' do
   end
 
 end
+
+use_frameworks!
+
+pod 'Leanplum-iOS-SDK', '2.6.2'
+
+# Uncomment one of the following for Location Services.
+# pod 'Leanplum-iOS-Location', '2.5.1'
+# pod 'Leanplum-iOS-LocationAndBeacons', '2.5.1'
