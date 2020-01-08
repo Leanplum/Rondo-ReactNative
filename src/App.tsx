@@ -1,46 +1,34 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import 'react-native-gesture-handler';
+import {createAppContainer} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 
-const App = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <View style={styles.body}>
-            <Text style={styles.sectionTitle}>Welcome to Rondo</Text>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+import {AppScreens, IScreen} from './screens';
+import {withTheme, CurrentTheme} from './utils';
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  body: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.white,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
+const screens: any = {};
+AppScreens.forEach((screen: IScreen) => {
+  screens[screen.name] = withTheme(screen.component);
+});
+
+const App = createBottomTabNavigator(screens, {
+  defaultNavigationOptions: ({navigation}) => ({
+    tabBarIcon: ({focused, horizontal, tintColor}) => {
+      const {routeName} = navigation.state;
+      const currentScreen =
+        AppScreens.find((screen: IScreen) => screen.name === routeName) ||
+        AppScreens[0];
+      return <Icon name={currentScreen.icon} size={25} color={tintColor} />;
+    },
+  }),
+  tabBarOptions: {
+    activeTintColor: 'white',
+    inactiveTintColor: 'black',
+    activeBackgroundColor: CurrentTheme.colors?.primary,
+    inactiveBackgroundColor: CurrentTheme.colors?.primary,
   },
 });
 
-export default App;
+export default createAppContainer(App);
