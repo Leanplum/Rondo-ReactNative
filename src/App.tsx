@@ -1,46 +1,22 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import {} from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import 'react-native-gesture-handler';
+import {createAppContainer} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 
-const App = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <View style={styles.body}>
-            <Text style={styles.sectionTitle}>Welcome to Rondo</Text>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+import SetupScreen from './screens/Setup.screen';
+import AdHocScreen from './screens/AdHoc.screen';
+import InboxScreen from './screens/Inbox.screen';
+import VariablesScreen from './screens/Variables.screen';
+import SdkScreen from './screens/Sdk.screen';
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  body: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.white,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
+const App = createBottomTabNavigator({
+  Setup: SetupScreen,
+  AdHoc: AdHocScreen,
+  Inbox: InboxScreen,
+  Variables: VariablesScreen,
+  Sdk: SdkScreen,
 });
 
-export default App;
+export default createAppContainer(App);
