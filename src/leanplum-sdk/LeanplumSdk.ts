@@ -10,5 +10,6 @@ class LeanplumSdkModule {
     this.nativeModule = nativeModule;
   }
 }
+
 const LeanplumSdk = new LeanplumSdkModule(NativeModules.LeanplumSdk);
 export {LeanplumSdk};
