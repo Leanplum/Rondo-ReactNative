@@ -1,5 +1,5 @@
 import React from 'react';
-import {Theme, ThemeProvider} from 'react-native-elements';
+import {Theme, ThemeProvider, Header} from 'react-native-elements';
 
 export const CurrentTheme: Theme = {
   colors: {
@@ -11,6 +11,10 @@ export const CurrentTheme: Theme = {
 export const withTheme = (Component: React.FC): React.FC => {
   return () => (
     <ThemeProvider theme={CurrentTheme}>
+      <Header
+        placement="left"
+        centerComponent={{text: 'Rondo', style: {color: '#fff'}}}
+      />
       <Component />
     </ThemeProvider>
   );
