@@ -11,7 +11,12 @@ import Leanplum
 
 @objc(LeanplumSdk)
 class LeanplumSdk: NSObject {
-  
+
+  @objc
+  static func requiresMainQueueSetup() -> Bool {
+    return true
+  }
+
   @objc
   func track(_ event: String, params: NSDictionary) -> Void {
     let withParameters = params as! Dictionary<String,Any>

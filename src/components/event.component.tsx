@@ -12,23 +12,26 @@ export const Event = () => {
       <Text style={styles.header}>Send Track Event</Text>
       <Input
         placeholder="Event Name (String)"
+        autoCapitalize="none"
         value={event}
         onChangeText={text => setEvent(text)}
       />
       <Input
         placeholder="Event Parameter Key (String)"
+        autoCapitalize="none"
         value={parameterKey}
         onChangeText={text => setParameterKey(text)}
       />
       <Input
         placeholder="Event Parameter Value (String)"
+        autoCapitalize="none"
         value={parameterValue}
         onChangeText={text => setParameterValue(text)}
       />
       <Button
         title="SEND TRACK EVENT"
         buttonStyle={styles.button}
-        disabled={event === '' || parameterKey === '' || parameterValue === ''}
+        disabled={event === ''}
         onPress={() =>
           LeanplumSdk.track(event, {[parameterKey]: parameterValue})
         }
