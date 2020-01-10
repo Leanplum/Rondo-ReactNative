@@ -29,17 +29,6 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   
-  // Insert your API keys here.
-  #ifdef DEBUG
-    LEANPLUM_USE_ADVERTISING_ID;
-    [Leanplum setAppId:@""
-     withDevelopmentKey:@""];
-  #else
-    [Leanplum setAppId:@""
-     withProductionKey:@""];
-  #endif
-  
-  [Leanplum start];
   return YES;
 }
 

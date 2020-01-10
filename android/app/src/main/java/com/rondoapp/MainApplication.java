@@ -56,19 +56,20 @@ public class MainApplication extends Application implements ReactApplication {
         //  For session lifecyle tracking.
         LeanplumActivityHelper.enableLifecycleCallbacks(this);
 
+
         // Insert your API keys here.
-        String appId = "";
-        if (BuildConfig.DEBUG) {
-            Leanplum.setAppIdForDevelopmentMode(appId, "");
-        } else {
-            Leanplum.setAppIdForProductionMode(appId, "");
-        }
+//        String appId = "";
+//        if (BuildConfig.DEBUG) {
+//            Leanplum.setAppIdForDevelopmentMode(appId, "");
+//        } else {
+//            Leanplum.setAppIdForProductionMode(appId, "");
+//        }
 
         // Optional: Tracks all screens in your app as states in Leanplum.
         // Leanplum.trackAllAppScreens();
 
         // This will only run once per session, even if the activity is restarted.
-        Leanplum.start(this);
+//        Leanplum.start(this);
     }
 
     /**

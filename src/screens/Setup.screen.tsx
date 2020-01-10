@@ -1,10 +1,20 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {ScrollView, SafeAreaView, StyleSheet} from 'react-native';
+import {CreateApp} from '../components';
 
 export const SetupScreen = () => {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Setup Screen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <CreateApp />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+});

@@ -44,6 +44,7 @@ target 'RondoApp' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+
   target 'RondoAppTests' do
     inherit! :search_paths
     # Pods for testing
