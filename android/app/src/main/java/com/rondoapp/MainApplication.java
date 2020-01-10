@@ -5,6 +5,9 @@ import android.content.Context;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.leanplum.Leanplum;
+import com.leanplum.LeanplumActivityHelper;
+import com.leanplum.annotations.Parser;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -47,6 +50,26 @@ public class MainApplication extends Application implements ReactApplication {
         super.onCreate();
         SoLoader.init(this, /* native exopackage */ false);
         initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+
+        Leanplum.setApplicationContext(this);
+        Parser.parseVariables(this);
+        //  For session lifecyle tracking.
+        LeanplumActivityHelper.enableLifecycleCallbacks(this);
+
+
+        // Insert your API keys here.
+//        String appId = "";
+//        if (BuildConfig.DEBUG) {
+//            Leanplum.setAppIdForDevelopmentMode(appId, "");
+//        } else {
+//            Leanplum.setAppIdForProductionMode(appId, "");
+//        }
+
+        // Optional: Tracks all screens in your app as states in Leanplum.
+        // Leanplum.trackAllAppScreens();
+
+        // This will only run once per session, even if the activity is restarted.
+//        Leanplum.start(this);
     }
 
     /**
