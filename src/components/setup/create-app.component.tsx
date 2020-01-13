@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Input, Button} from 'react-native-elements';
-import {Leanplum} from '../../../leanplum';
+import {Leanplum} from 'leanplum';
 
 export const CreateApp = () => {
   const [name, setName] = useState('');
