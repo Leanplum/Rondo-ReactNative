@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text, Input, Button, ThemeContext} from 'react-native-elements';
-import {LeanplumSdk} from '../leanplum-sdk';
+import {Leanplum} from '../../../leanplum';
 
 export const Event = () => {
   const [event, setEvent] = useState('');
@@ -32,9 +32,7 @@ export const Event = () => {
         title="SEND TRACK EVENT"
         buttonStyle={styles.button}
         disabled={event === ''}
-        onPress={() =>
-          LeanplumSdk.track(event, {[parameterKey]: parameterValue})
-        }
+        onPress={() => Leanplum.track(event, {[parameterKey]: parameterValue})}
       />
     </View>
   );

@@ -15,7 +15,7 @@ class LeanplumSdkModule {
     this.nativeModule.setAppIdForProductionMode(appId, accessKey);
   }
 
-  track(event: string, params: any): void {
+  track(event: string, params: any = {}): void {
     this.nativeModule.track(event, params);
   }
   constructor(nativeModule: NativeModulesStatic) {
@@ -23,5 +23,5 @@ class LeanplumSdkModule {
   }
 }
 
-const LeanplumSdk = new LeanplumSdkModule(NativeModules.LeanplumSdk);
-export {LeanplumSdk};
+const Leanplum = new LeanplumSdkModule(NativeModules.LeanplumSdk);
+export {Leanplum};

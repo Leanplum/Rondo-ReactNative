@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Input, Button} from 'react-native-elements';
-import {LeanplumSdk} from '../../leanplum-sdk';
+import {Leanplum} from '../../../leanplum';
 
 export const CreateApp = () => {
   const [name, setName] = useState('');
@@ -49,9 +49,9 @@ export const CreateApp = () => {
           developmentKey === ''
         }
         onPress={() => {
-          LeanplumSdk.setAppIdForDevelopmentMode(appId, developmentKey);
-          LeanplumSdk.setAppIdForProductionMode(appId, productionKey);
-          LeanplumSdk.start(startCallback);
+          Leanplum.setAppIdForDevelopmentMode(appId, developmentKey);
+          Leanplum.setAppIdForProductionMode(appId, productionKey);
+          Leanplum.start(startCallback);
         }}
       />
     </View>
