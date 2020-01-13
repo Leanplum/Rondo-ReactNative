@@ -5,8 +5,8 @@ import 'react-native-gesture-handler';
 import {createAppContainer} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 
-import {AppScreens, IScreen} from './screens';
-import {withTheme, CurrentTheme} from './utils';
+import {AppScreens, IScreen} from 'screens';
+import {withTheme, CurrentTheme} from 'utils';
 import {Header} from 'react-native-elements';
 
 const screens: any = {};

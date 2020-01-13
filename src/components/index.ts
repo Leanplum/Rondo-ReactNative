@@ -1,2 +1,2 @@
-export * from './event.component';
-export * from './setup/create-app.component';
+export * from './setup';
+export * from './ad-hoc';

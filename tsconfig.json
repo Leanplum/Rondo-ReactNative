@@ -10,7 +10,14 @@
     "noEmit": true,
     "strict": true,
     "target": "esnext",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "leanplum": ["./leanplum"],
+      "screens": ["./src/screens"],
+      "components": ["./src/components"],
+      "utils": ["./src/utils"]
+    }
   },
   "exclude": [
     "node_modules",
