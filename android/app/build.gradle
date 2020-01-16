@@ -192,8 +192,8 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     // For use react-navigation
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
+    implementation 'androidx.appcompat:appcompat:1.2.0-alpha01'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
@@ -203,13 +203,8 @@ dependencies {
         implementation jscFlavor
     }
 
-    implementation 'com.leanplum:leanplum-core:5.2.3'
-
-
-    // Firebase messaging.
-    // Minimum supported version of Firebase is 10.0.1.
-//    implementation 'com.leanplum:leanplum-fcm:5.2.3'
-//    implementation 'com.google.firebase:firebase-messaging:17.5.0'
+    implementation 'com.leanplum:leanplum-fcm:5.3.1'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
 
     // Location services.
     // Only include if you need location-based messaging.
@@ -230,4 +225,4 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'

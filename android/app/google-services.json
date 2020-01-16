@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "42998245338",
+    "firebase_url": "https://rn-leanplum.firebaseio.com",
+    "project_id": "rn-leanplum",
+    "storage_bucket": "rn-leanplum.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:42998245338:android:2be831dfabd44d86a5c2e3",
+        "android_client_info": {
+          "package_name": "com.rondoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "42998245338-4hebp4kaj6j8v32ur4puesccmg722t8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmvhRhRiDem2v7GjLlIAHwY7X2KiBm3Uc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "42998245338-4hebp4kaj6j8v32ur4puesccmg722t8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
