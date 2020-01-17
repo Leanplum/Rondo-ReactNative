@@ -39,9 +39,8 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void start(Callback startCallback) {
+    public void start() {
         Leanplum.start(getContext());
-        startCallback.invoke(Leanplum.getInbox().count());
     }
 
 

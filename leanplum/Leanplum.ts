@@ -3,8 +3,8 @@ import {NativeModules, NativeModulesStatic} from 'react-native';
 class LeanplumSdkModule {
   private nativeModule: NativeModulesStatic;
 
-  start(callback: any): void {
-    this.nativeModule.start(callback);
+  start(): void {
+    this.nativeModule.start();
   }
 
   setAppIdForDevelopmentMode(appId: string, accessKey: string): void {

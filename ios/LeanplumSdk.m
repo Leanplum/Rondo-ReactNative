@@ -13,5 +13,5 @@
   RCT_EXTERN_METHOD(track: (NSString *)event params:(NSDictionary *)params)
   RCT_EXTERN_METHOD(setAppIdForDevelopmentMode: (NSString *)appId accessKey:(NSString *)accessKey)
   RCT_EXTERN_METHOD(setAppIdForProductionMode: (NSString *)appId accessKey:(NSString *)accessKey)
-  RCT_EXTERN_METHOD(start: (RCTResponseSenderBlock)callback)
+  RCT_EXTERN_METHOD(start)
 @end

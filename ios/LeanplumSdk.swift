@@ -28,9 +28,8 @@ class LeanplumSdk: NSObject {
   }
   
   @objc
-  func start(_ callback: RCTResponseSenderBlock) -> Void {
+  func start() -> Void {
     Leanplum.start();
-    callback([])
   }
 
   @objc
