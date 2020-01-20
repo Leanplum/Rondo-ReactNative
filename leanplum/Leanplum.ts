@@ -33,7 +33,6 @@ class LeanplumSdkModule {
   }
 
   setUserAttributes(attributes: any) {
-    console.log(attributes);
     this.nativeModule.setUserAttributes(attributes);
   }
 
