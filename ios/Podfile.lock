@@ -19,6 +19,8 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - Leanplum-iOS-Location (2.5.1):
+    - Leanplum-iOS-SDK
   - Leanplum-iOS-SDK (2.6.2)
   - RCTRequired (0.61.5)
   - RCTTypeSafety (0.61.5):
@@ -238,6 +240,7 @@ DEPENDENCIES:
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - Leanplum-iOS-Location (= 2.5.1)
   - Leanplum-iOS-SDK (= 2.6.2)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -272,6 +275,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - Leanplum-iOS-Location
     - Leanplum-iOS-SDK
 
 EXTERNAL SOURCES:
@@ -345,6 +349,7 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 118d0d177724c2d67f08a59136eb29ef5943ec75
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
+  Leanplum-iOS-Location: e43c0735913074e887947fdc7df6b2845194c176
   Leanplum-iOS-SDK: 8ca2b882407802d6046a547f4fa08d3ddc795edf
   RCTRequired: b153add4da6e7dbc44aebf93f3cf4fcae392ddf1
   RCTTypeSafety: 9aa1b91d7f9310fc6eadc3cf95126ffe818af320
@@ -373,6 +378,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 8c6c5fc2f01122f883b47ee3e32790ecb9397292
+PODFILE CHECKSUM: 479355d7669d79a88d583f7adf654b6dbd424887
 
 COCOAPODS: 1.8.4
