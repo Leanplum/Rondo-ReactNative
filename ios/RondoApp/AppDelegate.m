@@ -11,6 +11,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <Leanplum/Leanplum.h>
+#import <LeanplumLocation/LPLocationManager.h>
 
 @implementation AppDelegate
 

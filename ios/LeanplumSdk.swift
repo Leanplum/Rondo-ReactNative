@@ -38,4 +38,15 @@ class LeanplumSdk: NSObject {
     Leanplum.track(event, withParameters: withParameters)
   }
   
+  @objc
+  func disableLocationCollection() -> Void {
+    Leanplum.disableLocationCollection()
+  }
+  
+  @objc
+  func setDeviceLocation(_ latitude: Double, longitude: Double, type: Int) -> Void {
+    let accuracyType = LPLocationAccuracyType(rawValue: UInt32(type))
+    Leanplum.setDeviceLocationWithLatitude(latitude, longitude: longitude, type: accuracyType)
+  }
+  
 }
