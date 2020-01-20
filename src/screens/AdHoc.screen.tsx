@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-navigation';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Divider} from 'react-native-elements';
 
-import {Event} from 'components';
+import {Event, Location} from 'components';
 
 export const AdHocScreen = () => {
   return (
@@ -17,7 +17,12 @@ export const AdHocScreen = () => {
           </Text>
         </View>
         <Divider style={styles.divider} />
-        <Event />
+        <View style={styles.component}>
+          <Event />
+        </View>
+        <View>
+          <Location />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -40,4 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {textAlign: 'center'},
+  component: {
+    marginBottom: 30,
+  },
 });

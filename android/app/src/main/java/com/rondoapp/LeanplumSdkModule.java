@@ -1,14 +1,15 @@
 package com.rondoapp;
 
-import android.content.Context;
+import android.location.Location;
+
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.Callback;
 
 
 import com.facebook.react.bridge.ReadableMap;
 import com.leanplum.Leanplum;
+import com.leanplum.LeanplumLocationAccuracyType;
 
 import static com.leanplum.Leanplum.getContext;
 
@@ -43,10 +44,22 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         Leanplum.start(getContext());
     }
 
-
-
     @ReactMethod
     public void track(String event, ReadableMap params) {
         Leanplum.track(event, params.toHashMap());
+    }
+
+    @ReactMethod
+    public void disableLocationCollection() {
+        Leanplum.disableLocationCollection();
+    }
+
+    @ReactMethod
+    public void setDeviceLocation(Double latitude, Double longitude, Integer type) {
+        Location location = new Location("");
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        LeanplumLocationAccuracyType accuracyType = LeanplumLocationAccuracyType.values()[type];
+        Leanplum.setDeviceLocation(location, accuracyType);
     }
 }

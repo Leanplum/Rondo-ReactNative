@@ -1,10 +1,19 @@
-import {NativeModules, NativeModulesStatic} from 'react-native';
+import {NativeModules, NativeModulesStatic, Platform} from 'react-native';
+import {LocationAccuracyType} from './location-accuracy-type';
 
 class LeanplumSdkModule {
-  private nativeModule: NativeModulesStatic;
+  private nativeModule: NativeModulesStatic = {};
 
-  start(): void {
-    this.nativeModule.start();
+  constructor(nativeModule: NativeModulesStatic) {
+    if (Platform.OS === 'android' || Platform.OS === 'ios') {
+      this.nativeModule = nativeModule;
+    } else {
+      this.throwUnsupportedPlatform();
+    }
+  }
+
+  throwUnsupportedPlatform() {
+    throw new Error('Unsupported Platform');
   }
 
   setAppIdForDevelopmentMode(appId: string, accessKey: string): void {
@@ -15,11 +24,24 @@ class LeanplumSdkModule {
     this.nativeModule.setAppIdForProductionMode(appId, accessKey);
   }
 
+  start(): void {
+    this.nativeModule.start();
+  }
+
   track(event: string, params: any = {}): void {
     this.nativeModule.track(event, params);
   }
-  constructor(nativeModule: NativeModulesStatic) {
-    this.nativeModule = nativeModule;
+
+  disableLocationCollection() {
+    this.nativeModule.disableLocationCollection();
+  }
+
+  setDeviceLocation(
+    latitude: number,
+    longitude: number,
+    type: LocationAccuracyType = LocationAccuracyType.CELL,
+  ) {
+    this.nativeModule.setDeviceLocation(latitude, longitude, type);
   }
 }
 
