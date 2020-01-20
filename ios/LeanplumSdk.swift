@@ -38,6 +38,12 @@ class LeanplumSdk: NSObject {
   }
   
   @objc
+  func setUserAttributes(_ attributes: NSDictionary) -> Void {
+    let attributesDict = attributes as! Dictionary<String,Any>
+    Leanplum.setUserAttributes(attributesDict)
+  }
+  
+  @objc
   func start() -> Void {
     Leanplum.start()
   }

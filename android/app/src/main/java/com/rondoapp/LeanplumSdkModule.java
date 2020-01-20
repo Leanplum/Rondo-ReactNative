@@ -50,6 +50,11 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void setUserAttributes(ReadableMap attributes) {
+        Leanplum.setUserAttributes(attributes.toHashMap());
+    }
+
+    @ReactMethod
     public void start() {
         Leanplum.start(getContext());
     }

@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-navigation';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Divider} from 'react-native-elements';
 
-import {Event, Location} from 'components';
+import {Event, Location, User, Attribute} from 'components';
 
 export const AdHocScreen = () => {
   return (
@@ -20,8 +20,14 @@ export const AdHocScreen = () => {
         <View style={styles.component}>
           <Event />
         </View>
-        <View>
+        <View style={styles.component}>
           <Location />
+        </View>
+        <View style={styles.component}>
+          <User />
+        </View>
+        <View>
+          <Attribute />
         </View>
       </ScrollView>
     </SafeAreaView>
