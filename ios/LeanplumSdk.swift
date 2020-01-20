@@ -28,8 +28,18 @@ class LeanplumSdk: NSObject {
   }
   
   @objc
+  func setDeviceId(_ id: String) -> Void {
+    Leanplum.setDeviceId(id)
+  }
+  
+  @objc
+  func setUserId(_ id: String) -> Void {
+    Leanplum.setUserId(id)
+  }
+  
+  @objc
   func start() -> Void {
-    Leanplum.start();
+    Leanplum.start()
   }
 
   @objc

@@ -40,6 +40,16 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void setDeviceId(String id) {
+        Leanplum.setDeviceId(id);
+    }
+
+    @ReactMethod
+    public void setUserId(String id) {
+        Leanplum.setUserId(id);
+    }
+
+    @ReactMethod
     public void start() {
         Leanplum.start(getContext());
     }

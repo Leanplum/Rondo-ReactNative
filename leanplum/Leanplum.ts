@@ -24,6 +24,14 @@ class LeanplumSdkModule {
     this.nativeModule.setAppIdForProductionMode(appId, accessKey);
   }
 
+  setDeviceId(id: string) {
+    this.nativeModule.setDeviceId(id);
+  }
+
+  setUserId(id: string) {
+    this.nativeModule.setUserId(id);
+  }
+
   start(): void {
     this.nativeModule.start();
   }
