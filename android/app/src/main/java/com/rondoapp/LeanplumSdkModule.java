@@ -65,6 +65,12 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void trackPurchase(String purchaseEvent, Double value, String currencyCode, ReadableMap purchaseParams) {
+        Leanplum.trackPurchase(purchaseEvent, value, currencyCode, purchaseParams.toHashMap());
+    }
+
+
+    @ReactMethod
     public void disableLocationCollection() {
         Leanplum.disableLocationCollection();
     }

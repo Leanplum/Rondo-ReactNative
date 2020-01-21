@@ -3,6 +3,7 @@ import {LocationAccuracyType} from './location-accuracy-type';
 
 class LeanplumSdkModule {
   private nativeModule: NativeModulesStatic = {};
+  PURCHASE_EVENT_NAME: string = 'Purchase';
 
   constructor(nativeModule: NativeModulesStatic) {
     if (Platform.OS === 'android' || Platform.OS === 'ios') {
@@ -42,6 +43,20 @@ class LeanplumSdkModule {
 
   track(event: string, params: any = {}): void {
     this.nativeModule.track(event, params);
+  }
+
+  trackPurchase(
+    value: number,
+    currencyCode: string,
+    purchaseParams: any,
+    purchaseEvent: string = this.PURCHASE_EVENT_NAME,
+  ) {
+    this.nativeModule.trackPurchase(
+      purchaseEvent,
+      value,
+      currencyCode,
+      purchaseParams,
+    );
   }
 
   disableLocationCollection() {

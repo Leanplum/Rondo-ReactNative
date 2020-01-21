@@ -55,6 +55,12 @@ class LeanplumSdk: NSObject {
   }
   
   @objc
+  func trackPurchase(_ purchaseEvent: String, value: Double, currencyCode: String, purchaseParams: NSDictionary) -> Void {
+    let parameters = purchaseParams as! Dictionary<String,Any>
+    Leanplum.trackPurchase(purchaseEvent, withValue: value, andCurrencyCode: currencyCode, andParameters: parameters)
+  }
+  
+  @objc
   func disableLocationCollection() -> Void {
     Leanplum.disableLocationCollection()
   }
