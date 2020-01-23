@@ -95,6 +95,7 @@
 		B01666569EB34E6C9918A440 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		B34F9CFBD18B952135B2CD4A /* Pods-RondoApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RondoApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-RondoApp-tvOS/Pods-RondoApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		BB868F12B9C84592BEA16D6C /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		C64056E023D883D900C3337C /* RondoApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = RondoApp.entitlements; path = RondoApp/RondoApp.entitlements; sourceTree = "<group>"; };
 		C66CE83223C74BFF00779201 /* RondoApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RondoApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		C66CE83323C74BFF00779201 /* LeanplumSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeanplumSdk.swift; sourceTree = "<group>"; };
 		C66CE83523C74CBE00779201 /* LeanplumSdk.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeanplumSdk.m; sourceTree = "<group>"; };
@@ -162,6 +163,7 @@
 		13B07FAE1A68108700A75B9A /* RondoApp */ = {
 			isa = PBXGroup;
 			children = (
+				C64056E023D883D900C3337C /* RondoApp.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -796,6 +798,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = RondoApp/RondoApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7H3MP52MUZ;
@@ -821,6 +824,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = RondoApp/RondoApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7H3MP52MUZ;
 				INFOPLIST_FILE = RondoApp/Info.plist;
