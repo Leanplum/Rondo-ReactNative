@@ -210,8 +210,8 @@ dependencies {
     // Only include if you need location-based messaging.
     // Minimum supported version of play location is:
     // 10.0.1 for FCM.
-//    implementation 'com.leanplum:leanplum-location:5.2.3'
-//    implementation 'com.google.android.gms:play-services-location:16.0.0'
+   implementation 'com.leanplum:leanplum-location:5.2.3'
+   implementation 'com.google.android.gms:play-services-location:16.0.0'
 }
 
 // Run this once to be able to run the application with BUCK

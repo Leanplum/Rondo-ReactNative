@@ -1,26 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
 
 export const CreateApp = () => {
-  const [name, setName] = useState('');
-  const [appId, setAppId] = useState('APP_ID');
-  const [productionKey, setProductionKey] = useState('PROD_KEY');
-  const [developmentKey, setDevelopmentKey] = useState('DEV_KEY');
-
-  const startCallback = (success: any) => {
-    console.log({startCallback: success});
-  };
+  const [appId, setAppId] = useState('');
+  const [productionKey, setProductionKey] = useState('');
+  const [developmentKey, setDevelopmentKey] = useState('');
 
   return (
     <View style={styles.container}>
-      <Input
-        placeholder="Display Name"
-        autoCapitalize="none"
-        value={name}
-        onChangeText={text => setName(text)}
-      />
       <Input
         placeholder="App ID"
         autoCapitalize="none"
@@ -40,18 +29,26 @@ export const CreateApp = () => {
         onChangeText={text => setDevelopmentKey(text)}
       />
       <Button
-        title="Create and Start session"
+        title="SET KEYS"
         buttonStyle={styles.button}
-        disabled={
-          name === '' ||
-          appId === '' ||
-          productionKey === '' ||
-          developmentKey === ''
-        }
+        disabled={appId === '' || productionKey === '' || developmentKey === ''}
         onPress={() => {
           Leanplum.setAppIdForDevelopmentMode(appId, developmentKey);
           Leanplum.setAppIdForProductionMode(appId, productionKey);
-          Leanplum.start(startCallback);
+        }}
+      />
+      <Button
+        title="DISABLE LOCATION COLLECTION"
+        buttonStyle={styles.button}
+        onPress={() => {
+          Leanplum.disableLocationCollection();
+        }}
+      />
+      <Button
+        title="CALL LEANPLUM - START"
+        buttonStyle={styles.button}
+        onPress={() => {
+          Leanplum.start();
         }}
       />
     </View>
