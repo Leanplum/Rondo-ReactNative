@@ -12,6 +12,7 @@
 #import <React/RCTRootView.h>
 #import <Leanplum/Leanplum.h>
 #import <LeanplumLocation/LPLocationManager.h>
+#import <RNCPushNotificationIOS.h>
 
 @implementation AppDelegate
 
@@ -82,8 +83,15 @@
 #endif
 }
 
+// Required to register for notifications
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+  [RNCPushNotificationIOS didRegisterUserNotificationSettings:notificationSettings];
+}
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
     // Needs to be called if swizzling is disabled in Info.plist otherwise it won’t affect SDK if swizzling is enabled.
     [Leanplum didReceiveRemoteNotification:userInfo
 
@@ -93,13 +101,21 @@ fetchCompletionHandler:completionHandler];
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     // Needs to be called if swizzling is disabled in Info.plist otherwise it won’t affect SDK if swizzling is enabled.
+    [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
     [Leanplum didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
+    [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
     // Needs to be called if swizzling is disabled in Info.plist otherwise it won’t affect SDK if swizzling is enabled.
     [Leanplum didFailToRegisterForRemoteNotificationsWithError:error];
+}
+
+// Required for the localNotification event.
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+  [RNCPushNotificationIOS didReceiveLocalNotification:notification];
 }
 
 @end

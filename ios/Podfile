@@ -45,6 +45,8 @@ target 'RondoApp' do
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
 
+  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
+
   target 'RondoAppTests' do
     inherit! :search_paths
     # Pods for testing
