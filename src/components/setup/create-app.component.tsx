@@ -38,13 +38,6 @@ export const CreateApp = () => {
         }}
       />
       <Button
-        title="DISABLE LOCATION COLLECTION"
-        buttonStyle={styles.button}
-        onPress={() => {
-          Leanplum.disableLocationCollection();
-        }}
-      />
-      <Button
         title="CALL LEANPLUM - START"
         buttonStyle={styles.button}
         onPress={() => {
