@@ -10,7 +10,9 @@
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "tsc": "tsc",
     "format": "prettier --write \"src/**/*.{ts,tsx}\" \"__{tests,mocks}__/**/*.{ts,tsx}\"",
-    "check-format": "prettier --check \"src/**/*.{ts,tsx}\" \"__{tests,mocks}__/**/*.{ts,tsx}\""
+    "check-format": "prettier --check \"src/**/*.{ts,tsx}\" \"__{tests,mocks}__/**/*.{ts,tsx}\"",
+    "log-android": "react-native log-android",
+    "log-ios": "react-native log-ios"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.5",
