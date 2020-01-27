@@ -37,6 +37,20 @@ export const CreateApp = () => {
           Leanplum.setAppIdForProductionMode(appId, productionKey);
         }}
       />
+       <Button
+        title="SET VARIABLES"
+        buttonStyle={styles.button}
+        onPress={() => {
+          Leanplum.setVariables();
+        }}
+      />
+      <Button
+        title="FORCE UPDATE"
+        buttonStyle={styles.button}
+        onPress={() => {
+          Leanplum.forceContentUpdate();
+        }}
+      />
       <Button
         title="CALL LEANPLUM - START"
         buttonStyle={styles.button}

@@ -36,9 +36,23 @@ class LeanplumSdkModule {
   setUserAttributes(attributes: any) {
     this.nativeModule.setUserAttributes(attributes);
   }
+  
+  setVariables() {
+    const variables = {
+      welcomeLabel: 'MyLabel',
+      someOtherLabel: 'other label',
+    };
+    this.nativeModule.setVariables(variables);
+  }
 
   start(): void {
+    console.log('LeanplumSdkModule.start');
     this.nativeModule.start();
+  }
+
+  forceContentUpdate(): void {
+    console.log('LeanplumSdkModule.forceContentUpdate');
+    this.nativeModule.forceContentUpdate();
   }
 
   track(event: string, params: any = {}): void {
