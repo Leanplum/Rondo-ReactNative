@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.Arguments;
 
 
 public class LeanplumSdkModule extends ReactContextBaseJavaModule {
@@ -86,6 +90,24 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         //LeanplumSdkModule.variables = attributes.toHashMap();
         //return LeanplumSdkModule.variables.get("welcomeLabel");
     }
+
+    @ReactMethod
+    public void setVariable(String variableName, String variableDefaultValue) {
+        variablesList.add(Var.define(variableName, variableDefaultValue));
+        // Log.d(ReactConstants.TAG, "SET VARIABLES");
+        // Log.d(ReactConstants.TAG, "attributes:" + attributes.toString());
+        // ReadableMapKeySetIterator iterator = attributes.keySetIterator();
+        // while (iterator.hasNextKey()) {
+        //     String key = iterator.nextKey();
+        //     Log.d(ReactConstants.TAG, "KEY:" + key);
+        //     Log.d(ReactConstants.TAG, "VAL:" + attributes.getString(key));
+        //     variablesList.add(Var.define(key, attributes.getString(key)));
+        // }
+        //Log.d(ReactConstants.TAG, attributes.toString());
+        //Log.d(ReactConstants.TAG, attributes.toHashMap().toString());
+        //LeanplumSdkModule.variables = attributes.toHashMap();
+        //return LeanplumSdkModule.variables.get("welcomeLabel");
+    }
     
     @ReactMethod
     public void start() {
@@ -101,20 +123,20 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         //Leanplum.forceContentUpdate();
         //Log.d(ReactConstants.TAG, "FORCE UPDATE FINISHED");
         // Then add a handler and pass it a new callback.
-        Log.d(ReactConstants.TAG, "variablesList: " + String.valueOf(variablesList.size()));
-        for (Var<String> varaibleDefinied : variablesList){
-            Log.d(ReactConstants.TAG, "variablesList step");
-            varaibleDefinied.addValueChangedHandler(new VariableCallback<String>() {
-                @Override
-                public void handle(Var<String> var) {
-                    //TODO invoke RN function
-                    Log.d(ReactConstants.TAG, "VALUE CHANGED TRIGGERED");
-                    LeanplumSdkModule.variables.put(var.name(), var.stringValue());
-                    Log.d(ReactConstants.TAG, var.name());
-                    Log.d(ReactConstants.TAG, var.stringValue());
-                }
-            });
-        }
+        // Log.d(ReactConstants.TAG, "variablesList: " + String.valueOf(variablesList.size()));
+        // for (Var<String> varaibleDefinied : variablesList){
+        //     Log.d(ReactConstants.TAG, "variablesList step");
+        //     varaibleDefinied.addValueChangedHandler(new VariableCallback<String>() {
+        //         @Override
+        //         public void handle(Var<String> var) {
+        //             //TODO invoke RN function
+        //             Log.d(ReactConstants.TAG, "VALUE CHANGED TRIGGERED");
+        //             LeanplumSdkModule.variables.put(var.name(), var.stringValue());
+        //             Log.d(ReactConstants.TAG, var.name());
+        //             Log.d(ReactConstants.TAG, var.stringValue());
+        //         }
+        //     });
+        // }
         /////////////////////////////////////////////////////////
         // Leanplum.addStartResponseHandler(new StartCallback() {
         //     @Override
@@ -126,6 +148,42 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         // });
     }
 
+    public void addStartResponseHandler(String variableName){ 
+        Leanplum.addStartResponseHandler(new StartCallback() {
+            @Override
+            public void onResponse(boolean b) {
+              // Insert code here.
+            }
+          });
+    }
+
+    @ReactMethod
+    public void addValueChangedHandler(String variableName){
+        for (Var<String> varaibleDefinied : variablesList){
+            if (varaibleDefinied.name().equals(variableName)) {
+                Log.d(ReactConstants.TAG, "Set addValueChangedHandler for: " + variableName);
+                varaibleDefinied.addValueChangedHandler(new VariableCallback<String>() {
+                    @Override
+                    public void handle(Var<String> var) {
+                        WritableMap event = Arguments.createMap();
+                        event.putString(var.name(), var.stringValue());
+                        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("valueChangedHandler", event);
+                        // WritableMap event = Arguments.createMap();
+                        // event.putString(var.name(), var.stringValue());
+                        // this.reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+                        //     getId(),
+                        //     "topChange",
+                        //     event);
+                        // Log.d(ReactConstants.TAG, "VALUE CHANGED TRIGGERED");
+                        // LeanplumSdkModule.variables.put(var.name(), var.stringValue());
+                        // Log.d(ReactConstants.TAG, var.name());
+                        // Log.d(ReactConstants.TAG, var.stringValue());
+                    }
+                });
+                break;
+            }
+        }
+    }
 
     @ReactMethod
     public void forceContentUpdate() {

@@ -1,8 +1,16 @@
 import {NativeModules, NativeModulesStatic, Platform} from 'react-native';
 import {LocationAccuracyType} from './location-accuracy-type';
+import {DeviceEventEmitter} from 'react-native';
+import {Alert} from 'react-native';
 
 class LeanplumSdkModule {
   private nativeModule: NativeModulesStatic = {};
+  private variables: Map<String, any>;
+  // var variables = {
+  //   welcomeLabel: 'MyLabel',
+  //   someOtherLabel: 'other label',
+  // };
+
   PURCHASE_EVENT_NAME: string = 'Purchase';
 
   constructor(nativeModule: NativeModulesStatic) {
@@ -11,11 +19,29 @@ class LeanplumSdkModule {
     } else {
       this.throwUnsupportedPlatform();
     }
+
+    this.variables = new Map<String, any>();
+    DeviceEventEmitter.addListener(
+      'valueChangedHandler',
+      this.valueChangedHandler,
+    );
   }
 
   throwUnsupportedPlatform() {
     throw new Error('Unsupported Platform');
   }
+
+  // Handlers
+  valueChangedHandler = (event: any) => {
+    var keys = Object.keys(event);
+    const key = keys[0];
+    const value = event[key];
+    console.log('valueChangedHandler-event', event);
+    console.log('valueChangedHandler-key', key);
+    console.log('valueChangedHandler-value', value);
+    this.variables.set(key, value);
+    Alert.alert('Key: ' + key + ', Value: ' + value);
+  };
 
   setAppIdForDevelopmentMode(appId: string, accessKey: string): void {
     this.nativeModule.setAppIdForDevelopmentMode(appId, accessKey);
@@ -36,13 +62,33 @@ class LeanplumSdkModule {
   setUserAttributes(attributes: any) {
     this.nativeModule.setUserAttributes(attributes);
   }
-  
+
+  setVariable(
+    variableName: String,
+    variableDefaultValue: String | Number | Boolean,
+  ) {
+    console.log('SET VARIABLE', variableName, variableDefaultValue);
+    for (let key of Array.from(this.variables.keys())) {
+      console.log('key-before', key);
+      console.log(
+        'value-before',
+        this.variables && this.variables.get(key).toString(),
+      );
+    }
+    this.variables.set(variableName, variableDefaultValue);
+    this.nativeModule.setVariable(variableName, variableDefaultValue);
+    for (let key of Array.from(this.variables.keys())) {
+      console.log('key-after', key);
+      console.log('value-after', this.variables.get(key).toString());
+    }
+  }
+
   setVariables() {
-    const variables = {
-      welcomeLabel: 'MyLabel',
-      someOtherLabel: 'other label',
-    };
-    this.nativeModule.setVariables(variables);
+    this.nativeModule.setVariables(this.variables);
+  }
+
+  addValueChangedHandler(variableName: String) {
+    this.nativeModule.addValueChangedHandler(variableName);
   }
 
   start(): void {

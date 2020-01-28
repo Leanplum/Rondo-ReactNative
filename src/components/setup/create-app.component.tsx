@@ -8,6 +8,9 @@ export const CreateApp = () => {
   const [productionKey, setProductionKey] = useState('');
   const [developmentKey, setDevelopmentKey] = useState('');
 
+  const [variableName, setVariableName] = useState();
+  const [variableDefaultValue, setVariableDefaultValue] = useState();
+
   return (
     <View style={styles.container}>
       <Input
@@ -37,18 +40,23 @@ export const CreateApp = () => {
           Leanplum.setAppIdForProductionMode(appId, productionKey);
         }}
       />
-       <Button
-        title="SET VARIABLES"
-        buttonStyle={styles.button}
-        onPress={() => {
-          Leanplum.setVariables();
-        }}
+      <Input
+        placeholder="Variable Name"
+        autoCapitalize="none"
+        value={variableName}
+        onChangeText={text => setVariableName(text)}
+      />
+      <Input
+        placeholder="Variable Default Value"
+        autoCapitalize="none"
+        value={variableDefaultValue}
+        onChangeText={text => setVariableDefaultValue(text)}
       />
       <Button
-        title="FORCE UPDATE"
+        title="SET VARIABLE"
         buttonStyle={styles.button}
         onPress={() => {
-          Leanplum.forceContentUpdate();
+          Leanplum.setVariable(variableName, variableDefaultValue);
         }}
       />
       <Button
@@ -56,6 +64,20 @@ export const CreateApp = () => {
         buttonStyle={styles.button}
         onPress={() => {
           Leanplum.start();
+        }}
+      />
+      <Button
+        title="ADD VALUE CHANGE HANDLER"
+        buttonStyle={styles.button}
+        onPress={() => {
+          Leanplum.addValueChangedHandler(variableName);
+        }}
+      />
+      <Button
+        title="FORCE UPDATE"
+        buttonStyle={styles.button}
+        onPress={() => {
+          Leanplum.forceContentUpdate();
         }}
       />
     </View>
