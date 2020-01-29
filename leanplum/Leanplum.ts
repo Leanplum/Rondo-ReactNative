@@ -1,10 +1,6 @@
 import {NativeModules, NativeModulesStatic, Platform} from 'react-native';
 import {LocationAccuracyType} from './location-accuracy-type';
 import {DeviceEventEmitter} from 'react-native';
-<<<<<<< Upstream, based on origin/develop
-=======
-import {Alert} from 'react-native';
->>>>>>> 47e1235 feat: define variable and add value change handler from RN
 
 class LeanplumSdkModule {
   private nativeModule: NativeModulesStatic = {};
@@ -94,7 +90,6 @@ class LeanplumSdkModule {
     } else {
       this.throwUnsupportedPlatform();
     }
-<<<<<<< Upstream, based on origin/develop
     
     DeviceEventEmitter.addListener(
       LeanplumSdkModule.VALUE_CHANGE_HANDLER,
@@ -108,32 +103,11 @@ class LeanplumSdkModule {
       LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
       this.variablesReadyHandler,
     );
-    
-=======
-
-    this.variables = new Map<String, any>();
-    DeviceEventEmitter.addListener(
-      'valueChangedHandler',
-      this.valueChangedHandler,
-    );
->>>>>>> 47e1235 feat: define variable and add value change handler from RN
   }
 
   throwUnsupportedPlatform() {
     throw new Error('Unsupported Platform');
   }
-
-  // Handlers
-  valueChangedHandler = (event: any) => {
-    var keys = Object.keys(event);
-    const key = keys[0];
-    const value = event[key];
-    console.log('valueChangedHandler-event', event);
-    console.log('valueChangedHandler-key', key);
-    console.log('valueChangedHandler-value', value);
-    this.variables.set(key, value);
-    Alert.alert('Key: ' + key + ', Value: ' + value);
-  };
 
   setAppIdForDevelopmentMode(appId: string, accessKey: string): void {
     this.nativeModule.setAppIdForDevelopmentMode(appId, accessKey);
