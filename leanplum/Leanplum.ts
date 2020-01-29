@@ -25,11 +25,43 @@ class LeanplumSdkModule {
       'valueChangedHandler',
       this.valueChangedHandler,
     );
+    DeviceEventEmitter.addListener(
+      'valueChangedHandlerDouble',
+      this.valueChangedHandlerDouble,
+    );
+    DeviceEventEmitter.addListener(
+      'valueChangedHandlerBool',
+      this.valueChangedHandlerBool,
+    );
   }
 
   throwUnsupportedPlatform() {
     throw new Error('Unsupported Platform');
   }
+
+  valueChangedHandlerDouble = (event: any) => {
+    this.valueChangedHandler(event);
+    // var keys = Object.keys(event);
+    // const key = keys[0];
+    // const value = event[key];
+    // console.log('valueChangedHandler-event', event);
+    // console.log('valueChangedHandler-key', key);
+    // console.log('valueChangedHandler-value', value);
+    // this.variables.set(key, value);
+    // Alert.alert('Key: ' + key + ', Value: ' + value);
+  };
+
+  valueChangedHandlerBool = (event: any) => {
+    this.valueChangedHandler(event);
+    // var keys = Object.keys(event);
+    // const key = keys[0];
+    // const value = event[key];
+    // console.log('valueChangedHandler-event', event);
+    // console.log('valueChangedHandler-key', key);
+    // console.log('valueChangedHandler-value', value);
+    // this.variables.set(key, value);
+    // Alert.alert('Key: ' + key + ', Value: ' + value);
+  };
 
   // Handlers
   valueChangedHandler = (event: any) => {
@@ -67,20 +99,34 @@ class LeanplumSdkModule {
     variableName: String,
     variableDefaultValue: String | Number | Boolean,
   ) {
-    console.log('SET VARIABLE', variableName, variableDefaultValue);
-    for (let key of Array.from(this.variables.keys())) {
-      console.log('key-before', key);
-      console.log(
-        'value-before',
-        this.variables && this.variables.get(key).toString(),
-      );
+    // console.log('SET VARIABLE', variableName, variableDefaultValue);
+    // for (let key of Array.from(this.variables.keys())) {
+    //   console.log('key-before', key);
+    //   console.log(
+    //     'value-before',
+    //     this.variables && this.variables.get(key).toString(),
+    //   );
+    // }
+    let varBoolean: Boolean = true;
+    if (typeof varBoolean === 'boolean') {
+      this.variables.set('boolVar', varBoolean);
+      this.nativeModule.setBooleanVariable('boolVar', varBoolean);
     }
-    this.variables.set(variableName, variableDefaultValue);
-    this.nativeModule.setVariable(variableName, variableDefaultValue);
-    for (let key of Array.from(this.variables.keys())) {
-      console.log('key-after', key);
-      console.log('value-after', this.variables.get(key).toString());
+
+    let varNumber: Number = 1;
+    if (typeof varNumber === 'number') {
+      this.variables.set('numVar', varNumber);
+      this.nativeModule.setNumberVariable('numVar', varNumber);
     }
+
+    if (typeof variableDefaultValue === 'string') {
+      this.variables.set(variableName, variableDefaultValue);
+      this.nativeModule.setStringVariable(variableName, variableDefaultValue);
+    }
+    // for (let key of Array.from(this.variables.keys())) {
+    //   console.log('key-after', key);
+    //   console.log('value-after', this.variables.get(key).toString());
+    // }
   }
 
   setVariables() {
@@ -88,6 +134,8 @@ class LeanplumSdkModule {
   }
 
   addValueChangedHandler(variableName: String) {
+    this.nativeModule.addValueChangedHandler('boolVar');
+    this.nativeModule.addValueChangedHandler('numVar');
     this.nativeModule.addValueChangedHandler(variableName);
   }
 
