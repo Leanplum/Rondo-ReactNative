@@ -1,7 +1,6 @@
 import React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, View, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-navigation';
-import {ScrollView} from 'react-native-gesture-handler';
 import {Divider} from 'react-native-elements';
 
 import {Event, Location, User, Attribute, PurchaseEvent} from 'components';
@@ -12,7 +11,7 @@ export const AdHocScreen = () => {
       <ScrollView>
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>
-            You can type in custom events, sessions and attributes tp send from
+            You can type in custom events, sessions and attributes to send from
             here.
           </Text>
         </View>
