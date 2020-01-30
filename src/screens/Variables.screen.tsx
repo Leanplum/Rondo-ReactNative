@@ -1,10 +1,22 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {Varstring, Varbool, Varnumber, Buttons} from 'components';
 
 export const VariablesScreen = () => {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Variables Screen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <Varstring />
+        <Varbool />
+        <Varnumber />
+        <Buttons />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

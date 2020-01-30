@@ -28,6 +28,8 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.Arguments;
+import com.rondoapp.variables.Type;
+import com.rondoapp.variables.HandlerManager;
 
 
 public class LeanplumSdkModule extends ReactContextBaseJavaModule {
@@ -72,99 +74,35 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     public void setUserAttributes(ReadableMap attributes) {
         Leanplum.setUserAttributes(attributes.toHashMap());
     }
-    
-    // @ReactMethod
-    // public void setVariables(ReadableMap attributes) {
-    //     Log.d(ReactConstants.TAG, "SET VARIABLES");
-    //     Log.d(ReactConstants.TAG, "attributes:" + attributes.toString());
-    //     ReadableMapKeySetIterator iterator = attributes.keySetIterator();
-    //     while (iterator.hasNextKey()) {
-    //         String key = iterator.nextKey();
-    //         Log.d(ReactConstants.TAG, "KEY:" + key);
-    //         Log.d(ReactConstants.TAG, "VAL:" + attributes.getString(key));
-    //         variablesList.add(Var.define(key, attributes.getString(key)));
-    //     }
-    // }
 
     @ReactMethod
-    public void setStringVariable(String variableName, String variableDefaultValue) {
-        Log.d(ReactConstants.TAG, "VAR IS STRING");    
-        Log.d(ReactConstants.TAG, "VAR TYPE:" + variableDefaultValue.getClass().getSimpleName());
-        Var<String> var = Var.define(variableName, variableDefaultValue);
-        variablesList.add(var);
-    }
+    public void setVariable(String variableName, String variableDefaultValue, String type) {
+        if (type.equalsIgnoreCase(Type.STRING.label)) {
+            variablesList.add(Var.define(variableName, variableDefaultValue));
+        }
 
-    @ReactMethod
-    public void setBooleanVariable(String variableName, Boolean variableDefaultValue) {
-        Log.d(ReactConstants.TAG, "VAR IS BOOLEAN");    
-        Log.d(ReactConstants.TAG, "VAR TYPE:" + variableDefaultValue.getClass().getSimpleName());
-        Var<Boolean> var = Var.define(variableName, variableDefaultValue);
-        variablesList.add(var);
-    }
+        if (type.equalsIgnoreCase(Type.BOOLEAN.label)) {
+            variablesList.add(Var.define(variableName, Boolean.parseBoolean(variableDefaultValue)));
+        }
 
-    @ReactMethod
-    public void setNumberVariable(String variableName, Double variableDefaultValue) {
-        Log.d(ReactConstants.TAG, "VAR IS Double");    
-        Log.d(ReactConstants.TAG, "VAR TYPE:" + variableDefaultValue.getClass().getSimpleName());
-        Var<Double> var = Var.define(variableName, variableDefaultValue);
-        variablesList.add(var);
+        if (type.equalsIgnoreCase(Type.NUMBER.label)) {
+            variablesList.add(Var.define(variableName, Double.parseDouble(variableDefaultValue)));
+        }
     }
     
     @ReactMethod
     public void start() {
-        if (BuildConfig.DEBUG) {
-            Log.d(ReactConstants.TAG, "DEV MODE");
-        }
-        Parser.parseVariables(LeanplumSdkModule.variablesList);
-        Log.d(ReactConstants.TAG, "PARSE FINISHED");
         Leanplum.start(getContext());
-        Log.d(ReactConstants.TAG, "START FINISHED");
     }
 
     @ReactMethod
-    public void addValueChangedHandler(String variableName){
-        for (Object varaibleDefinied : variablesList){
+    public void addValueChangedHandler(String variableName, String listenerName) {
+        for (Object varaibleDefinied : variablesList) {
             if (varaibleDefinied instanceof Var<?>) {
                 Var<?> var = (Var<?>)varaibleDefinied;
                 if (var.name().equals(variableName)){
-                    Log.d(ReactConstants.TAG, "VAR: " + var.name() + " - " + var.kind());
-                    if (var.kind().equals("string")) {
-                        Var<String> variableString = (Var<String>)varaibleDefinied;
-                        Log.d(ReactConstants.TAG, "variableString: " + variableString.name() + " - " + variableString.value());
-                        variableString.addValueChangedHandler(new VariableCallback<String>() {
-                                @Override
-                                public void handle(Var<String> var) {
-                                    WritableMap event = Arguments.createMap();
-                                    Log.d(ReactConstants.TAG, "var.value().getClass(): " + var.value().getClass());
-                                    event.putString(var.name(), var.value());
-                                    reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("valueChangedHandler", event);
-                                }
-                            });
-                    } else if  (var.kind().equals("float")) {
-                        Var<Double> variableFloat = (Var<Double>)varaibleDefinied;
-                        //Log.d(ReactConstants.TAG, "variableFloat: " + variableFloat.name() + " - " + variableFloat.value().toString());
-                        variableFloat.addValueChangedHandler(new VariableCallback<Double>() {
-                            @Override
-                            public void handle(Var<Double> var) {
-                                WritableMap event = Arguments.createMap();
-                                Log.d(ReactConstants.TAG, "var.value().getClass(): " + var.value().getClass());
-                                event.putDouble(var.name(), var.value());
-                                reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("valueChangedHandlerDouble", event);
-                            }
-                        });
-                    } else if  (var.kind().equals("bool")) {
-                        Var<Boolean> variableBool = (Var<Boolean>)varaibleDefinied;
-                        Log.d(ReactConstants.TAG, "variableBool: " + variableBool.name() + " - " + variableBool.value().toString());
-                        variableBool.addValueChangedHandler(new VariableCallback<Boolean>() {
-                            @Override
-                            public void handle(Var<Boolean> var) {
-                                WritableMap event = Arguments.createMap();
-                                Log.d(ReactConstants.TAG, "var.value().getClass(): " + var.value().getClass());
-                                event.putBoolean(var.name(), var.value());
-                                reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("valueChangedHandlerBool", event);
-                            }
-                        });
-                    }
+                    HandlerManager handlerManager = new HandlerManager(reactContext);
+                    handlerManager.addValueChangedHandler(var, listenerName);
                 }
             }
         }
@@ -172,7 +110,6 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void forceContentUpdate() {
-        Log.d(ReactConstants.TAG, "FORCE CONTENT UPDATE");
         Leanplum.forceContentUpdate();
     }
 
@@ -194,8 +131,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     
     @ReactMethod
     public void parseVariables() {
-        Var<String> welcomeLabel = Var.define("welcomeLabel", "Welcome!");
-        Parser.parseVariables(welcomeLabel);
+        Parser.parseVariables(LeanplumSdkModule.variablesList);
     }
 
     @ReactMethod

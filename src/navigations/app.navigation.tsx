@@ -4,7 +4,14 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {withTheme, CurrentTheme} from 'utils';
-import {Screens, SetupScreen, AdHocScreen, IScreen, AppScreens} from 'screens';
+import {
+  Screens,
+  SetupScreen,
+  AdHocScreen,
+  IScreen,
+  AppScreens,
+  VariablesScreen,
+} from 'screens';
 
 const defaultStackConfig: any = {
   defaultNavigationOptions: {
@@ -30,10 +37,18 @@ const AdHocStack = createStackNavigator(
   defaultStackConfig,
 );
 
+const VariablesStack = createStackNavigator(
+  {
+    [Screens.Variables]: withTheme(VariablesScreen),
+  },
+  defaultStackConfig,
+);
+
 export const AppNavigation = createBottomTabNavigator(
   {
     [Screens.Setup]: SetupStack,
     [Screens.AdHoc]: AdHocStack,
+    [Screens.Variables]: VariablesStack,
   },
   {
     defaultNavigationOptions: ({navigation}) => ({

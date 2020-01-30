@@ -4,12 +4,6 @@ import {DeviceEventEmitter} from 'react-native';
 
 class LeanplumSdkModule {
   private nativeModule: NativeModulesStatic = {};
-  private variables: Map<String, any>;
-  // var variables = {
-  //   welcomeLabel: 'MyLabel',
-  //   someOtherLabel: 'other label',
-  // };
-
   PURCHASE_EVENT_NAME: string = 'Purchase';
   private static readonly VALUE_CHANGE_HANDLER: string = 'valueChangedHandler';
   private static readonly START_RESPONSE_HANDLER: string =
@@ -103,6 +97,7 @@ class LeanplumSdkModule {
       LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
       this.variablesReadyHandler,
     );
+
   }
 
   throwUnsupportedPlatform() {
@@ -119,6 +114,10 @@ class LeanplumSdkModule {
 
   setDeviceId(id: string) {
     this.nativeModule.setDeviceId(id);
+  }
+
+  parseVariables() {
+    this.nativeModule.parseVariables();
   }
 
   setUserId(id: string) {
@@ -258,12 +257,10 @@ class LeanplumSdkModule {
   }
 
   start(): void {
-    console.log('LeanplumSdkModule.start');
     this.nativeModule.start();
   }
 
   forceContentUpdate(): void {
-    console.log('LeanplumSdkModule.forceContentUpdate');
     this.nativeModule.forceContentUpdate();
   }
 
