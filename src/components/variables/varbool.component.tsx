@@ -4,9 +4,9 @@ import {Text, Input, Button} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
 import {DeviceEventEmitter} from 'react-native';
 
-const LISTENER_NAME: string = 'valueChangedHandler';
+const LISTENER_NAME: string = 'valueChangedHandlerBoolean';
 
-function valueChangedHandler(event: any) {
+function valueChangedHandlerBoolean(event: any) {
   console.log('HANDLER INVOKED FOR BOOLEAN TYPE: ', event);
 }
 
@@ -14,7 +14,7 @@ export const Varbool = () => {
   const [variableName, setVariableName] = useState('boolVar');
   const [variableDefaultValue, setVariableDefaultValue] = useState('true');
 
-  DeviceEventEmitter.addListener(LISTENER_NAME, valueChangedHandler);
+  DeviceEventEmitter.addListener(LISTENER_NAME, valueChangedHandlerBoolean);
 
   return (
     <View style={styles.container}>

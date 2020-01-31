@@ -132,6 +132,7 @@ class LeanplumSdkModule {
     this.nativeModule.parseVariables();
   }
 
+<<<<<<< Upstream, based on origin/develop
   /**
    * Define/Set multiple primitive variables using JSON object, we can use this method if we want to define multiple variables at once
    *
