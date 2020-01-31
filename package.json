@@ -27,7 +27,8 @@
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^2.0.11",
-    "react-navigation-tabs": "^2.7.0"
+    "react-navigation-tabs": "^2.7.0",
+    "react-native-leanplum": "file:../react-native-leanplum"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

@@ -17,7 +17,6 @@ module.exports = {
           '.json',
         ],
         alias: {
-          'leanplum': './leanplum',
           'screens': './src/screens',
           'components': './src/components',
           'utils': './src/utils',

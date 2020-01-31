@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Input, Button} from 'react-native-elements';
-import {Leanplum} from 'leanplum';
+import Leanplum from 'react-native-leanplum';
 
 export const CreateApp = () => {
   const [appId, setAppId] = useState('app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I');

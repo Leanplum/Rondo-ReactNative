@@ -36,8 +36,6 @@ target 'RondoApp' do
 
   use_frameworks!
 
-  pod 'Leanplum-iOS-SDK', '2.6.2'
-
   # Uncomment one of the following for Location Services.
   pod 'Leanplum-iOS-Location', '2.5.1'
   # pod 'Leanplum-iOS-LocationAndBeacons', '2.5.1'
@@ -46,6 +44,8 @@ target 'RondoApp' do
 
 
   pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
+
+  pod 'react-native-leanplum', :path => '../node_modules/react-native-leanplum'
 
   target 'RondoAppTests' do
     inherit! :search_paths

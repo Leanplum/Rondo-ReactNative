@@ -1,15 +1,12 @@
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet, Picker} from 'react-native';
 import {Text, Input, Button, ThemeContext} from 'react-native-elements';
-import {Leanplum} from 'leanplum';
-import {LocationAccuracyType} from 'leanplum/location-accuracy-type';
+import Leanplum from 'react-native-leanplum';
 
 export const Location = () => {
-  //55.5807481  36.8251398 RUSIA
-  // CUBA 23.0977862 -82.3787488
   const [latitude, setLatitude] = useState('23.0977862');
   const [longitude, setLongitude] = useState('-82.3787488');
-  const [locationType, setLocationType] = useState(LocationAccuracyType.GPS);
+  const [locationType, setLocationType] = useState(1);
   return (
     <View>
       <Text style={styles.header}>Set Device Location</Text>
@@ -31,18 +28,9 @@ export const Location = () => {
         selectedValue={locationType}
         style={{flex: 1}}
         onValueChange={(itemValue, itemIndex) => setLocationType(itemValue)}>
-        <Picker.Item
-          label="IP => Lowest accuracy"
-          value={LocationAccuracyType.IP}
-        />
-        <Picker.Item
-          label="CELL => Default accuracy"
-          value={LocationAccuracyType.CELL}
-        />
-        <Picker.Item
-          label="GPS => Highest accuracy"
-          value={LocationAccuracyType.GPS}
-        />
+        <Picker.Item label="IP => Lowest accuracy" value={0} />
+        <Picker.Item label="CELL => Default accuracy" value={1} />
+        <Picker.Item label="GPS => Highest accuracy" value={2} />
       </Picker>
       <Button
         title="SET DEVICE LOCATION"
@@ -51,7 +39,7 @@ export const Location = () => {
           Leanplum.setDeviceLocation(
             Number(latitude),
             Number(longitude),
-            LocationAccuracyType.GPS,
+            locationType,
           )
         }
       />

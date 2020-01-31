@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text, Input, Button, ThemeContext} from 'react-native-elements';
-import {Leanplum} from 'leanplum';
+import Leanplum from 'react-native-leanplum';
 
 export const PurchaseEvent = () => {
   const [event, setEvent] = useState(Leanplum.PURCHASE_EVENT_NAME);
