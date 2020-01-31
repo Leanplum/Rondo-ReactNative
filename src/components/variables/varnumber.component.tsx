@@ -4,9 +4,9 @@ import {Text, Input, Button} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
 import {DeviceEventEmitter} from 'react-native';
 
-const LISTENER_NAME: string = 'valueChangedHandler';
+const LISTENER_NAME: string = 'valueChangedHandlerString';
 
-function valueChangedHandler(event: any) {
+function valueChangedHandlerNumber(event: any) {
   console.log('HANDLER INVOKED FOR NUMBER TYPE: ', event);
 }
 
@@ -14,7 +14,7 @@ export const Varnumber = () => {
   const [variableName, setVariableName] = useState('numVar');
   const [variableDefaultValue, setVariableDefaultValue] = useState('15.0');
 
-  DeviceEventEmitter.addListener(LISTENER_NAME, valueChangedHandler);
+  DeviceEventEmitter.addListener(LISTENER_NAME, valueChangedHandlerNumber);
 
   return (
     <View style={styles.container}>

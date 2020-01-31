@@ -4,9 +4,9 @@ import {Text, Input, Button} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
 import {DeviceEventEmitter} from 'react-native';
 
-const LISTENER_NAME: string = 'valueChangedHandler';
+const LISTENER_NAME: string = 'valueChangedHandlerString';
 
-function valueChangedHandler(event: any) {
+function valueChangedHandlerString(event: any) {
   console.log('HANDLER INVOKED FOR STRING TYPE: ', event);
 }
 
@@ -16,7 +16,7 @@ export const Varstring = () => {
     'string var default value',
   );
 
-  DeviceEventEmitter.addListener(LISTENER_NAME, valueChangedHandler);
+  DeviceEventEmitter.addListener(LISTENER_NAME, valueChangedHandlerString);
 
   return (
     <View style={styles.container}>

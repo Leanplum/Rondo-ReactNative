@@ -41,6 +41,10 @@ class LeanplumSdkModule {
     this.nativeModule.setUserAttributes(attributes);
   }
 
+  setVariables(variablesObject: object) {
+    this.nativeModule.setVariables(JSON.stringify(variablesObject));
+  }
+
   setVariable(
     variableName: String,
     variableDefaultValue: String | Number | Boolean,

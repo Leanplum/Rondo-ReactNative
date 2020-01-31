@@ -24,12 +24,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.Arguments;
 import com.rondoapp.variables.Type;
 import com.rondoapp.variables.HandlerManager;
+import com.rondoapp.variables.JsonHelper;
+import org.json.JSONObject;
+import java.util.Iterator;
 
 
 public class LeanplumSdkModule extends ReactContextBaseJavaModule {
@@ -73,6 +77,37 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setUserAttributes(ReadableMap attributes) {
         Leanplum.setUserAttributes(attributes.toHashMap());
+    }
+
+    @ReactMethod
+    public void setVariables(String json) {
+        try {
+             JSONObject jsonObject = new JSONObject(json);
+             Map<String, Object> variablesMap = JsonHelper.toMap(jsonObject);
+             Map<String, Object> variablesFlatMap = JsonHelper.toFlatMap(variablesMap);
+
+             for (Entry<String, Object> entry : variablesFlatMap.entrySet()) {
+                 String key = entry.getKey();
+                 Object value = entry.getValue();
+                if (entry.getValue() instanceof String) {
+                    Log.d(ReactConstants.TAG, "IS STRING key:" + key + " value:" + value.toString());
+                    this.setVariable(key, value.toString(), "string");
+                }  else if (entry.getValue() instanceof Double) { 
+                    Log.d(ReactConstants.TAG, "IS NUMBER key:" + key + " value:" + value.toString());
+                    this.setVariable(key, value.toString(), "number"); 
+                } else if (entry.getValue() instanceof Boolean) { 
+                    Log.d(ReactConstants.TAG, "IS BOOLEAN key:" + key + " value:" + value.toString());
+                    this.setVariable(key, value.toString(), "boolean");
+                } else if(entry.getValue() instanceof List) {
+                    Log.d(ReactConstants.TAG, "IS LIST key:" + key + " value:" + value.toString());
+                    variablesList.add(Var.define(key, (List)value));
+                }
+            }
+            
+        } catch (Exception e) {
+            // TODO check how to throw exception in react method
+            e.printStackTrace();
+        }
     }
 
     @ReactMethod
