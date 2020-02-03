@@ -1,9 +1,10 @@
 import React from 'react';
 import {Text, StyleSheet, View, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-navigation';
-import {Divider} from 'react-native-elements';
+import {Divider, Button} from 'react-native-elements';
 
 import {Event, Location, User, Attribute, PurchaseEvent} from 'components';
+import Leanplum from 'react-native-leanplum';
 
 export const AdHocScreen = () => {
   return (
@@ -28,8 +29,14 @@ export const AdHocScreen = () => {
         <View style={styles.component}>
           <User />
         </View>
-        <View>
+        <View style={styles.component}>
           <Attribute />
+        </View>
+        <View>
+          <Button
+            onPress={() => Leanplum.forceContentUpdate()}
+            title="FORCE CONTENT UPDATE"
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
