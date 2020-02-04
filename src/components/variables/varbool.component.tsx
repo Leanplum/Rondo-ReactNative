@@ -1,20 +1,20 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Alert} from 'react-native';
+import {Alert, View, StyleSheet} from 'react-native';
 import {Text, Input, Button} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
-import {DeviceEventEmitter} from 'react-native';
 
-const LISTENER_NAME: string = 'valueChangedHandlerBoolean';
+const VARIABLE_NAME: string = 'boolVar';
 
 function valueChangedHandlerBoolean(event: any) {
-  console.log('HANDLER INVOKED FOR BOOLEAN TYPE: ', event);
+  console.log(
+    'BOOLEAN VARIABLE VALUE IS: ',
+    Leanplum.getVariable(VARIABLE_NAME),
+  );
 }
 
 export const Varbool = () => {
-  const [variableName, setVariableName] = useState('boolVar');
+  const [variableName, setVariableName] = useState(VARIABLE_NAME);
   const [variableDefaultValue, setVariableDefaultValue] = useState('true');
-
-  DeviceEventEmitter.addListener(LISTENER_NAME, valueChangedHandlerBoolean);
 
   return (
     <View style={styles.container}>
@@ -42,7 +42,17 @@ export const Varbool = () => {
         title="ADD VALUE CHANGE HANDLER"
         buttonStyle={styles.button}
         onPress={() => {
-          Leanplum.addValueChangedHandler(variableName, LISTENER_NAME);
+          Leanplum.addValueChangedHandler(
+            variableName,
+            valueChangedHandlerBoolean,
+          );
+        }}
+      />
+      <Button
+        title="GET VALUE"
+        buttonStyle={styles.button}
+        onPress={() => {
+          Alert.alert(Leanplum.getVariable(variableName)?.toString());
         }}
       />
     </View>

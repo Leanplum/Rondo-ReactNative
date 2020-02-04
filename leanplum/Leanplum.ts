@@ -1,9 +1,31 @@
 import {NativeModules, NativeModulesStatic, Platform} from 'react-native';
 import {LocationAccuracyType} from './location-accuracy-type';
+import {DeviceEventEmitter} from 'react-native';
 
 class LeanplumSdkModule {
   private nativeModule: NativeModulesStatic = {};
   PURCHASE_EVENT_NAME: string = 'Purchase';
+  private static readonly VALUE_CHANGE_HANDLER: string = 'valueChangedHandler';
+  private static variableValue: Map<
+    String,
+    String | Boolean | Number
+  > = new Map<String, String | Boolean | Number>();
+  private static variableCallbackFunction: Map<String, Function> = new Map<
+    String,
+    Function
+  >();
+
+  valueChangedHandler(event: any) {
+    for (var key in event) {
+      if (event.hasOwnProperty(key)) {
+        LeanplumSdkModule.variableValue.set(key, event[key]);
+        if (LeanplumSdkModule.variableCallbackFunction.has(key)) {
+          const func = LeanplumSdkModule.variableCallbackFunction.get(key);
+          if (func != undefined) func.call(func);
+        }
+      }
+    }
+  }
 
   constructor(nativeModule: NativeModulesStatic) {
     if (Platform.OS === 'android' || Platform.OS === 'ios') {
@@ -11,6 +33,11 @@ class LeanplumSdkModule {
     } else {
       this.throwUnsupportedPlatform();
     }
+
+    DeviceEventEmitter.addListener(
+      LeanplumSdkModule.VALUE_CHANGE_HANDLER,
+      this.valueChangedHandler,
+    );
   }
 
   throwUnsupportedPlatform() {
@@ -41,23 +68,52 @@ class LeanplumSdkModule {
     this.nativeModule.setUserAttributes(attributes);
   }
 
+  /**
+   * Define/Set variables using JSON object, we can use this method if we want to define multiple variables at once
+   *
+   * @param object object with multiple variables
+   */
   setVariables(variablesObject: object) {
     this.nativeModule.setVariables(JSON.stringify(variablesObject));
   }
 
-  setVariable(
-    variableName: String,
-    variableDefaultValue: String | Number | Boolean,
-  ) {
+  /**
+   * Define/Set variable, we can use this method if we want to define variable
+   *
+   * @param name name of the variable
+   * @param defaultValue default value of the variable
+   */
+  setVariable(name: String, defaultValue: String | Number | Boolean) {
+    LeanplumSdkModule.variableValue.set(name, defaultValue);
     this.nativeModule.setVariable(
-      variableName,
-      variableDefaultValue.toString(),
-      typeof variableDefaultValue,
+      name,
+      defaultValue.toString(),
+      typeof defaultValue,
     );
   }
 
-  addValueChangedHandler(variableName: String, listenerName: String) {
-    this.nativeModule.addValueChangedHandler(variableName, listenerName);
+  /**
+   * Get value for specific variable, if we want to be sure that the method will return latest variable value
+   * we need to invoke forceContentUpdate() before invoking getVariable
+   *
+   * @param name name of the variable
+   * @param defaultValue default value of the variable
+   */
+  getVariable(variableName: String) {
+    if (LeanplumSdkModule.variableValue.has(variableName))
+      return LeanplumSdkModule.variableValue.get(variableName);
+
+    return '';
+  }
+
+  addValueChangedHandler(variableName: String, handler?: Function) {
+    if (handler != undefined)
+      LeanplumSdkModule.variableCallbackFunction.set(variableName, handler);
+
+    this.nativeModule.addValueChangedHandler(
+      variableName,
+      LeanplumSdkModule.VALUE_CHANGE_HANDLER,
+    );
   }
 
   start(): void {

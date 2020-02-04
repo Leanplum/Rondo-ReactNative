@@ -1,22 +1,22 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {Alert, View, StyleSheet} from 'react-native';
 import {Text, Input, Button} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
-import {DeviceEventEmitter} from 'react-native';
 
-const LISTENER_NAME: string = 'valueChangedHandlerString';
+const VARIABLE_NAME: string = 'stringVar';
 
-function valueChangedHandlerString(event: any) {
-  console.log('HANDLER INVOKED FOR STRING TYPE: ', event);
+function valueChangedHandlerString() {
+  console.log(
+    'STRING VARIABLE VALUE IS: ',
+    Leanplum.getVariable(VARIABLE_NAME),
+  );
 }
 
 export const Varstring = () => {
-  const [variableName, setVariableName] = useState('stringVar');
+  const [variableName, setVariableName] = useState(VARIABLE_NAME);
   const [variableDefaultValue, setVariableDefaultValue] = useState(
     'string var default value',
   );
-
-  DeviceEventEmitter.addListener(LISTENER_NAME, valueChangedHandlerString);
 
   return (
     <View style={styles.container}>
@@ -44,7 +44,17 @@ export const Varstring = () => {
         title="ADD VALUE CHANGE HANDLER"
         buttonStyle={styles.button}
         onPress={() => {
-          Leanplum.addValueChangedHandler(variableName, LISTENER_NAME);
+          Leanplum.addValueChangedHandler(
+            variableName,
+            valueChangedHandlerString,
+          );
+        }}
+      />
+      <Button
+        title="GET VALUE"
+        buttonStyle={styles.button}
+        onPress={() => {
+          Alert.alert(Leanplum.getVariable(variableName));
         }}
       />
     </View>

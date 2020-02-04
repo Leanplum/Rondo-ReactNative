@@ -12,33 +12,12 @@ import org.json.JSONObject;
 
 public class JsonHelper {
 
-    public static Map<String, Object> toFlatMap(Map<String, Object> map) {
-		Map<String, Object> flatMap = new HashMap<String, Object>();
-		for (Entry<String, Object> entry : map.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-			if (value instanceof Map) {
-				JsonHelper.flatMapHelper((Map<String, Object>) entry.getValue(), flatMap, key + ".");
-			} else {
-				flatMap.put(entry.getKey(), entry.getValue());
-			}
-		}
-
-		return flatMap;
-	}
-
-	private static void flatMapHelper(Map<String, Object> map, Map<String, Object> flatMap, String sufix) {
-		for (Entry<String, Object> entry : map.entrySet()) {
-			if (entry.getValue() instanceof String || entry.getValue() instanceof Integer || entry.getValue() instanceof Boolean || entry.getValue() instanceof List) {
-				flatMap.put(sufix + entry.getKey(), entry.getValue());
-			}
-
-			if (entry.getValue() instanceof Map) {
-				JsonHelper.flatMapHelper((Map<String, Object>) entry.getValue(), flatMap, sufix + entry.getKey() + ".");
-			}
-		}
-	}
-
+	/**
+	 * convert JSON object to Map
+	 * 
+	 * @param JSON object that needs to be converted into a Map
+	 * @return map created from the input JSON object
+	 */
     public static Map<String, Object> toMap(JSONObject object) throws JSONException {
 	    Map<String, Object> map = new HashMap<String, Object>();
 
@@ -59,6 +38,12 @@ public class JsonHelper {
 	    return map;
 	}
 
+	/**
+	 * convert JSON array to List
+	 * 
+	 * @param JSON array that needs to be converted into a List
+	 * @return list created from the input JSON array
+	 */
 	public static List<Object> toList(JSONArray array) throws JSONException {
 	    List<Object> list = new ArrayList<Object>();
 	    for(int i = 0; i < array.length(); i++) {
