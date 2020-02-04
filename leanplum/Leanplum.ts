@@ -25,6 +25,7 @@ class LeanplumSdkModule {
     Function
   >();  
 
+
   valueChangedHandler(event: any) {
     console.log('valueChangedHandler', event);
     for (var key in event) {
@@ -97,7 +98,6 @@ class LeanplumSdkModule {
       LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
       this.variablesReadyHandler,
     );
-
   }
 
   throwUnsupportedPlatform() {
@@ -132,7 +132,6 @@ class LeanplumSdkModule {
     this.nativeModule.parseVariables();
   }
 
-<<<<<<< Upstream, based on origin/develop
   /**
    * Define/Set multiple primitive variables using JSON object, we can use this method if we want to define multiple variables at once
    *

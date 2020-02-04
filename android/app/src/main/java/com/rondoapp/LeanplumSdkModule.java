@@ -1,46 +1,36 @@
 package com.rondoapp;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.json.JSONObject;
+import org.json.JSONException;
+
 import android.location.Location;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.ReadableMapKeySetIterator;
-
-
 import com.facebook.react.bridge.ReadableMap;
+
+import static com.leanplum.Leanplum.getContext;
 import com.leanplum.Leanplum;
 import com.leanplum.LeanplumLocationAccuracyType;
 import com.leanplum.annotations.Parser;
-
-import static com.leanplum.Leanplum.getContext;
 import com.leanplum.Var;
-import android.util.Log;
-import com.facebook.react.common.ReactConstants;
-import com.leanplum.callbacks.VariableCallback;
-import com.leanplum.callbacks.StartCallback;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.bridge.Arguments;
 import com.rondoapp.variables.Type;
 import com.rondoapp.variables.HandlerManager;
 import com.rondoapp.variables.JsonHelper;
-import org.json.JSONObject;
-import java.util.Iterator;
-
+import com.rondoapp.variables.MapHelper;
 
 public class LeanplumSdkModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
     private static final String TAG = LeanplumSdkModule.class.getName();
-    public static List variablesList = new ArrayList();
+    public static List variables = new ArrayList();
 
 
 
@@ -79,49 +69,56 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         Leanplum.setUserAttributes(attributes.toHashMap());
     }
 
+    /**
+     * Define/Set variables using JSON object, we can use this method if we want to define multiple variables at once
+     *
+     * @param json JSON string
+     */
     @ReactMethod
-    public void setVariables(String json) {
+    public void setVariables(String json) throws JSONException {
         try {
              JSONObject jsonObject = new JSONObject(json);
              Map<String, Object> variablesMap = JsonHelper.toMap(jsonObject);
-             Map<String, Object> variablesFlatMap = JsonHelper.toFlatMap(variablesMap);
+             Map<String, Object> variablesFlatMap = MapHelper.toFlatMap(variablesMap);
 
              for (Entry<String, Object> entry : variablesFlatMap.entrySet()) {
                  String key = entry.getKey();
                  Object value = entry.getValue();
                 if (entry.getValue() instanceof String) {
-                    Log.d(ReactConstants.TAG, "IS STRING key:" + key + " value:" + value.toString());
-                    this.setVariable(key, value.toString(), "string");
+                    this.setVariable(key, value.toString(), Type.STRING.label);
                 }  else if (entry.getValue() instanceof Double) { 
-                    Log.d(ReactConstants.TAG, "IS NUMBER key:" + key + " value:" + value.toString());
-                    this.setVariable(key, value.toString(), "number"); 
+                    this.setVariable(key, value.toString(), Type.NUMBER.label); 
                 } else if (entry.getValue() instanceof Boolean) { 
-                    Log.d(ReactConstants.TAG, "IS BOOLEAN key:" + key + " value:" + value.toString());
-                    this.setVariable(key, value.toString(), "boolean");
+                    this.setVariable(key, value.toString(), Type.BOOLEAN.label);
                 } else if(entry.getValue() instanceof List) {
-                    Log.d(ReactConstants.TAG, "IS LIST key:" + key + " value:" + value.toString());
-                    variablesList.add(Var.define(key, (List)value));
+                    variables.add(Var.define(key, (List)value));
                 }
-            }
-            
-        } catch (Exception e) {
-            // TODO check how to throw exception in react method
+            } 
+        } catch (JSONException e) {
             e.printStackTrace();
+            throw new JSONException(e);
         }
     }
 
+    /**
+     * Define/Set variable, we can use this method if we want to define variable
+     *
+     * @param name name of the variable
+     * @param defaultValue default value of the variable
+     * @param type type of the variable String | Number | Boolean
+     */
     @ReactMethod
-    public void setVariable(String variableName, String variableDefaultValue, String type) {
+    public void setVariable(String name, String defaultValue, String type) {
         if (type.equalsIgnoreCase(Type.STRING.label)) {
-            variablesList.add(Var.define(variableName, variableDefaultValue));
-        }
-
-        if (type.equalsIgnoreCase(Type.BOOLEAN.label)) {
-            variablesList.add(Var.define(variableName, Boolean.parseBoolean(variableDefaultValue)));
+            variables.add(Var.define(name, defaultValue));
         }
 
         if (type.equalsIgnoreCase(Type.NUMBER.label)) {
-            variablesList.add(Var.define(variableName, Double.parseDouble(variableDefaultValue)));
+            variables.add(Var.define(name, Double.parseDouble(defaultValue)));
+        }
+
+        if (type.equalsIgnoreCase(Type.BOOLEAN.label)) {
+            variables.add(Var.define(name, Boolean.parseBoolean(defaultValue)));
         }
     }
     
@@ -130,14 +127,20 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         Leanplum.start(getContext());
     }
 
+    /**
+     * add value change handler for specific variable
+     * 
+     * @param name name of the variable on which we will register the handler
+     * @param event name of the event that will be propagated to RN
+     */
     @ReactMethod
-    public void addValueChangedHandler(String variableName, String listenerName) {
-        for (Object varaibleDefinied : variablesList) {
-            if (varaibleDefinied instanceof Var<?>) {
-                Var<?> var = (Var<?>)varaibleDefinied;
-                if (var.name().equals(variableName)){
+    public void addValueChangedHandler(String name, String event) {
+        for (Object varaible : variables) {
+            if (varaible instanceof Var<?>) {
+                Var<?> var = (Var<?>)varaible;
+                if (var.name().equals(name)){
                     HandlerManager handlerManager = new HandlerManager(reactContext);
-                    handlerManager.addValueChangedHandler(var, listenerName);
+                    handlerManager.addValueChangedHandler(var, event);
                 }
             }
         }
@@ -164,9 +167,13 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         Leanplum.disableLocationCollection();
     }
     
+    /**
+     * parse all variables that were defined using setVariable or setVariables methods
+     * 
+     */
     @ReactMethod
     public void parseVariables() {
-        Parser.parseVariables(LeanplumSdkModule.variablesList);
+        Parser.parseVariables(LeanplumSdkModule.variables);
     }
 
     @ReactMethod
