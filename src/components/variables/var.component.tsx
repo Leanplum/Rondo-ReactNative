@@ -11,8 +11,13 @@ type VariableProps = {
 export const Var = ({name, defaultValue}: VariableProps) => {
   return (
     <View style={styles.container}>
-      <Input autoCapitalize="none" value={name} />
-      <Input autoCapitalize="none" value={defaultValue} />
+      {/* <Input autoCapitalize="none" value={name} /> */}
+      <Input
+        autoCapitalize="none"
+        editable={false}
+        label={name}
+        value={defaultValue}
+      />
     </View>
   );
 };

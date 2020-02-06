@@ -90,16 +90,13 @@ export const Variables = () => {
       BOOL_VARIABLE_NAME,
       valueChangedHandlerBool,
     );
-    //SET MAP VARIABLE
+    //SET MAP/LIST VARIABLE
     const myMap = {
       var1: 'var1 val',
       var2: 'var2 val',
     };
 
     const myArr = [1, 2, 3, 4, 5];
-    // var myMap: Map<String, any> = new Map<String, any>();
-    // myMap.set('var1', 'var1 val');
-    // myMap.set('var2', 'var2 val');
     Leanplum.setVariable(MAP_VARIABLE_NAME, myMap);
     Leanplum.addValueChangedHandler(MAP_VARIABLE_NAME, valueChangedHandlerMap);
     Leanplum.setVariable(ARR_VARIABLE_NAME, myArr);
