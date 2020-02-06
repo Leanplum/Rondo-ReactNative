@@ -11,6 +11,10 @@ import Leanplum
 
 @objc(LeanplumSdk)
 class LeanplumSdk: NSObject {
+  
+  var variables = [String: LPVar]()
+  let undefinedVariableErrorMessage = "Undefined Variable";
+  let undefinedVariableError = NSError(domain: "Undefined Variable", code: 404)
 
   @objc
   static func requiresMainQueueSetup() -> Bool {
@@ -39,7 +43,9 @@ class LeanplumSdk: NSObject {
   
   @objc
   func setUserAttributes(_ attributes: NSDictionary) -> Void {
-    let attributesDict = attributes as! Dictionary<String,Any>
+    guard let attributesDict = attributes as? Dictionary<String, Any> else {
+      return
+    }
     Leanplum.setUserAttributes(attributesDict)
   }
   
@@ -50,8 +56,10 @@ class LeanplumSdk: NSObject {
 
   @objc
   func track(_ event: String, params: NSDictionary) -> Void {
-    let withParameters = params as! Dictionary<String,Any>
-    Leanplum.track(event, withParameters: withParameters)
+    guard let parametersDict = params as? Dictionary<String, Any> else {
+      return
+    }
+    Leanplum.track(event, withParameters: parametersDict)
   }
   
   @objc
@@ -71,4 +79,32 @@ class LeanplumSdk: NSObject {
     Leanplum.setDeviceLocationWithLatitude(latitude, longitude: longitude, type: accuracyType)
   }
   
+  @objc
+   func forceContentUpdate() -> Void {
+     Leanplum.forceContentUpdate()
+   }
+  
+  @objc
+  func setVariables(_ variables: NSDictionary) -> Void {
+    guard let variablesDict = variables as? Dictionary<String, Any> else {
+      return
+    }
+    let variablesFlatDict = DictionaryHelper.toFlatDict(dictionary: variablesDict)
+    for (key, value) in variablesFlatDict {
+      if let lpVar = LeanplumTypeUtils.createVar(key: key, value: value) {
+         self.variables[key] = lpVar;
+      }
+    }
+  }
+  
+  @objc
+  func getVariable(_ variableName: String, resolver resolve: RCTPromiseResolveBlock,
+  rejecter reject: RCTPromiseRejectBlock
+) {
+    if let lpVar = self.variables[variableName] {
+      resolve(LeanplumTypeUtils.getValueCasted(lpVar: lpVar))
+    } else {
+      reject(self.undefinedVariableErrorMessage, "\(undefinedVariableErrorMessage): '\(variableName)'", self.undefinedVariableError)
+    }
+  }
 }

@@ -35,6 +35,8 @@
 		BBF9DCC5F3604593991E36A7 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07539174A53B44788BF349CD /* MaterialCommunityIcons.ttf */; };
 		C66CE83423C74BFF00779201 /* LeanplumSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66CE83323C74BFF00779201 /* LeanplumSdk.swift */; };
 		C66CE83623C74CBE00779201 /* LeanplumSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = C66CE83523C74CBE00779201 /* LeanplumSdk.m */; };
+		C67F616A23EAF9EA004D54B5 /* DictionaryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67F616923EAF9EA004D54B5 /* DictionaryHelper.swift */; };
+		C6808C1123EC3F4600C42CEC /* LeanplumTypeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6808C1023EC3F4600C42CEC /* LeanplumTypeUtils.swift */; };
 		DC61BD2FE4DF4F3AB182601A /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAD66BD15E1143378A066BA8 /* Feather.ttf */; };
 		E11A55EA4DD94FBD84C32269 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 206424B62F4145C1804BBA82 /* FontAwesome5_Brands.ttf */; };
 		E8CA8375BA9E45C498A7F565 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB868F12B9C84592BEA16D6C /* Entypo.ttf */; };
@@ -99,6 +101,8 @@
 		C66CE83223C74BFF00779201 /* RondoApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RondoApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		C66CE83323C74BFF00779201 /* LeanplumSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeanplumSdk.swift; sourceTree = "<group>"; };
 		C66CE83523C74CBE00779201 /* LeanplumSdk.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeanplumSdk.m; sourceTree = "<group>"; };
+		C67F616923EAF9EA004D54B5 /* DictionaryHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DictionaryHelper.swift; path = ../../../../Downloads/DictionaryHelper.swift; sourceTree = "<group>"; };
+		C6808C1023EC3F4600C42CEC /* LeanplumTypeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeanplumTypeUtils.swift; sourceTree = "<group>"; };
 		D3BAA01055CD4CB98CC57976 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		E7799854ED6A81AAA6CBC846 /* Pods-RondoApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RondoApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-RondoApp-tvOSTests/Pods-RondoApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -168,12 +172,14 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				C67F616923EAF9EA004D54B5 /* DictionaryHelper.swift */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				C66CE83323C74BFF00779201 /* LeanplumSdk.swift */,
 				C66CE83223C74BFF00779201 /* RondoApp-Bridging-Header.h */,
 				C66CE83523C74CBE00779201 /* LeanplumSdk.m */,
+				C6808C1023EC3F4600C42CEC /* LeanplumTypeUtils.swift */,
 			);
 			name = RondoApp;
 			sourceTree = "<group>";
@@ -696,9 +702,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C66CE83623C74CBE00779201 /* LeanplumSdk.m in Sources */,
+				C6808C1123EC3F4600C42CEC /* LeanplumTypeUtils.swift in Sources */,
 				C66CE83423C74BFF00779201 /* LeanplumSdk.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				C67F616A23EAF9EA004D54B5 /* DictionaryHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

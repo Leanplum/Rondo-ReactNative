@@ -2,6 +2,8 @@ import {NativeModules, NativeModulesStatic, Platform} from 'react-native';
 import {LocationAccuracyType} from './location-accuracy-type';
 import {DeviceEventEmitter} from 'react-native';
 
+type LeanplumVariable = String | Boolean | Number;
+
 class LeanplumSdkModule {
   private nativeModule: NativeModulesStatic = {};
   PURCHASE_EVENT_NAME: string = 'Purchase';
@@ -9,7 +11,7 @@ class LeanplumSdkModule {
   private static variableValue: Map<
     String,
     String | Boolean | Number
-  > = new Map<String, String | Boolean | Number>();
+  > = new Map<String, LeanplumVariable>();
   private static variableCallbackFunction: Map<String, Function> = new Map<
     String,
     Function
@@ -74,7 +76,7 @@ class LeanplumSdkModule {
    * @param object object with multiple variables
    */
   setVariables(variablesObject: object) {
-    this.nativeModule.setVariables(JSON.stringify(variablesObject));
+    this.nativeModule.setVariables(variablesObject);
   }
 
   /**
@@ -83,13 +85,9 @@ class LeanplumSdkModule {
    * @param name name of the variable
    * @param defaultValue default value of the variable
    */
-  setVariable(name: String, defaultValue: String | Number | Boolean) {
+  setVariable(name: String, defaultValue: LeanplumVariable) {
     LeanplumSdkModule.variableValue.set(name, defaultValue);
-    this.nativeModule.setVariable(
-      name,
-      defaultValue.toString(),
-      typeof defaultValue,
-    );
+    this.nativeModule.setVariable(name, defaultValue.toString(), defaultValue);
   }
 
   /**
@@ -97,13 +95,10 @@ class LeanplumSdkModule {
    * we need to invoke forceContentUpdate() before invoking getVariable
    *
    * @param name name of the variable
-   * @param defaultValue default value of the variable
+   * @returns a Promise with variable value
    */
-  getVariable(variableName: String) {
-    if (LeanplumSdkModule.variableValue.has(variableName))
-      return LeanplumSdkModule.variableValue.get(variableName);
-
-    return '';
+  async getVariable(variableName: String): Promise<LeanplumVariable> {
+    return await this.nativeModule.getVariable(variableName);
   }
 
   addValueChangedHandler(variableName: String, handler?: Function) {
