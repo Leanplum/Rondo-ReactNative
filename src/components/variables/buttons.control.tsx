@@ -25,7 +25,7 @@ export const Buttons = () => {
 
   return (
     <View style={styles.container}>
-      <Button
+      {/* <Button
         title="SET COMPLEX VARIABLE - MAP"
         buttonStyle={styles.button}
         onPress={() => {
@@ -52,7 +52,7 @@ export const Buttons = () => {
         onPress={() => {
           Leanplum.parseVariables();
         }}
-      />
+      /> */}
       <Button
         title="CALL LEANPLUM - START"
         buttonStyle={styles.button}
