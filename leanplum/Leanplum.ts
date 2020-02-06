@@ -6,24 +6,68 @@ class LeanplumSdkModule {
   private nativeModule: NativeModulesStatic = {};
   PURCHASE_EVENT_NAME: string = 'Purchase';
   private static readonly VALUE_CHANGE_HANDLER: string = 'valueChangedHandler';
+  private static readonly START_RESPONSE_HANDLER: string =
+    'startResponseHandler';
+  private static readonly ALL_VARIABLES_READY_HANDLER: string =
+    'variablesReadyHandler';
+
   private static variableValue: Map<
     String,
-    String | Boolean | Number
-  > = new Map<String, String | Boolean | Number>();
+    String | Boolean | Number | object
+  > = new Map<String, String | Boolean | Number | object>();
   private static variableCallbackFunction: Map<String, Function> = new Map<
     String,
     Function
   >();
 
+  private static callbackFunction: Map<String, Function> = new Map<
+    String,
+    Function
+  >();
+
   valueChangedHandler(event: any) {
+    console.log('valueChangedHandler: ', event);
     for (var key in event) {
       if (event.hasOwnProperty(key)) {
-        LeanplumSdkModule.variableValue.set(key, event[key]);
+        try {
+          LeanplumSdkModule.variableValue.set(key, JSON.parse(event[key]));
+        } catch (e) {
+          LeanplumSdkModule.variableValue.set(key, event[key]);
+        }
+
         if (LeanplumSdkModule.variableCallbackFunction.has(key)) {
           const func = LeanplumSdkModule.variableCallbackFunction.get(key);
           if (func != undefined) func.call(func);
         }
       }
+    }
+  }
+
+  startResponseHandler(event: any) {
+    console.log('startResponseHandler', event);
+    if (
+      LeanplumSdkModule.callbackFunction.has(
+        LeanplumSdkModule.START_RESPONSE_HANDLER,
+      )
+    ) {
+      const func = LeanplumSdkModule.callbackFunction.get(
+        LeanplumSdkModule.START_RESPONSE_HANDLER,
+      );
+      if (func != undefined) func.call(func, event['b']);
+    }
+  }
+
+  variablesReadyHandler() {
+    console.log('variablesReadyHandler');
+    if (
+      LeanplumSdkModule.callbackFunction.has(
+        LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
+      )
+    ) {
+      const func = LeanplumSdkModule.callbackFunction.get(
+        LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
+      );
+      if (func != undefined) func.call(func);
     }
   }
 
@@ -37,6 +81,14 @@ class LeanplumSdkModule {
     DeviceEventEmitter.addListener(
       LeanplumSdkModule.VALUE_CHANGE_HANDLER,
       this.valueChangedHandler,
+    );
+    DeviceEventEmitter.addListener(
+      LeanplumSdkModule.START_RESPONSE_HANDLER,
+      this.startResponseHandler,
+    );
+    DeviceEventEmitter.addListener(
+      LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
+      this.variablesReadyHandler,
     );
   }
 
@@ -69,27 +121,56 @@ class LeanplumSdkModule {
   }
 
   /**
-   * Define/Set variables using JSON object, we can use this method if we want to define multiple variables at once
+   * Define/Set multiple primitive variables using JSON object, we can use this method if we want to define multiple variables at once
    *
    * @param object object with multiple variables
    */
   setVariables(variablesObject: object) {
-    this.nativeModule.setVariables(JSON.stringify(variablesObject));
+    this.nativeModule.setVariables(variablesObject);
   }
 
   /**
-   * Define/Set variable, we can use this method if we want to define variable
+   * Define/Set asset, we can use this method if we want to define asset
+   *
+   * @param name name of the variable
+   * @param defaultValue default value of the variable
+   * @param type type of the variable String | Number | Boolean
+   */
+  // setAsset(name: String, defaultValue: String) {
+  //   LeanplumSdkModule.variableValue.set(name, defaultValue);
+  //   this.nativeModule.setAsset(name, defaultValue);
+  // }
+
+  /**
+   * Define/Set variable, you can use this method if you want to define variable
    *
    * @param name name of the variable
    * @param defaultValue default value of the variable
    */
-  setVariable(name: String, defaultValue: String | Number | Boolean) {
+  setVariable(
+    name: String,
+    defaultValue: String | Number | Boolean | object | any[],
+  ) {
     LeanplumSdkModule.variableValue.set(name, defaultValue);
-    this.nativeModule.setVariable(
-      name,
-      defaultValue.toString(),
-      typeof defaultValue,
-    );
+    if (
+      typeof defaultValue == 'string' ||
+      typeof defaultValue == 'number' ||
+      typeof defaultValue == 'boolean'
+    ) {
+      this.nativeModule.setVariable(
+        name,
+        defaultValue.toString(),
+        typeof defaultValue,
+      );
+    } else if (typeof defaultValue == 'object') {
+      if (Array.isArray(defaultValue)) {
+        console.log('SETTING ARRAY VARIABLE', defaultValue);
+        this.nativeModule.setListVariable(name, defaultValue);
+      } else {
+        console.log('SETTING MAP VARIABLE', defaultValue.toString());
+        this.nativeModule.setMapVariable(name, defaultValue);
+      }
+    }
   }
 
   /**
@@ -106,13 +187,54 @@ class LeanplumSdkModule {
     return '';
   }
 
-  addValueChangedHandler(variableName: String, handler?: Function) {
+  /**
+   * add value change handler for specific variable
+   *
+   * @param name name of the variable on which we will register the handler
+   * @param handler function that is going to be invoked when value is changed
+   */
+  addValueChangedHandler(name: String, handler?: Function) {
     if (handler != undefined)
-      LeanplumSdkModule.variableCallbackFunction.set(variableName, handler);
+      LeanplumSdkModule.variableCallbackFunction.set(name, handler);
+    console.log('addValueChangedHandler: ', name);
 
     this.nativeModule.addValueChangedHandler(
-      variableName,
+      name,
       LeanplumSdkModule.VALUE_CHANGE_HANDLER,
+    );
+  }
+
+  /**
+   * add callback when start finishes
+   *
+   * @param handler callback that is going to be invoked when start finishes
+   */
+  addStartResponseHandler(handler: Function) {
+    console.log('addStartResponseHandler');
+    LeanplumSdkModule.callbackFunction.set(
+      LeanplumSdkModule.START_RESPONSE_HANDLER,
+      handler,
+    );
+
+    this.nativeModule.addStartResponseHandler(
+      LeanplumSdkModule.START_RESPONSE_HANDLER,
+    );
+  }
+
+  /**
+   * add callback when all variables are ready
+   *
+   * @param handler callback that is going to be invoked when all variables are ready
+   */
+  addVariablesChangedHandler(handler: Function) {
+    console.log('addVariablesChangedHandler');
+    LeanplumSdkModule.callbackFunction.set(
+      LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
+      handler,
+    );
+
+    this.nativeModule.addVariablesChangedHandler(
+      LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
     );
   }
 

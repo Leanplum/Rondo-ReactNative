@@ -2,20 +2,30 @@ import React, {useState} from 'react';
 import {Alert, View, StyleSheet} from 'react-native';
 import {Text, Input, Button} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
-import {DeviceEventEmitter} from 'react-native';
 
 const VARIABLE_NAME: string = 'numVar';
 
-function valueChangedHandlerNumber(event: any) {
-  console.log(
-    'NUMBER VARIABLE VALUE IS: ',
-    Leanplum.getVariable(VARIABLE_NAME),
-  );
-}
+// function valueChangedHandlerNumber(event: any) {
+//   console.log(
+//     'NUMBER VARIABLE VALUE IS: ',
+//     Leanplum.getVariable(VARIABLE_NAME),
+//   );
+// }
 
 export const Varnumber = () => {
   const [variableName, setVariableName] = useState(VARIABLE_NAME);
   const [variableDefaultValue, setVariableDefaultValue] = useState('15.0');
+
+  // const valueChangedHandlerNumber = () => {
+  //   const numVariable = Leanplum.getVariable(VARIABLE_NAME);
+  //   console.log('NUMBER VARIABLE VALUE IS: ', numVariable);
+  //   if (numVariable != undefined) {
+  //     setVariableDefaultValue(numVariable.toString());
+  //   }
+  // };
+
+  // Leanplum.setVariable(variableName, variableDefaultValue);
+  // Leanplum.addValueChangedHandler(variableName, valueChangedHandlerNumber);
 
   return (
     <View style={styles.container}>
@@ -32,7 +42,7 @@ export const Varnumber = () => {
         value={variableDefaultValue}
         onChangeText={text => setVariableDefaultValue(text)}
       />
-      <Button
+      {/* <Button
         title="SET NUMBER VARIABLE"
         buttonStyle={styles.button}
         onPress={() => {
@@ -55,7 +65,7 @@ export const Varnumber = () => {
         onPress={() => {
           Alert.alert(Leanplum.getVariable(variableName)?.toString());
         }}
-      />
+      /> */}
     </View>
   );
 };

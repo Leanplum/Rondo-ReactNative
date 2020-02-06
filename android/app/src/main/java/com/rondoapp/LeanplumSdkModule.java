@@ -14,6 +14,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableArray;
 
 import static com.leanplum.Leanplum.getContext;
 import com.leanplum.Leanplum;
@@ -22,9 +23,12 @@ import com.leanplum.annotations.Parser;
 import com.leanplum.Var;
 
 import com.rondoapp.variables.Type;
-import com.rondoapp.variables.HandlerManager;
-import com.rondoapp.variables.JsonHelper;
+import com.rondoapp.variables.CallBackManager;
 import com.rondoapp.variables.MapHelper;
+
+////////////////////
+import android.util.Log;
+import com.facebook.react.common.ReactConstants;
 
 public class LeanplumSdkModule extends ReactContextBaseJavaModule {
 
@@ -72,33 +76,37 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     /**
      * Define/Set variables using JSON object, we can use this method if we want to define multiple variables at once
      *
-     * @param json JSON string
+     * @param object RN object
      */
     @ReactMethod
-    public void setVariables(String json) throws JSONException {
-        try {
-             JSONObject jsonObject = new JSONObject(json);
-             Map<String, Object> variablesMap = JsonHelper.toMap(jsonObject);
-             Map<String, Object> variablesFlatMap = MapHelper.toFlatMap(variablesMap);
-
-             for (Entry<String, Object> entry : variablesFlatMap.entrySet()) {
-                 String key = entry.getKey();
-                 Object value = entry.getValue();
-                if (entry.getValue() instanceof String) {
-                    this.setVariable(key, value.toString(), Type.STRING.label);
-                }  else if (entry.getValue() instanceof Double) { 
-                    this.setVariable(key, value.toString(), Type.NUMBER.label); 
-                } else if (entry.getValue() instanceof Boolean) { 
-                    this.setVariable(key, value.toString(), Type.BOOLEAN.label);
-                } else if(entry.getValue() instanceof List) {
-                    variables.add(Var.define(key, (List)value));
-                }
-            } 
-        } catch (JSONException e) {
-            e.printStackTrace();
-            throw new JSONException(e);
+    public void setVariables(ReadableMap object) throws JSONException {
+        Map<String, Object> variablesFlatMap = MapHelper.toFlatMap(object.toHashMap());
+        for (Entry<String, Object> entry : variablesFlatMap.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            if (entry.getValue() instanceof String) {
+                this.setVariable(key, value.toString(), Type.STRING.label);
+            }  else if (entry.getValue() instanceof Double || entry.getValue() instanceof Integer || entry.getValue() instanceof Float) { 
+                this.setVariable(key, value.toString(), Type.NUMBER.label); 
+            } else if (entry.getValue() instanceof Boolean) {
+                this.setVariable(key, value.toString(), Type.BOOLEAN.label);
+            } else if(entry.getValue() instanceof List) {
+                variables.add(Var.define(key, (List)value));
+            }
         }
     }
+
+    // TODO handle assets in RN
+    /**
+     * Define/Set asset, we can use this method if we want to define asset
+     *
+     * @param name name of the variable
+     * @param defaultValue default value of the variable
+     */
+    // @ReactMethod
+    // public void setAsset(String name, String defaultValue) {
+    //     variables.add(Var.defineAsset(name, defaultValue));
+    // }
 
     /**
      * Define/Set variable, we can use this method if we want to define variable
@@ -121,6 +129,30 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
             variables.add(Var.define(name, Boolean.parseBoolean(defaultValue)));
         }
     }
+
+    /**
+     * Define/Set variable, we can use this method if we want to define map variable
+     *
+     * @param name name of the variable
+     * @param defaultValue default value of the variable
+     */
+    @ReactMethod
+    public void setMapVariable(String name, ReadableMap defaultValue) {
+        Log.d(ReactConstants.TAG, "add map variable" + defaultValue.toHashMap().toString());
+        variables.add(Var.define(name, defaultValue.toHashMap()));
+    }
+
+    /**
+     * Define/Set variable, we can use this method if we want to define list variable
+     *
+     * @param name name of the variable
+     * @param defaultValue default value of the variable
+     */
+    @ReactMethod
+    public void setListVariable(String name, ReadableArray defaultValue) {
+        Log.d(ReactConstants.TAG, "add list variable" + defaultValue.toArrayList().toString());
+        variables.add(Var.define(name, defaultValue.toArrayList()));
+    }
     
     @ReactMethod
     public void start() {
@@ -128,7 +160,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     }
 
     /**
-     * add value change handler for specific variable
+     * add value change callback for specific variable
      * 
      * @param name name of the variable on which we will register the handler
      * @param event name of the event that will be propagated to RN
@@ -139,12 +171,35 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
             if (varaible instanceof Var<?>) {
                 Var<?> var = (Var<?>)varaible;
                 if (var.name().equals(name)){
-                    HandlerManager handlerManager = new HandlerManager(reactContext);
-                    handlerManager.addValueChangedHandler(var, event);
+                    CallBackManager callBackManager = new CallBackManager(reactContext);
+                    callBackManager.addValueChangedHandler(var, event);
                 }
             }
         }
     }
+
+    /**
+     * add callback when start finishes
+     * 
+     * @param event name of the event that will be propagated to RN
+     */
+    @ReactMethod
+    public void addStartResponseHandler(String event) {
+        CallBackManager callBackManager = new CallBackManager(reactContext);
+        callBackManager.addStartResponseHandler(event);
+    }
+
+    /**
+     * add callback when all variables are ready
+     * 
+     * @param event name of the event that will be propagated to RN
+     */
+    @ReactMethod
+    public void addVariablesChangedHandler(String event) {
+        CallBackManager callBackManager = new CallBackManager(reactContext);
+        callBackManager.addVariablesChangedHandler(event);
+    }
+    
 
     @ReactMethod
     public void forceContentUpdate() {
