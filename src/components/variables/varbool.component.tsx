@@ -4,6 +4,7 @@ import {Text, Input, Button} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
 
 const VARIABLE_NAME: string = 'boolVar';
+let isVariableSet = false;
 
 function valueChangedHandlerBoolean(event: any) {
   console.log(
@@ -15,6 +16,19 @@ function valueChangedHandlerBoolean(event: any) {
 export const Varbool = () => {
   const [variableName, setVariableName] = useState(VARIABLE_NAME);
   const [variableDefaultValue, setVariableDefaultValue] = useState('true');
+
+  // const valueChangedHandlerBoolean = () => {
+  //   console.log('BEFORE Leanplum.getVariable(VARIABLE_NAME)');
+  //   const val = Leanplum.getVariable(VARIABLE_NAME);
+  //   console.log('value is:' + val);
+  //   //setVariableDefaultValue(Leanplum.getVariable(VARIABLE_NAME)?.toString());
+  // };
+
+  // if (!isVariableSet) {
+  //   Leanplum.setVariable(variableName, variableDefaultValue);
+  //   Leanplum.addValueChangedHandler(variableName, valueChangedHandlerBoolean);
+  //   isVariableSet = true;
+  // }
 
   return (
     <View style={styles.container}>

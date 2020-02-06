@@ -10,7 +10,7 @@ class LeanplumSdkModule {
     'startResponseHandler';
   private static readonly ALL_VARIABLES_READY_HANDLER: string =
     'variablesReadyHandler';
-    
+
   private static variableValue: Map<
     String,
     String | Boolean | Number | object
@@ -78,7 +78,7 @@ class LeanplumSdkModule {
       if (func != undefined) func.call(func);
     }
   }
-  
+
   constructor(nativeModule: NativeModulesStatic) {
     if (Platform.OS === 'android' || Platform.OS === 'ios') {
       this.nativeModule = nativeModule;
@@ -141,7 +141,20 @@ class LeanplumSdkModule {
     this.nativeModule.setVariables(variablesObject);
   }
 
- /**
+
+  /**
+   * Define/Set asset, we can use this method if we want to define asset
+   *
+   * @param name name of the variable
+   * @param defaultValue default value of the variable
+   * @param type type of the variable String | Number | Boolean
+   */
+  // setAsset(name: String, defaultValue: String) {
+  //   LeanplumSdkModule.variableValue.set(name, defaultValue);
+  //   this.nativeModule.setAsset(name, defaultValue);
+  // }
+
+  /**
    * Define/Set variable, you can use this method if you want to define variable
    *
    * @param name name of the variable

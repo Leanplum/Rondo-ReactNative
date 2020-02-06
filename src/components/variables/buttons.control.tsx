@@ -3,6 +3,14 @@ import {View, StyleSheet} from 'react-native';
 import {Button} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
 
+function startResponseHandler(event: any) {
+  console.log('BOOLEAN VARIABLE VALUE IS: ', event);
+}
+
+function variablesChangedHandler() {
+  console.log('VARIABLES CHANGED HANDLER');
+}
+
 export const Buttons = () => {
   const [variableName, setVariableName] = useState();
   const [variableDefaultValue, setVariableDefaultValue] = useState();
@@ -15,8 +23,6 @@ export const Buttons = () => {
     testArr: [1, 2, 3, 4, 5],
   };
 
-  const myList = [1, 2, 3, 5];
-
   return (
     <View style={styles.container}>
       <Button
@@ -24,6 +30,20 @@ export const Buttons = () => {
         buttonStyle={styles.button}
         onPress={() => {
           Leanplum.setVariables(myVars);
+        }}
+      />
+      <Button
+        title="ADD START RESPONSE HANDLER"
+        buttonStyle={styles.button}
+        onPress={() => {
+          Leanplum.addStartResponseHandler(startResponseHandler);
+        }}
+      />
+      <Button
+        title="ADD ALL VARIABLES HANDLER"
+        buttonStyle={styles.button}
+        onPress={() => {
+          Leanplum.addVariablesChangedHandler(variablesChangedHandler);
         }}
       />
       <Button
