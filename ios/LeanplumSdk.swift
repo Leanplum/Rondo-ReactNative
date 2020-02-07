@@ -15,7 +15,7 @@ class LeanplumSdk: NSObject {
   var variables = [String: LPVar]()
   let undefinedVariableErrorMessage = "Undefined Variable";
   let undefinedVariableError = NSError(domain: "Undefined Variable", code: 404)
-
+  
   @objc
   static func requiresMainQueueSetup() -> Bool {
     return true
@@ -53,7 +53,7 @@ class LeanplumSdk: NSObject {
   func start() -> Void {
     Leanplum.start()
   }
-
+  
   @objc
   func track(_ event: String, params: NSDictionary) -> Void {
     guard let parametersDict = params as? Dictionary<String, Any> else {
@@ -80,31 +80,39 @@ class LeanplumSdk: NSObject {
   }
   
   @objc
-   func forceContentUpdate() -> Void {
-     Leanplum.forceContentUpdate()
-   }
+  func forceContentUpdate() -> Void {
+    Leanplum.forceContentUpdate()
+  }
   
   @objc
   func setVariables(_ variables: NSDictionary) -> Void {
     guard let variablesDict = variables as? Dictionary<String, Any> else {
       return
     }
-    let variablesFlatDict = DictionaryHelper.toFlatDict(dictionary: variablesDict)
-    for (key, value) in variablesFlatDict {
+    for (key, value) in variablesDict {
       if let lpVar = LeanplumTypeUtils.createVar(key: key, value: value) {
-         self.variables[key] = lpVar;
+        self.variables[key] = lpVar;
       }
     }
   }
   
   @objc
   func getVariable(_ variableName: String, resolver resolve: RCTPromiseResolveBlock,
-  rejecter reject: RCTPromiseRejectBlock
-) {
+                   rejecter reject: RCTPromiseRejectBlock
+  ) {
     if let lpVar = self.variables[variableName] {
-      resolve(LeanplumTypeUtils.getValueCasted(lpVar: lpVar))
+      resolve(lpVar.value)
     } else {
       reject(self.undefinedVariableErrorMessage, "\(undefinedVariableErrorMessage): '\(variableName)'", self.undefinedVariableError)
     }
+  }
+  
+  @objc
+  func getVariables(_ resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
+    var allVariables = [String: Any]()
+    for (key, value) in self.variables {
+      allVariables[key] = value.value
+    }
+    resolve(allVariables)
   }
 }

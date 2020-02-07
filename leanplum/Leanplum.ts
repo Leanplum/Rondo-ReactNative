@@ -101,6 +101,10 @@ class LeanplumSdkModule {
     return await this.nativeModule.getVariable(variableName);
   }
 
+  async getVariables(): Promise<any> {
+    return await this.nativeModule.getVariables();
+  }
+
   addValueChangedHandler(variableName: String, handler?: Function) {
     if (handler != undefined)
       LeanplumSdkModule.variableCallbackFunction.set(variableName, handler);

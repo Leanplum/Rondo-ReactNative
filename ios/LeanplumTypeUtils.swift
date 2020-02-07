@@ -24,29 +24,18 @@ class LeanplumTypeUtils {
     var lpVar: LPVar;
     switch value.self {
     case is Int, is Double, is Float:
-        lpVar = LPVar.define(key, with: value as? Double ?? 0.0)
+      lpVar = LPVar.define(key, with: value as? Double ?? 0.0)
     case is Bool:
-        lpVar = LPVar.define(key, with: value as? Bool ?? false)
+      lpVar = LPVar.define(key, with: value as? Bool ?? false)
     case is String:
-        lpVar = LPVar.define(key, with: value as? String)
+      lpVar = LPVar.define(key, with: value as? String)
     case is Array<Any>:
-        lpVar = LPVar.define(key, with: value as? Array)
+      lpVar = LPVar.define(key, with: value as? Array)
+    case is Dictionary<String, Any>:
+      lpVar = LPVar.define(key, with: value as? Dictionary)
     default:
-        return nil
+      return nil
     }
     return lpVar;
-  }
-  
-  static func getValueCasted(lpVar: LPVar) -> Any {
-    var value: Any;
-    switch lpVar.kind {
-    case LeanplumKinds.INT.rawValue, LeanplumKinds.FLOAT.rawValue:
-        value = lpVar.doubleValue()
-    case LeanplumKinds.BOOLEAN.rawValue:
-        value = lpVar.boolValue()
-      default:
-        value = lpVar.stringValue ?? ""
-    }
-    return value;
   }
 }

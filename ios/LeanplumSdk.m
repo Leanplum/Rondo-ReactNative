@@ -22,5 +22,6 @@
   RCT_EXTERN_METHOD(setDeviceLocation: (double *)latitude longitude:(double *)longitude type:(NSInteger *)type)
   RCT_EXTERN_METHOD(forceContentUpdate)
   RCT_EXTERN_METHOD(setVariables: (NSDictionary *)variables)
-RCT_EXTERN_METHOD(getVariable: (NSString *)variableName resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+ RCT_EXTERN_METHOD(getVariable: (NSString *)variableName resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+ RCT_EXTERN_METHOD(getVariables: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 @end
