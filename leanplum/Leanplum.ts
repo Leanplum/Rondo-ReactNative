@@ -26,7 +26,6 @@ class LeanplumSdkModule {
   >();
 
   valueChangedHandler(event: any) {
-    console.log('valueChangedHandler: ', event);
     for (var key in event) {
       if (event.hasOwnProperty(key)) {
         try {
@@ -44,7 +43,6 @@ class LeanplumSdkModule {
   }
 
   startResponseHandler(event: any) {
-    console.log('startResponseHandler', event);
     if (
       LeanplumSdkModule.callbackFunction.has(
         LeanplumSdkModule.START_RESPONSE_HANDLER,
@@ -58,7 +56,6 @@ class LeanplumSdkModule {
   }
 
   variablesReadyHandler() {
-    console.log('variablesReadyHandler');
     if (
       LeanplumSdkModule.callbackFunction.has(
         LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
@@ -130,18 +127,6 @@ class LeanplumSdkModule {
   }
 
   /**
-   * Define/Set asset, we can use this method if we want to define asset
-   *
-   * @param name name of the variable
-   * @param defaultValue default value of the variable
-   * @param type type of the variable String | Number | Boolean
-   */
-  // setAsset(name: String, defaultValue: String) {
-  //   LeanplumSdkModule.variableValue.set(name, defaultValue);
-  //   this.nativeModule.setAsset(name, defaultValue);
-  // }
-
-  /**
    * Define/Set variable, you can use this method if you want to define variable
    *
    * @param name name of the variable
@@ -164,13 +149,21 @@ class LeanplumSdkModule {
       );
     } else if (typeof defaultValue == 'object') {
       if (Array.isArray(defaultValue)) {
-        console.log('SETTING ARRAY VARIABLE', defaultValue);
         this.nativeModule.setListVariable(name, defaultValue);
       } else {
-        console.log('SETTING MAP VARIABLE', defaultValue.toString());
         this.nativeModule.setMapVariable(name, defaultValue);
       }
     }
+  }
+
+  /**
+   * Define/Set asset, we can use this method if we want to define asset
+   *
+   * @param name name of the variable
+   * @param defaultValue default value of the variable
+   */
+  setAsset(name: String, defaultValue: String) {
+    this.nativeModule.setAsset(name, defaultValue);
   }
 
   /**
@@ -180,9 +173,10 @@ class LeanplumSdkModule {
    * @param name name of the variable
    * @param defaultValue default value of the variable
    */
-  getVariable(variableName: String) {
-    if (LeanplumSdkModule.variableValue.has(variableName))
-      return LeanplumSdkModule.variableValue.get(variableName);
+  getVariable(name: String) {
+    if (LeanplumSdkModule.variableValue.has(name))
+      return LeanplumSdkModule.variableValue.get(name);
+    //return this.nativeModule.getVariable(name);
 
     return '';
   }

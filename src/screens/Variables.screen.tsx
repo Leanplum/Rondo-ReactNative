@@ -1,14 +1,11 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
-import {Varstring, Varbool, Varnumber, Buttons, Variables} from 'components';
+import {SafeAreaView, StyleSheet} from 'react-native';
+import {Variables} from 'components';
 
 export const VariablesScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Variables />
-      {/* <Varstring />
-        <Varbool /> */}
-      {/* <Varnumber /> */}
     </SafeAreaView>
   );
 };

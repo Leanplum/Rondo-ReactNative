@@ -23,6 +23,15 @@ import com.leanplum.callbacks.VariablesChangedCallback;
 import com.leanplum.internal.Constants;
 import com.leanplum.Var;
 
+// HANDLING STREAMS ///////////////////////
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Base64;
+///////////////////////////////////////////
+
 ////////////////////
 import android.util.Log;
 import com.facebook.react.common.ReactConstants;
@@ -54,7 +63,7 @@ public class CallBackManager {
             this.addBooleanValueChangeHandler(var, event);
         } else if  (var.kind().equals(Constants.Kinds.FILE)) {
             //TODO handle assets in RN 
-            //this.addFileValueChangeHandler(var, event);   
+            this.addFileValueChangeHandler(var, event);   
         } else if (var.kind().equals(Constants.Kinds.DICTIONARY)) {
             addMapValueChangeHandler(var, event);
         }  else if (var.kind().equals(Constants.Kinds.ARRAY)) {
@@ -158,16 +167,43 @@ public class CallBackManager {
         });
     }
 
-    // private void addFileValueChangeHandler(Var<?> var, final String event){
-    //     Var<String> variableString = (Var<String>)var;
-    //     variableString.addFileReadyHandler(new VariableCallback<String>() {
-    //         @Override
-    //         public void handle(Var<String> var) {
-    //             im.setImageBitmap(BitmapFactory.decodeStream(mario.stream()))
-    //             WritableMap args = Arguments.createMap();
-    //             args.putString(var.name(), var.value());
-    //             reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(event, args);
-    //         }
-    //     });
-    // }
+    private void addFileValueChangeHandler(Var<?> var, final String event) {
+        Log.d(ReactConstants.TAG, "addFileValueChangeHandler");
+        Var<String> variableString = (Var<String>)var;
+        variableString.addFileReadyHandler(new VariableCallback<String>() {
+            @Override
+            public void handle(Var<String> var) {
+                try {
+                    Log.d(ReactConstants.TAG, "addFileValueChangeHandler-handle");
+                    InputStream finput = variableString.stream();
+                    if (finput == null){
+                        Log.d(ReactConstants.TAG, "VARIABLE STRING STREAM IS NULL");
+                        finput = var.stream();
+                    }
+                    if (finput == null) {
+                        Log.d(ReactConstants.TAG, "VARIABLE STREAM IS NULL");
+                        return;
+                    }
+                    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                    int nRead;
+                    byte[] data = new byte[1024];
+                    while ((nRead = finput.read(data, 0, data.length)) != -1) {
+                        buffer.write(data, 0, nRead);
+                    }
+                    buffer.flush();
+                    finput.close();
+                    byte[] byteArray = buffer.toByteArray();
+                    String imageStr = Base64.getMimeEncoder().encodeToString(byteArray);
+                    Log.d(ReactConstants.TAG, "BASE64" + imageStr);
+                    //System.out.println("imageStr: " + imageStr);
+                    //im.setImageBitmap(BitmapFactory.decodeStream(mario.stream()))
+                    WritableMap args = Arguments.createMap();
+                    args.putString(var.name(), imageStr);
+                    reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(event, args);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 }
