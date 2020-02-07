@@ -10,16 +10,30 @@ import Foundation
 import Leanplum
 
 @objc(LeanplumSdk)
-class LeanplumSdk: NSObject {
+class LeanplumSdk: RCTEventEmitter {
   
   var variables = [String: LPVar]()
-  let undefinedVariableErrorMessage = "Undefined Variable";
+  let undefinedVariableErrorMessage = "Undefined Variable"
   let undefinedVariableError = NSError(domain: "Undefined Variable", code: 404)
+  var onVariableChangedListenerName = "onVariableChanged"
+  var onVariablesChangedListenerName = "onVariablesChanged"
+  var allSupportedEvents: [String] = []
   
   @objc
-  static func requiresMainQueueSetup() -> Bool {
+  override static func requiresMainQueueSetup() -> Bool {
     return true
   }
+  
+  override func supportedEvents() -> [String]! {
+    return self.allSupportedEvents
+  }
+  
+  @objc
+  func setListenersNames(_ onVariableChangedListenerName: String, onVariablesChangedListenerName: String) {
+    self.onVariableChangedListenerName = onVariableChangedListenerName;
+    self.onVariablesChangedListenerName = onVariablesChangedListenerName;
+  }
+
   
   @objc
   func setAppIdForDevelopmentMode(_ appId: String, accessKey: String) -> Void {
@@ -109,10 +123,41 @@ class LeanplumSdk: NSObject {
   
   @objc
   func getVariables(_ resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
+    resolve(self.getVariablesValues())
+  }
+  
+  
+  func getVariablesValues() -> [String: Any] {
     var allVariables = [String: Any]()
     for (key, value) in self.variables {
       allVariables[key] = value.value
     }
-    resolve(allVariables)
+    return allVariables
+  }
+  
+  @objc
+  func onStartResponse(_ callback: @escaping RCTResponseSenderBlock) {
+    Leanplum.onStartResponse { (success:Bool) in
+      callback([success])
+    }
+  }
+  
+  @objc
+  func onVariableChanged(_ variableName: String) {
+     if let lpVar = self.variables[variableName] {
+      let listenerName = "\(self.onVariableChangedListenerName).\(variableName)"
+      self.allSupportedEvents.append(listenerName)
+      lpVar.onValueChanged {
+        self.sendEvent(withName: listenerName, body: [variableName: lpVar.value])
+      }
+    }
+  }
+  
+  @objc
+  func onVariablesChanged() {
+    self.allSupportedEvents.append(self.onVariablesChangedListenerName)
+    Leanplum.onVariablesChanged {
+      self.sendEvent(withName: self.onVariablesChangedListenerName, body: [self.getVariablesValues()])
+    }
   }
 }
