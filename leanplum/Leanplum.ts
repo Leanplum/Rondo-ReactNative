@@ -143,18 +143,6 @@ class LeanplumSdkModule {
 
 
   /**
-   * Define/Set asset, we can use this method if we want to define asset
-   *
-   * @param name name of the variable
-   * @param defaultValue default value of the variable
-   * @param type type of the variable String | Number | Boolean
-   */
-  // setAsset(name: String, defaultValue: String) {
-  //   LeanplumSdkModule.variableValue.set(name, defaultValue);
-  //   this.nativeModule.setAsset(name, defaultValue);
-  // }
-
-  /**
    * Define/Set variable, you can use this method if you want to define variable
    *
    * @param name name of the variable
@@ -184,7 +172,7 @@ class LeanplumSdkModule {
     }
   }
 
-  /**
+    /**
    * Define/Set asset, we can use this method if we want to define asset
    *
    * @param name name of the variable
@@ -196,7 +184,8 @@ class LeanplumSdkModule {
     this.nativeModule.setAsset(name, defaultValue);
   }
 
-  /**
+
+   /**
    * Get value for specific variable, if we want to be sure that the method will return latest variable value
    * we need to invoke forceContentUpdate() before invoking getVariable
    *
@@ -217,6 +206,7 @@ class LeanplumSdkModule {
 
     return '';
   }
+
 
   /**
    * add value change handler for specific variable

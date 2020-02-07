@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.HashMap;
 
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -26,7 +27,7 @@ import com.rondoapp.variables.Type;
 import com.rondoapp.variables.CallBackManager;
 import com.rondoapp.variables.MapHelper;
 
-////////////////////
+////////////////////////////////////////////////
 import android.util.Log;
 import com.facebook.react.common.ReactConstants;
 
@@ -34,7 +35,8 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
     private static final String TAG = LeanplumSdkModule.class.getName();
-    public static List variables = new ArrayList();
+    //public static List variables = new ArrayList();
+    public static Map<String, Object> variables = new HashMap<String, Object>();
 
 
 
@@ -91,7 +93,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
             } else if (entry.getValue() instanceof Boolean) {
                 this.setVariable(key, value.toString(), Type.BOOLEAN.label);
             } else if(entry.getValue() instanceof List) {
-                variables.add(Var.define(key, (List)value));
+                variables.put(key, Var.define(key, (List)value));
             }
         }
     }
@@ -103,10 +105,14 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
      * @param name name of the variable
      * @param defaultValue default value of the variable
      */
-    // @ReactMethod
-    // public void setAsset(String name, String defaultValue) {
-    //     variables.add(Var.defineAsset(name, defaultValue));
-    // }
+    @ReactMethod
+    public void setAsset(String name, String defaultValue) {
+        Log.d(ReactConstants.TAG, "add asset variable:" + name);
+        Var<String> var = Var.defineAsset(name, defaultValue);
+        Log.d(ReactConstants.TAG, "var value:" + var.value());
+        Log.d(ReactConstants.TAG, "var fileValue:" + var.fileValue());
+        variables.put(name, var);
+    }
 
     /**
      * Define/Set variable, we can use this method if we want to define variable
@@ -118,15 +124,15 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setVariable(String name, String defaultValue, String type) {
         if (type.equalsIgnoreCase(Type.STRING.label)) {
-            variables.add(Var.define(name, defaultValue));
+            variables.put(name, Var.define(name, defaultValue));
         }
 
         if (type.equalsIgnoreCase(Type.NUMBER.label)) {
-            variables.add(Var.define(name, Double.parseDouble(defaultValue)));
+            variables.put(name, Var.define(name, Double.parseDouble(defaultValue)));
         }
 
         if (type.equalsIgnoreCase(Type.BOOLEAN.label)) {
-            variables.add(Var.define(name, Boolean.parseBoolean(defaultValue)));
+            variables.put(name, Var.define(name, Boolean.parseBoolean(defaultValue)));
         }
     }
 
@@ -139,7 +145,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setMapVariable(String name, ReadableMap defaultValue) {
         Log.d(ReactConstants.TAG, "add map variable" + defaultValue.toHashMap().toString());
-        variables.add(Var.define(name, defaultValue.toHashMap()));
+        variables.put(name, Var.define(name, defaultValue.toHashMap()));
     }
 
     /**
@@ -151,7 +157,17 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setListVariable(String name, ReadableArray defaultValue) {
         Log.d(ReactConstants.TAG, "add list variable" + defaultValue.toArrayList().toString());
-        variables.add(Var.define(name, defaultValue.toArrayList()));
+        variables.put(name, Var.define(name, defaultValue.toArrayList()));
+    }
+
+    @ReactMethod
+    public Object getVariable(String name) {
+        Log.d(ReactConstants.TAG, "get variable" + name);
+        if (variables.containsKey(name)){
+            Log.d(ReactConstants.TAG, "getting variable" + name);
+            return ((Var<?>)variables.get(name)).value();
+        }
+        return new Object();
     }
     
     @ReactMethod
@@ -167,15 +183,15 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
      */
     @ReactMethod
     public void addValueChangedHandler(String name, String event) {
-        for (Object varaible : variables) {
-            if (varaible instanceof Var<?>) {
-                Var<?> var = (Var<?>)varaible;
+        //for (Object varaible : variables) {
+          //  if (varaible instanceof Var<?>) {
+                Var<?> var = (Var<?>)variables.get(name);
                 if (var.name().equals(name)){
                     CallBackManager callBackManager = new CallBackManager(reactContext);
                     callBackManager.addValueChangedHandler(var, event);
                 }
-            }
-        }
+           // }
+        //}
     }
 
     /**
