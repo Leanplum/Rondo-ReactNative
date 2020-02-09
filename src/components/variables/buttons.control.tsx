@@ -53,13 +53,13 @@ export const Buttons = () => {
           Leanplum.parseVariables();
         }}
       /> */}
-      <Button
+      {/* <Button
         title="CALL LEANPLUM - START"
         buttonStyle={styles.button}
         onPress={() => {
           Leanplum.start();
         }}
-      />
+      /> */}
       <Button
         title="FORCE UPDATE"
         buttonStyle={styles.button}

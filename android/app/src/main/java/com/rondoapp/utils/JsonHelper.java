@@ -1,4 +1,4 @@
-package com.rondoapp.variables;
+package com.rondoapp.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;

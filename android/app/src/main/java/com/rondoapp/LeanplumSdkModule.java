@@ -23,9 +23,9 @@ import com.leanplum.LeanplumLocationAccuracyType;
 import com.leanplum.annotations.Parser;
 import com.leanplum.Var;
 
-import com.rondoapp.variables.Type;
-import com.rondoapp.variables.CallBackManager;
-import com.rondoapp.variables.MapHelper;
+import com.rondoapp.utils.Type;
+import com.rondoapp.utils.CallBackManager;
+import com.rondoapp.utils.MapHelper;
 
 ////////////////////////////////////////////////
 import android.util.Log;

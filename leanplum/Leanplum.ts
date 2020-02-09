@@ -15,6 +15,7 @@ class LeanplumSdkModule {
     String,
     String | Boolean | Number | object
   > = new Map<String, String | Boolean | Number | object>();
+  private static variableAsset = new Map<String, String>();
   private static variableCallbackFunction: Map<String, Function> = new Map<
     String,
     Function
@@ -26,14 +27,24 @@ class LeanplumSdkModule {
   >();
 
   valueChangedHandler(event: any) {
+    console.log('valueChangedHandler', event);
     for (var key in event) {
       if (event.hasOwnProperty(key)) {
-        try {
-          LeanplumSdkModule.variableValue.set(key, JSON.parse(event[key]));
-        } catch (e) {
-          LeanplumSdkModule.variableValue.set(key, event[key]);
+        // console.log('valueChangedHandler-key', key);
+        // console.log(
+        //   'valueChangedHandler-variableAsset',
+        //   LeanplumSdkModule.variableAsset,
+        // );
+        if (LeanplumSdkModule.variableAsset.has(key)) {
+          LeanplumSdkModule.variableAsset.set(key, event[key][key + '-asset']);
+          LeanplumSdkModule.variableValue.set(key, event[key][key + '-value']);
+        } else {
+          try {
+            LeanplumSdkModule.variableValue.set(key, JSON.parse(event[key]));
+          } catch (e) {
+            LeanplumSdkModule.variableValue.set(key, event[key]);
+          }
         }
-
         if (LeanplumSdkModule.variableCallbackFunction.has(key)) {
           const func = LeanplumSdkModule.variableCallbackFunction.get(key);
           if (func != undefined) func.call(func);
@@ -163,6 +174,8 @@ class LeanplumSdkModule {
    * @param defaultValue default value of the variable
    */
   setAsset(name: String, defaultValue: String) {
+    LeanplumSdkModule.variableValue.set(name, defaultValue);
+    LeanplumSdkModule.variableAsset.set(name, '');
     this.nativeModule.setAsset(name, defaultValue);
   }
 
@@ -177,6 +190,13 @@ class LeanplumSdkModule {
     if (LeanplumSdkModule.variableValue.has(name))
       return LeanplumSdkModule.variableValue.get(name);
     //return this.nativeModule.getVariable(name);
+
+    return '';
+  }
+
+  getAsset(name: String) {
+    if (LeanplumSdkModule.variableAsset.has(name))
+      return LeanplumSdkModule.variableAsset.get(name);
 
     return '';
   }
