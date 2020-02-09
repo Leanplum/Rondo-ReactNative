@@ -207,7 +207,6 @@ class LeanplumSdkModule {
     return '';
   }
 
-
   /**
    * add value change handler for specific variable
    *

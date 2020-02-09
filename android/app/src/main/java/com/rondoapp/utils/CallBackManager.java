@@ -1,4 +1,4 @@
-package com.rondoapp.variables;
+package com.rondoapp.utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -184,21 +184,24 @@ public class CallBackManager {
                         Log.d(ReactConstants.TAG, "VARIABLE STREAM IS NULL");
                         return;
                     }
-                    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-                    int nRead;
-                    byte[] data = new byte[1024];
-                    while ((nRead = finput.read(data, 0, data.length)) != -1) {
-                        buffer.write(data, 0, nRead);
-                    }
-                    buffer.flush();
-                    finput.close();
-                    byte[] byteArray = buffer.toByteArray();
-                    String imageStr = Base64.getMimeEncoder().encodeToString(byteArray);
-                    Log.d(ReactConstants.TAG, "BASE64" + imageStr);
-                    //System.out.println("imageStr: " + imageStr);
-                    //im.setImageBitmap(BitmapFactory.decodeStream(mario.stream()))
+                    // ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                    // int nRead;
+                    // byte[] data = new byte[1024];
+                    // while ((nRead = finput.read(data, 0, data.length)) != -1) {
+                    //     buffer.write(data, 0, nRead);
+                    // }
+                    // buffer.flush();
+                    // finput.close();
+                    // byte[] byteArray = buffer.toByteArray();
+                    // String imageStr = Base64.getMimeEncoder().encodeToString(byteArray);
+                    String imageStr = Encoder.toBase64(finput);
+                    //Log.d(ReactConstants.TAG, "BASE64" + imageStr);
+
                     WritableMap args = Arguments.createMap();
-                    args.putString(var.name(), imageStr);
+                    WritableMap assetMap = Arguments.createMap();
+                    assetMap.putString(var.name()+"-asset", imageStr);
+                    assetMap.putString(var.name()+"-value", var.value());
+                    args.putMap(var.name(), assetMap);
                     reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(event, args);
                 } catch (IOException e) {
                     e.printStackTrace();

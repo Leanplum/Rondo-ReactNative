@@ -1,4 +1,4 @@
-package com.rondoapp.variables;
+package com.rondoapp.utils;
 
 public enum Type {
 	STRING("string"), NUMBER("number"), BOOLEAN("boolean");
