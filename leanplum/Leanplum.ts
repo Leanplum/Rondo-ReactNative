@@ -258,6 +258,130 @@ class LeanplumSdkModule {
     );
   }
 
+  /**
+   * Define/Set multiple primitive variables using JSON object, we can use this method if we want to define multiple variables at once
+   *
+   * @param object object with multiple variables
+   */
+  setVariables(variablesObject: object) {
+    this.nativeModule.setVariables(variablesObject);
+  }
+
+  /**
+   * Define/Set variable, you can use this method if you want to define variable
+   *
+   * @param name name of the variable
+   * @param defaultValue default value of the variable
+   */
+  setVariable(
+    name: String,
+    defaultValue: String | Number | Boolean | object | any[],
+  ) {
+    LeanplumSdkModule.variableValue.set(name, defaultValue);
+    if (
+      typeof defaultValue == 'string' ||
+      typeof defaultValue == 'number' ||
+      typeof defaultValue == 'boolean'
+    ) {
+      this.nativeModule.setVariable(
+        name,
+        defaultValue.toString(),
+        typeof defaultValue,
+      );
+    } else if (typeof defaultValue == 'object') {
+      if (Array.isArray(defaultValue)) {
+        this.nativeModule.setListVariable(name, defaultValue);
+      } else {
+        this.nativeModule.setMapVariable(name, defaultValue);
+      }
+    }
+  }
+
+  /**
+   * Define/Set asset, we can use this method if we want to define asset
+   *
+   * @param name name of the variable
+   * @param defaultValue default value of the variable
+   */
+  setAsset(name: String, defaultValue: String) {
+    LeanplumSdkModule.variableValue.set(name, defaultValue);
+    LeanplumSdkModule.variableAsset.set(name, '');
+    this.nativeModule.setAsset(name, defaultValue);
+  }
+
+  /**
+   * Get value for specific variable, if we want to be sure that the method will return latest variable value
+   * we need to invoke forceContentUpdate() before invoking getVariable
+   *
+   * @param name name of the variable
+   * @param defaultValue default value of the variable
+   */
+  getVariable(name: String) {
+    if (LeanplumSdkModule.variableValue.has(name))
+      return LeanplumSdkModule.variableValue.get(name);
+    //return this.nativeModule.getVariable(name);
+
+    return '';
+  }
+
+  getAsset(name: String) {
+    if (LeanplumSdkModule.variableAsset.has(name))
+      return LeanplumSdkModule.variableAsset.get(name);
+
+    return '';
+  }
+
+  /**
+   * add value change handler for specific variable
+   *
+   * @param name name of the variable on which we will register the handler
+   * @param handler function that is going to be invoked when value is changed
+   */
+  addValueChangedHandler(name: String, handler?: Function) {
+    if (handler != undefined)
+      LeanplumSdkModule.variableCallbackFunction.set(name, handler);
+    console.log('addValueChangedHandler: ', name);
+
+    this.nativeModule.addValueChangedHandler(
+      name,
+      LeanplumSdkModule.VALUE_CHANGE_HANDLER,
+    );
+  }
+
+  /**
+   * add callback when start finishes
+   *
+   * @param handler callback that is going to be invoked when start finishes
+   */
+  addStartResponseHandler(handler: Function) {
+    console.log('addStartResponseHandler');
+    LeanplumSdkModule.callbackFunction.set(
+      LeanplumSdkModule.START_RESPONSE_HANDLER,
+      handler,
+    );
+
+    this.nativeModule.addStartResponseHandler(
+      LeanplumSdkModule.START_RESPONSE_HANDLER,
+    );
+  }
+
+  /**
+   * add callback when all variables are ready
+   *
+   * @param handler callback that is going to be invoked when all variables are ready
+   */
+  addVariablesChangedHandler(handler: Function) {
+    console.log('addVariablesChangedHandler');
+    LeanplumSdkModule.callbackFunction.set(
+      LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
+      handler,
+    );
+
+    this.nativeModule.addVariablesChangedHandler(
+      LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
+    );
+  }
+
   start(): void {
     this.nativeModule.start();
   }
