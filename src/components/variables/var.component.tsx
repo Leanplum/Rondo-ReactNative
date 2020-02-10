@@ -4,8 +4,8 @@ import {Text, Input, Button} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
 
 type VariableProps = {
-  name: String;
-  defaultValue: String;
+  name: string;
+  defaultValue: string;
 };
 
 export const Var = ({name, defaultValue}: VariableProps) => {
