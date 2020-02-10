@@ -1,16 +1,20 @@
 package com.rondoapp;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
 
-import org.json.JSONObject;
+
 import org.json.JSONException;
 
 import android.location.Location;
 
+
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -18,17 +22,23 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableArray;
 
 import static com.leanplum.Leanplum.getContext;
+
+
+import com.facebook.react.bridge.WritableMap;
 import com.leanplum.Leanplum;
 import com.leanplum.LeanplumLocationAccuracyType;
 import com.leanplum.annotations.Parser;
 import com.leanplum.Var;
 
+import com.leanplum.internal.Constants;
+import com.rondoapp.utils.ArrayUtil;
+import com.rondoapp.utils.MapUtil;
 import com.rondoapp.utils.Type;
 import com.rondoapp.utils.CallBackManager;
-import com.rondoapp.utils.MapHelper;
 
-////////////////////////////////////////////////
 import android.util.Log;
+
+
 import com.facebook.react.common.ReactConstants;
 
 public class LeanplumSdkModule extends ReactContextBaseJavaModule {
@@ -37,7 +47,6 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     private static final String TAG = LeanplumSdkModule.class.getName();
     //public static List variables = new ArrayList();
     public static Map<String, Object> variables = new HashMap<String, Object>();
-
 
 
     public LeanplumSdkModule(ReactApplicationContext reactContext) {
@@ -82,27 +91,24 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
      */
     @ReactMethod
     public void setVariables(ReadableMap object) throws JSONException {
-        Map<String, Object> variablesFlatMap = MapHelper.toFlatMap(object.toHashMap());
-        for (Entry<String, Object> entry : variablesFlatMap.entrySet()) {
+        for (Entry<String, Object> entry : object.toHashMap().entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
-            if (entry.getValue() instanceof String) {
-                this.setVariable(key, value.toString(), Type.STRING.label);
-            }  else if (entry.getValue() instanceof Double || entry.getValue() instanceof Integer || entry.getValue() instanceof Float) { 
-                this.setVariable(key, value.toString(), Type.NUMBER.label); 
-            } else if (entry.getValue() instanceof Boolean) {
-                this.setVariable(key, value.toString(), Type.BOOLEAN.label);
-            } else if(entry.getValue() instanceof List) {
-                variables.put(key, Var.define(key, (List)value));
-            }
+//            if (value instanceof HashMap) {
+//                variables.put(key, Var.define(key, value, "Map"));
+//            } else {
+//                variables.put(key, Var.define(key, value));
+//            }
+            variables.put(key, Var.define(key, value));
         }
     }
 
     // TODO handle assets in RN
+
     /**
      * Define/Set asset, we can use this method if we want to define asset
      *
-     * @param name name of the variable
+     * @param name         name of the variable
      * @param defaultValue default value of the variable
      */
     @ReactMethod
@@ -117,9 +123,9 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     /**
      * Define/Set variable, we can use this method if we want to define variable
      *
-     * @param name name of the variable
+     * @param name         name of the variable
      * @param defaultValue default value of the variable
-     * @param type type of the variable String | Number | Boolean
+     * @param type         type of the variable String | Number | Boolean
      */
     @ReactMethod
     public void setVariable(String name, String defaultValue, String type) {
@@ -139,7 +145,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     /**
      * Define/Set variable, we can use this method if we want to define map variable
      *
-     * @param name name of the variable
+     * @param name         name of the variable
      * @param defaultValue default value of the variable
      */
     @ReactMethod
@@ -151,7 +157,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     /**
      * Define/Set variable, we can use this method if we want to define list variable
      *
-     * @param name name of the variable
+     * @param name         name of the variable
      * @param defaultValue default value of the variable
      */
     @ReactMethod
@@ -161,15 +167,41 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public Object getVariable(String name) {
-        Log.d(ReactConstants.TAG, "get variable" + name);
-        if (variables.containsKey(name)){
-            Log.d(ReactConstants.TAG, "getting variable" + name);
-            return ((Var<?>)variables.get(name)).value();
+    public void getVariable(String name, Promise promise) {
+        promise.resolve(this.getVariableValue(name));
+    }
+
+    public Object getVariableValue(String name) {
+        if (variables.containsKey(name)) {
+            Var<?> variable = (Var<?>) variables.get(name);
+            Object value;
+            switch (variable.kind()) {
+                case Constants.Kinds.DICTIONARY:
+                    value = MapUtil.toWritableMap((Map<String, Object>) variable.value());
+                    break;
+                case Constants.Kinds.ARRAY:
+                    value = ArrayUtil.toWritableArray((ArrayList) variable.value());
+                    break;
+                default:
+                    value = variable.value();
+            }
+            return value;
         }
+        // TODO raise an error
         return new Object();
     }
-    
+
+    @ReactMethod
+    public void getVariables(Promise promise) {
+        WritableMap writableMap = Arguments.createMap();
+        for (Entry<String, Object> entry : variables.entrySet()) {
+            String key = entry.getKey();
+            Object value = this.getVariableValue(key);
+            writableMap.merge(MapUtil.addValue(key, value));
+        }
+        promise.resolve(writableMap);
+    }
+
     @ReactMethod
     public void start() {
         Leanplum.start(getContext());
@@ -177,26 +209,26 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
 
     /**
      * add value change callback for specific variable
-     * 
-     * @param name name of the variable on which we will register the handler
+     *
+     * @param name  name of the variable on which we will register the handler
      * @param event name of the event that will be propagated to RN
      */
     @ReactMethod
     public void addValueChangedHandler(String name, String event) {
         //for (Object varaible : variables) {
-          //  if (varaible instanceof Var<?>) {
-                Var<?> var = (Var<?>)variables.get(name);
-                if (var.name().equals(name)){
-                    CallBackManager callBackManager = new CallBackManager(reactContext);
-                    callBackManager.addValueChangedHandler(var, event);
-                }
-           // }
+        //  if (varaible instanceof Var<?>) {
+        Var<?> var = (Var<?>) variables.get(name);
+        if (var.name().equals(name)) {
+            CallBackManager callBackManager = new CallBackManager(reactContext);
+            callBackManager.addValueChangedHandler(var, event);
+        }
+        // }
         //}
     }
 
     /**
      * add callback when start finishes
-     * 
+     *
      * @param event name of the event that will be propagated to RN
      */
     @ReactMethod
@@ -207,7 +239,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
 
     /**
      * add callback when all variables are ready
-     * 
+     *
      * @param event name of the event that will be propagated to RN
      */
     @ReactMethod
@@ -215,7 +247,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         CallBackManager callBackManager = new CallBackManager(reactContext);
         callBackManager.addVariablesChangedHandler(event);
     }
-    
+
 
     @ReactMethod
     public void forceContentUpdate() {
@@ -237,10 +269,9 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     public void disableLocationCollection() {
         Leanplum.disableLocationCollection();
     }
-    
+
     /**
      * parse all variables that were defined using setVariable or setVariables methods
-     * 
      */
     @ReactMethod
     public void parseVariables() {

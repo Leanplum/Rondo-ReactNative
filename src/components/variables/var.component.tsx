@@ -5,7 +5,7 @@ import {Leanplum} from 'leanplum';
 
 type VariableProps = {
   name: string;
-  defaultValue: string;
+  defaultValue: any;
 };
 
 export const Var = ({name, defaultValue}: VariableProps) => {
@@ -15,7 +15,11 @@ export const Var = ({name, defaultValue}: VariableProps) => {
         autoCapitalize="none"
         editable={false}
         label={name}
-        value={defaultValue}
+        value={
+          typeof defaultValue === 'string'
+            ? defaultValue
+            : defaultValue.toString()
+        }
       />
     </View>
   );

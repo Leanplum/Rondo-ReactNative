@@ -133,38 +133,8 @@ class LeanplumSdkModule {
    *
    * @param object object with multiple variables
    */
-  setVariables(variablesObject: object) {
+  setVariables(variablesObject: object): void {
     this.nativeModule.setVariables(variablesObject);
-  }
-
-  /**
-   * Define/Set variable, you can use this method if you want to define variable
-   *
-   * @param name name of the variable
-   * @param defaultValue default value of the variable
-   */
-  setVariable(
-    name: String,
-    defaultValue: String | Number | Boolean | object | any[],
-  ) {
-    LeanplumSdkModule.variableValue.set(name, defaultValue);
-    if (
-      typeof defaultValue == 'string' ||
-      typeof defaultValue == 'number' ||
-      typeof defaultValue == 'boolean'
-    ) {
-      this.nativeModule.setVariable(
-        name,
-        defaultValue.toString(),
-        typeof defaultValue,
-      );
-    } else if (typeof defaultValue == 'object') {
-      if (Array.isArray(defaultValue)) {
-        this.nativeModule.setListVariable(name, defaultValue);
-      } else {
-        this.nativeModule.setMapVariable(name, defaultValue);
-      }
-    }
   }
 
   /**
@@ -186,12 +156,19 @@ class LeanplumSdkModule {
    * @param name name of the variable
    * @param defaultValue default value of the variable
    */
-  getVariable(name: String) {
-    if (LeanplumSdkModule.variableValue.has(name))
-      return LeanplumSdkModule.variableValue.get(name);
-    //return this.nativeModule.getVariable(name);
+  getVariable(name: String): Promise<any> {
+    return this.nativeModule.getVariable(name);
+  }
 
-    return '';
+  /**
+   * Get value for specific variable, if we want to be sure that the method will return latest variable value
+   * we need to invoke forceContentUpdate() before invoking getVariable
+   *
+   * @param name name of the variable
+   * @param defaultValue default value of the variable
+   */
+  getVariables(): Promise<any> {
+    return this.nativeModule.getVariables();
   }
 
   getAsset(name: String) {
