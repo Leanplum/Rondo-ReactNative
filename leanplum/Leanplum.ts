@@ -1,21 +1,20 @@
-import {NativeModules, NativeModulesStatic, Platform} from 'react-native';
+import {NativeModules, Platform, NativeEventEmitter} from 'react-native';
 import {LocationAccuracyType} from './location-accuracy-type';
 import {DeviceEventEmitter} from 'react-native';
 
-type LeanplumVariable = String | Boolean | Number;
+export type LeanplumVariableValue = String | Boolean | Number;
 
-class LeanplumSdkModule {
-  private nativeModule: NativeModulesStatic = {};
-  PURCHASE_EVENT_NAME: string = 'Purchase';
+class LeanplumSdkModule extends NativeEventEmitter {
+  private readonly nativeModule: any;
+  private static readonly PURCHASE_EVENT_NAME: string = 'Purchase';
   private static readonly VALUE_CHANGE_HANDLER: string = 'valueChangedHandler';
-  private static variableValue: Map<
-    String,
-    String | Boolean | Number
-  > = new Map<String, LeanplumVariable>();
-  private static variableCallbackFunction: Map<String, Function> = new Map<
-    String,
-    Function
-  >();
+  private static readonly ON_VARIABLE_CHANGE_LISTENER: string =
+    'onVariableChanged';
+  private static readonly ON_VARIABLES_CHANGE_LISTENER: string =
+    'onVariablesChanged';
+
+  private static variableValue = new Map<string, LeanplumVariableValue>();
+  private static variableCallbackFunction = new Map<string, Function>();
 
   valueChangedHandler(event: any) {
     for (var key in event) {
@@ -29,16 +28,26 @@ class LeanplumSdkModule {
     }
   }
 
-  constructor(nativeModule: NativeModulesStatic) {
+  constructor(nativeModule: any) {
+    super(nativeModule);
     if (Platform.OS === 'android' || Platform.OS === 'ios') {
       this.nativeModule = nativeModule;
     } else {
       this.throwUnsupportedPlatform();
     }
 
+    this.setListenersNames();
+
     DeviceEventEmitter.addListener(
       LeanplumSdkModule.VALUE_CHANGE_HANDLER,
       this.valueChangedHandler,
+    );
+  }
+
+  setListenersNames(): void {
+    this.nativeModule.setListenersNames(
+      LeanplumSdkModule.ON_VARIABLE_CHANGE_LISTENER,
+      LeanplumSdkModule.ON_VARIABLES_CHANGE_LISTENER,
     );
   }
 
@@ -85,7 +94,7 @@ class LeanplumSdkModule {
    * @param name name of the variable
    * @param defaultValue default value of the variable
    */
-  setVariable(name: String, defaultValue: LeanplumVariable) {
+  setVariable(name: string, defaultValue: LeanplumVariableValue) {
     LeanplumSdkModule.variableValue.set(name, defaultValue);
     this.nativeModule.setVariable(name, defaultValue.toString(), defaultValue);
   }
@@ -97,7 +106,7 @@ class LeanplumSdkModule {
    * @param name name of the variable
    * @returns a Promise with variable value
    */
-  async getVariable(variableName: String): Promise<LeanplumVariable> {
+  async getVariable(variableName: String): Promise<LeanplumVariableValue> {
     return await this.nativeModule.getVariable(variableName);
   }
 
@@ -105,7 +114,7 @@ class LeanplumSdkModule {
     return await this.nativeModule.getVariables();
   }
 
-  addValueChangedHandler(variableName: String, handler?: Function) {
+  addValueChangedHandler(variableName: string, handler?: Function) {
     if (handler != undefined)
       LeanplumSdkModule.variableCallbackFunction.set(variableName, handler);
 
@@ -131,7 +140,7 @@ class LeanplumSdkModule {
     value: number,
     currencyCode: string,
     purchaseParams: any,
-    purchaseEvent: string = this.PURCHASE_EVENT_NAME,
+    purchaseEvent: string = LeanplumSdkModule.PURCHASE_EVENT_NAME,
   ) {
     this.nativeModule.trackPurchase(
       purchaseEvent,
@@ -151,6 +160,26 @@ class LeanplumSdkModule {
     type: LocationAccuracyType = LocationAccuracyType.CELL,
   ) {
     this.nativeModule.setDeviceLocation(latitude, longitude, type);
+  }
+
+  onStartResponse(callback: (success: boolean) => void) {
+    this.nativeModule.onStartResponse(callback);
+  }
+
+  onVariableChanged(
+    variableName: string,
+    callback: (value: LeanplumVariableValue) => void,
+  ) {
+    this.nativeModule.onVariableChanged(variableName);
+    this.addListener(
+      `${LeanplumSdkModule.ON_VARIABLE_CHANGE_LISTENER}.${variableName}`,
+      callback,
+    );
+  }
+
+  onVariablesChanged(callback: (value: any) => void) {
+    this.nativeModule.onVariablesChanged();
+    this.addListener(LeanplumSdkModule.ON_VARIABLES_CHANGE_LISTENER, callback);
   }
 }
 

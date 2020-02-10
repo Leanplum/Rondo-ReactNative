@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <React/RCTEventEmitter.h>
 
 #import "React/RCTBridgeModule.h"
-@interface RCT_EXTERN_MODULE(LeanplumSdk, NSObject)
+@interface RCT_EXTERN_MODULE(LeanplumSdk, RCTEventEmitter)
+  RCT_EXTERN_METHOD(setListenersNames: (NSString *)onVariableChangedListenerName onVariablesChangedListenerName:(NSString *)onVariablesChangedListenerName)
   RCT_EXTERN_METHOD(setAppIdForDevelopmentMode: (NSString *)appId accessKey:(NSString *)accessKey)
   RCT_EXTERN_METHOD(setAppIdForProductionMode: (NSString *)appId accessKey:(NSString *)accessKey)
   RCT_EXTERN_METHOD(setDeviceId: (NSString *)id)
@@ -22,6 +24,10 @@
   RCT_EXTERN_METHOD(setDeviceLocation: (double *)latitude longitude:(double *)longitude type:(NSInteger *)type)
   RCT_EXTERN_METHOD(forceContentUpdate)
   RCT_EXTERN_METHOD(setVariables: (NSDictionary *)variables)
- RCT_EXTERN_METHOD(getVariable: (NSString *)variableName resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
- RCT_EXTERN_METHOD(getVariables: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+  RCT_EXTERN_METHOD(getVariable: (NSString *)variableName resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+  RCT_EXTERN_METHOD(getVariables: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+  RCT_EXTERN_METHOD(onStartResponse: (RCTResponseSenderBlock)callback)
+  RCT_EXTERN_METHOD(onVariableChanged: (NSString *)variableName)
+  RCT_EXTERN_METHOD(onVariablesChanged)
+
 @end
