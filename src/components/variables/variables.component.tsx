@@ -33,43 +33,8 @@ export const Variables = () => {
     Leanplum.onValueChanged(STRING_VARIABLE_NAME, (value: any) =>
       console.log({value, type: typeof value}),
     );
-    Leanplum.onVariablesChanged((value: any) => console.log({value}));
+    Leanplum.onVariablesChanged((value: any) => console.log(value));
   }, []);
-
-  // valueChangedHandlerString = () => {
-  //   const val = Leanplum.getVariable(STRING_VARIABLE_NAME);
-  //   if (val != undefined) {
-  //     this.setState({stringVarVal: val.toString()});
-  //   }
-  // };
-
-  // valueChangedHandlerNum = () => {
-  //   const val = Leanplum.getVariable(NUM_VARIABLE_NAME);
-  //   if (val != undefined) {
-  //     this.setState({numVarVal: val});
-  //   }
-  // };
-
-  // valueChangedHandlerBool = () => {
-  //   const val = Leanplum.getVariable(BOOL_VARIABLE_NAME);
-  //   if (val != undefined) {
-  //     this.setState({boolVarVal: val});
-  //   }
-  // };
-
-  // valueChangedHandlerMap = () => {
-  //   const val = Leanplum.getVariable(MAP_VARIABLE_NAME);
-  //   if (val != undefined) {
-  //     console.log(MAP_VARIABLE_NAME + ' value is: ' + JSON.stringify(val));
-  //   }
-  // };
-
-  // valueChangedHandlerArr = () => {
-  //   const val = Leanplum.getVariable(ARR_VARIABLE_NAME);
-  //   if (val != undefined) {
-  //     console.log(ARR_VARIABLE_NAME + ' value is: ' + JSON.stringify(val));
-  //   }
-  // };
 
   // valueChangedHandlerAsset = () => {
   //   console.log('valueChangedHandlerAsset-val');
@@ -83,49 +48,12 @@ export const Variables = () => {
   //   }
   // };
 
-  // public componentDidMount() {
-  //   if (!isVariableSet) {
-  //     Leanplum.setVariable(STRING_VARIABLE_NAME, this.state.stringVarVal);
-  //     Leanplum.setVariable(NUM_VARIABLE_NAME, this.state.numVarVal);
-  //     Leanplum.setVariable(BOOL_VARIABLE_NAME, this.state.boolVarVal);
-  //     Leanplum.addValueChangedHandler(
-  //       STRING_VARIABLE_NAME,
-  //       this.valueChangedHandlerString,
-  //     );
-  //     Leanplum.addValueChangedHandler(
-  //       NUM_VARIABLE_NAME,
-  //       this.valueChangedHandlerNum,
-  //     );
-  //     Leanplum.addValueChangedHandler(
-  //       BOOL_VARIABLE_NAME,
-  //       this.valueChangedHandlerBool,
-  //     );
   //     Leanplum.setAsset(ASSET_VARIABLE_NAME, 'Mario.png');
   //     Leanplum.addValueChangedHandler(
   //       ASSET_VARIABLE_NAME,
   //       this.valueChangedHandlerAsset,
   //     );
-  //     //SET MAP/LIST VARIABLE
-  //     // const myMap = {
-  //     //   var1: 'var1 val',
-  //     //   var2: 'var2 val',
-  //     // };
 
-  //     // const myArr = [1, 2, 3, 4, 5];
-  //     // Leanplum.setVariable(MAP_VARIABLE_NAME, myMap);
-  //     // Leanplum.addValueChangedHandler(
-  //     //   MAP_VARIABLE_NAME,
-  //     //   this.valueChangedHandlerMap,
-  //     // );
-  //     // Leanplum.setVariable(ARR_VARIABLE_NAME, myArr);
-  //     // Leanplum.addValueChangedHandler(
-  //     //   ARR_VARIABLE_NAME,
-  //     //   this.valueChangedHandlerArr,
-  //     // );
-  //     ////////////////////
-  //     isVariableSet = true;
-  //   }
-  // }
   return (
     <ScrollView>
       <Var

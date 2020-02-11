@@ -4,7 +4,7 @@ import {Text, Input, Button, ThemeContext} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
 
 export const PurchaseEvent = () => {
-  const [event, setEvent] = useState(Leanplum.PURCHASE_EVENT_NAME);
+  const [event, setEvent] = useState('Purchase');
   const [value, setValue] = useState('1');
   const [currencyCode, setCurrencyCode] = useState('USD');
   const [parameterKey, setParameterKey] = useState('');

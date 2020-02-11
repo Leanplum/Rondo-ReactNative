@@ -59,24 +59,10 @@ export const CreateApp = () => {
         onChangeText={text => setVariableDefaultValue(text)}
       />
       <Button
-        title="SET VARIABLE"
-        buttonStyle={styles.button}
-        onPress={() => {
-          Leanplum.setVariable(variableName, variableDefaultValue);
-        }}
-      />
-      <Button
         title="CALL LEANPLUM - START"
         buttonStyle={styles.button}
         onPress={() => {
           Leanplum.start();
-        }}
-      />
-      <Button
-        title="ADD VALUE CHANGE HANDLER"
-        buttonStyle={styles.button}
-        onPress={() => {
-          Leanplum.addValueChangedHandler(variableName);
         }}
       />
       <Button

@@ -10,12 +10,30 @@ import Foundation
 import Leanplum
 
 @objc(LeanplumSdk)
-class LeanplumSdk: NSObject {
-
+class LeanplumSdk: RCTEventEmitter {
+  
+  var variables = [String: LPVar]()
+  let undefinedVariableErrorMessage = "Undefined Variable"
+  let undefinedVariableError = NSError(domain: "Undefined Variable", code: 404)
+  var onVariableChangedListenerName = "onVariableChanged"
+  var onVariablesChangedListenerName = "onVariablesChanged"
+  var allSupportedEvents: [String] = []
+  
   @objc
-  static func requiresMainQueueSetup() -> Bool {
+  override static func requiresMainQueueSetup() -> Bool {
     return true
   }
+  
+  override func supportedEvents() -> [String]! {
+    return self.allSupportedEvents
+  }
+  
+  @objc
+  func setListenersNames(_ onVariableChangedListenerName: String, onVariablesChangedListenerName: String) {
+    self.onVariableChangedListenerName = onVariableChangedListenerName;
+    self.onVariablesChangedListenerName = onVariablesChangedListenerName;
+  }
+
   
   @objc
   func setAppIdForDevelopmentMode(_ appId: String, accessKey: String) -> Void {
@@ -39,7 +57,9 @@ class LeanplumSdk: NSObject {
   
   @objc
   func setUserAttributes(_ attributes: NSDictionary) -> Void {
-    let attributesDict = attributes as! Dictionary<String,Any>
+    guard let attributesDict = attributes as? Dictionary<String, Any> else {
+      return
+    }
     Leanplum.setUserAttributes(attributesDict)
   }
   
@@ -47,11 +67,13 @@ class LeanplumSdk: NSObject {
   func start() -> Void {
     Leanplum.start()
   }
-
+  
   @objc
   func track(_ event: String, params: NSDictionary) -> Void {
-    let withParameters = params as! Dictionary<String,Any>
-    Leanplum.track(event, withParameters: withParameters)
+    guard let parametersDict = params as? Dictionary<String, Any> else {
+      return
+    }
+    Leanplum.track(event, withParameters: parametersDict)
   }
   
   @objc
@@ -71,4 +93,71 @@ class LeanplumSdk: NSObject {
     Leanplum.setDeviceLocationWithLatitude(latitude, longitude: longitude, type: accuracyType)
   }
   
+  @objc
+  func forceContentUpdate() -> Void {
+    Leanplum.forceContentUpdate()
+  }
+  
+  @objc
+  func setVariables(_ variables: NSDictionary) -> Void {
+    guard let variablesDict = variables as? Dictionary<String, Any> else {
+      return
+    }
+    for (key, value) in variablesDict {
+      if let lpVar = LeanplumTypeUtils.createVar(key: key, value: value) {
+        self.variables[key] = lpVar;
+      }
+    }
+  }
+  
+  @objc
+  func getVariable(_ variableName: String, resolver resolve: RCTPromiseResolveBlock,
+                   rejecter reject: RCTPromiseRejectBlock
+  ) {
+    if let lpVar = self.variables[variableName] {
+      resolve(lpVar.value)
+    } else {
+      reject(self.undefinedVariableErrorMessage, "\(undefinedVariableErrorMessage): '\(variableName)'", self.undefinedVariableError)
+    }
+  }
+  
+  @objc
+  func getVariables(_ resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) {
+    resolve(self.getVariablesValues())
+  }
+  
+  
+  func getVariablesValues() -> [String: Any] {
+    var allVariables = [String: Any]()
+    for (key, value) in self.variables {
+      allVariables[key] = value.value
+    }
+    return allVariables
+  }
+  
+  @objc
+  func onStartResponse(_ callback: @escaping RCTResponseSenderBlock) {
+    Leanplum.onStartResponse { (success:Bool) in
+      callback([success])
+    }
+  }
+  
+  @objc
+  func onValueChanged(_ variableName: String) {
+     if let lpVar = self.variables[variableName] {
+      let listenerName = "\(self.onVariableChangedListenerName).\(variableName)"
+      self.allSupportedEvents.append(listenerName)
+      lpVar.onValueChanged {
+        self.sendEvent(withName: listenerName, body: lpVar.value)
+      }
+    }
+  }
+  
+  @objc
+  func onVariablesChanged() {
+    self.allSupportedEvents.append(self.onVariablesChangedListenerName)
+    Leanplum.onVariablesChanged {
+      self.sendEvent(withName: self.onVariablesChangedListenerName, body: self.getVariablesValues())
+    }
+  }
 }

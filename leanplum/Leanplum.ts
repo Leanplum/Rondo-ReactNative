@@ -1,6 +1,5 @@
 import {NativeModules, Platform, NativeEventEmitter} from 'react-native';
 import {LocationAccuracyType} from './location-accuracy-type';
-import {DeviceEventEmitter} from 'react-native';
 
 export type VariableValue = string | boolean | number | Array<any> | object;
 
@@ -9,26 +8,16 @@ interface AllVariablesValue {
 }
 
 class LeanplumSdkModule extends NativeEventEmitter {
-  private nativeModule: any;
-  PURCHASE_EVENT_NAME: string = 'Purchase';
-  private static readonly VALUE_CHANGE_HANDLER: string = 'valueChangedHandler';
-  private static readonly ALL_VARIABLES_READY_HANDLER: string =
-    'variablesReadyHandler';
+  private readonly nativeModule: any;
+  private static readonly PURCHASE_EVENT_NAME: string = 'Purchase';
+  private static readonly ON_VARIABLE_CHANGE_LISTENER: string =
+    'onVariableChanged';
+  private static readonly ON_VARIABLES_CHANGE_LISTENER: string =
+    'onVariablesChanged';
 
-  private static variableValue: Map<
-    String,
-    String | Boolean | Number | object
-  > = new Map<String, String | Boolean | Number | object>();
-  private static variableAsset = new Map<String, String>();
-  private static variableCallbackFunction: Map<String, Function> = new Map<
-    String,
-    Function
-  >();
-
-  private static callbackFunction: Map<String, Function> = new Map<
-    String,
-    Function
-  >();
+  private static variableValue = new Map<string, VariableValue>();
+  private static variableAsset = new Map<string, string>();
+  private static variableCallbackFunction = new Map<string, Function>();
 
   valueChangedHandler(event: any) {
     for (var key in event) {
@@ -56,19 +45,6 @@ class LeanplumSdkModule extends NativeEventEmitter {
     }
   }
 
-  variablesReadyHandler() {
-    if (
-      LeanplumSdkModule.callbackFunction.has(
-        LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
-      )
-    ) {
-      const func = LeanplumSdkModule.callbackFunction.get(
-        LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
-      );
-      if (func != undefined) func.call(func);
-    }
-  }
-
   constructor(nativeModule: any) {
     super(nativeModule);
     if (Platform.OS === 'android' || Platform.OS === 'ios') {
@@ -82,8 +58,8 @@ class LeanplumSdkModule extends NativeEventEmitter {
 
   setListenersNames(): void {
     this.nativeModule.setListenersNames(
-      LeanplumSdkModule.VALUE_CHANGE_HANDLER,
-      LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
+      LeanplumSdkModule.ON_VARIABLE_CHANGE_LISTENER,
+      LeanplumSdkModule.ON_VARIABLES_CHANGE_LISTENER,
     );
   }
 
@@ -120,7 +96,7 @@ class LeanplumSdkModule extends NativeEventEmitter {
    *
    * @param object object with multiple variables
    */
-  setVariables(variablesObject: object): void {
+  setVariables(variablesObject: AllVariablesValue): void {
     this.nativeModule.setVariables(variablesObject);
   }
 
@@ -130,7 +106,7 @@ class LeanplumSdkModule extends NativeEventEmitter {
    * @param name name of the variable
    * @param defaultValue default value of the variable
    */
-  setAsset(name: String, defaultValue: String) {
+  setAsset(name: string, defaultValue: string): void {
     LeanplumSdkModule.variableValue.set(name, defaultValue);
     LeanplumSdkModule.variableAsset.set(name, '');
     this.nativeModule.setAsset(name, defaultValue);
@@ -141,10 +117,10 @@ class LeanplumSdkModule extends NativeEventEmitter {
    * we need to invoke forceContentUpdate() before invoking getVariable
    *
    * @param name name of the variable
-   * @param defaultValue default value of the variable
+   * @returns a Promise with variable value
    */
-  getVariable(name: String): Promise<VariableValue> {
-    return this.nativeModule.getVariable(name);
+  async getVariable(name: String): Promise<VariableValue> {
+    return await this.nativeModule.getVariable(name);
   }
 
   /**
@@ -154,32 +130,13 @@ class LeanplumSdkModule extends NativeEventEmitter {
    * @param name name of the variable
    * @param defaultValue default value of the variable
    */
-  getVariables(): Promise<AllVariablesValue> {
-    return this.nativeModule.getVariables();
+  async getVariables(): Promise<AllVariablesValue> {
+    return await this.nativeModule.getVariables();
   }
 
-  getAsset(name: String) {
+  getAsset(name: string) {
     if (LeanplumSdkModule.variableAsset.has(name))
       return LeanplumSdkModule.variableAsset.get(name);
-
-    return '';
-  }
-
-  /**
-   * add value change handler for specific variable
-   *
-   * @param name name of the variable on which we will register the handler
-   * @param handler function that is going to be invoked when value is changed
-   */
-  onValueChanged(
-    variableName: string,
-    callback: (value: VariableValue) => void,
-  ) {
-    this.nativeModule.onValueChanged(variableName);
-    this.addListener(
-      `${LeanplumSdkModule.VALUE_CHANGE_HANDLER}.${variableName}`,
-      callback,
-    );
   }
 
   /**
@@ -192,13 +149,30 @@ class LeanplumSdkModule extends NativeEventEmitter {
   }
 
   /**
+   * add value change handler for specific variable
+   *
+   * @param name name of the variable on which we will register the handler
+   * @param handler function that is going to be invoked when value is changed
+   */
+  onValueChanged(
+    variableName: string,
+    callback: (value: VariableValue) => void,
+  ): void {
+    this.nativeModule.onValueChanged(variableName);
+    this.addListener(
+      `${LeanplumSdkModule.ON_VARIABLE_CHANGE_LISTENER}.${variableName}`,
+      callback,
+    );
+  }
+
+  /**
    * add callback when all variables are ready
    *
    * @param handler callback that is going to be invoked when all variables are ready
    */
-  onVariablesChanged(callback: (value: AllVariablesValue) => void) {
+  onVariablesChanged(callback: (value: AllVariablesValue) => void): void {
     this.nativeModule.onVariablesChanged();
-    this.addListener(LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER, callback);
+    this.addListener(LeanplumSdkModule.ON_VARIABLES_CHANGE_LISTENER, callback);
   }
 
   start(): void {
@@ -217,7 +191,7 @@ class LeanplumSdkModule extends NativeEventEmitter {
     value: number,
     currencyCode: string,
     purchaseParams: any,
-    purchaseEvent: string = this.PURCHASE_EVENT_NAME,
+    purchaseEvent: string = LeanplumSdkModule.PURCHASE_EVENT_NAME,
   ) {
     this.nativeModule.trackPurchase(
       purchaseEvent,
