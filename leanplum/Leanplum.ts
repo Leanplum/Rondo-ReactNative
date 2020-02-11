@@ -3,7 +3,7 @@ import {LocationAccuracyType} from './location-accuracy-type';
 
 export type VariableValue = string | boolean | number | Array<any> | object;
 
-interface AllVariablesValue {
+export interface AllVariablesValue {
   [name: string]: VariableValue;
 }
 

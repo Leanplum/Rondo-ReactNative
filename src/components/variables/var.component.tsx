@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
-import {Alert, View, StyleSheet} from 'react-native';
-import {Text, Input, Button} from 'react-native-elements';
-import {Leanplum} from 'leanplum';
+import React from 'react';
+import {View} from 'react-native';
+import {Input} from 'react-native-elements';
 
 type VariableProps = {
   name: string;
@@ -10,7 +9,7 @@ type VariableProps = {
 
 export const Var = ({name, defaultValue}: VariableProps) => {
   return (
-    <View style={styles.container}>
+    <View>
       <Input
         autoCapitalize="none"
         editable={false}
@@ -24,16 +23,3 @@ export const Var = ({name, defaultValue}: VariableProps) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-  },
-  header: {
-    fontSize: 20,
-  },
-  button: {
-    marginTop: 10,
-  },
-});

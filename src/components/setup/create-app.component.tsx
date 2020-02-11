@@ -14,9 +14,6 @@ export const CreateApp = () => {
     'dev_S73p5EOeSmH5U2fmT5sH0DENA16qWSnWisUIJtO33qM',
   );
 
-  const [variableName, setVariableName] = useState();
-  const [variableDefaultValue, setVariableDefaultValue] = useState();
-
   return (
     <View style={styles.container}>
       <Input
@@ -45,18 +42,6 @@ export const CreateApp = () => {
           Leanplum.setAppIdForDevelopmentMode(appId, developmentKey);
           Leanplum.setAppIdForProductionMode(appId, productionKey);
         }}
-      />
-      <Input
-        placeholder="Variable Name"
-        autoCapitalize="none"
-        value={variableName}
-        onChangeText={text => setVariableName(text)}
-      />
-      <Input
-        placeholder="Variable Default Value"
-        autoCapitalize="none"
-        value={variableDefaultValue}
-        onChangeText={text => setVariableDefaultValue(text)}
       />
       <Button
         title="CALL LEANPLUM - START"

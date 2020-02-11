@@ -1,11 +1,13 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import {Variables} from 'components';
 
 export const VariablesScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Variables />
+      <ScrollView>
+        <Variables />
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -13,5 +15,6 @@ export const VariablesScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 10,
   },
 });
