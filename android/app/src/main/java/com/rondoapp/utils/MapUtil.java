@@ -137,7 +137,7 @@ public class MapUtil {
             writableMap.putString(key, (String) value);
         } else if (value instanceof Map) {
             writableMap.putMap(key, MapUtil.toWritableMap((Map<String, Object>) value));
-        } else if (value.getClass() != null && value.getClass().isArray()) {
+        } else if (value.getClass() != null && (value.getClass().isArray() || value instanceof ArrayList)) {
             writableMap.putArray(key, ArrayUtil.toWritableArray((ArrayList) value));
         }
         return writableMap;

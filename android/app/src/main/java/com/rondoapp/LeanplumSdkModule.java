@@ -26,6 +26,7 @@ import static com.leanplum.Leanplum.getContext;
 
 import com.facebook.react.bridge.WritableMap;
 import com.leanplum.Leanplum;
+import com.leanplum.LeanplumInboxMessage;
 import com.leanplum.LeanplumLocationAccuracyType;
 import com.leanplum.annotations.Parser;
 import com.leanplum.Var;
@@ -94,11 +95,6 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         for (Entry<String, Object> entry : object.toHashMap().entrySet()) {
             String key = entry.getKey();
             Object value = entry.getValue();
-//            if (value instanceof HashMap) {
-//                variables.put(key, Var.define(key, value, "Map"));
-//            } else {
-//                variables.put(key, Var.define(key, value));
-//            }
             variables.put(key, Var.define(key, value));
         }
     }
@@ -142,53 +138,24 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         }
     }
 
-    /**
-     * Define/Set variable, we can use this method if we want to define map variable
-     *
-     * @param name         name of the variable
-     * @param defaultValue default value of the variable
-     */
-    @ReactMethod
-    public void setMapVariable(String name, ReadableMap defaultValue) {
-        Log.d(ReactConstants.TAG, "add map variable" + defaultValue.toHashMap().toString());
-        variables.put(name, Var.define(name, defaultValue.toHashMap()));
-    }
-
-    /**
-     * Define/Set variable, we can use this method if we want to define list variable
-     *
-     * @param name         name of the variable
-     * @param defaultValue default value of the variable
-     */
-    @ReactMethod
-    public void setListVariable(String name, ReadableArray defaultValue) {
-        Log.d(ReactConstants.TAG, "add list variable" + defaultValue.toArrayList().toString());
-        variables.put(name, Var.define(name, defaultValue.toArrayList()));
-    }
-
     @ReactMethod
     public void getVariable(String name, Promise promise) {
-        promise.resolve(this.getVariableValue(name));
-    }
-
-    public Object getVariableValue(String name) {
         if (variables.containsKey(name)) {
             Var<?> variable = (Var<?>) variables.get(name);
+            Object variableValue = variable.value();
             Object value;
             switch (variable.kind()) {
                 case Constants.Kinds.DICTIONARY:
-                    value = MapUtil.toWritableMap((Map<String, Object>) variable.value());
+                    value = MapUtil.toWritableMap((Map<String, Object>) variableValue);
                     break;
                 case Constants.Kinds.ARRAY:
-                    value = ArrayUtil.toWritableArray((ArrayList) variable.value());
+                    value = ArrayUtil.toWritableArray((ArrayList) variableValue);
                     break;
                 default:
-                    value = variable.value();
+                    value = variableValue;
             }
-            return value;
+            promise.resolve(value);
         }
-        // TODO raise an error
-        return new Object();
     }
 
     @ReactMethod
@@ -196,8 +163,9 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         WritableMap writableMap = Arguments.createMap();
         for (Entry<String, Object> entry : variables.entrySet()) {
             String key = entry.getKey();
-            Object value = this.getVariableValue(key);
-            writableMap.merge(MapUtil.addValue(key, value));
+            Var<?> value = (Var<?>) entry.getValue();
+            WritableMap variableWritableMap = MapUtil.addValue(key, value.value());
+            writableMap.merge(variableWritableMap);
         }
         promise.resolve(writableMap);
     }
