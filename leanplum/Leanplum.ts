@@ -1,13 +1,17 @@
-import {NativeModules, NativeModulesStatic, Platform} from 'react-native';
+import {NativeModules, Platform, NativeEventEmitter} from 'react-native';
 import {LocationAccuracyType} from './location-accuracy-type';
 import {DeviceEventEmitter} from 'react-native';
 
-class LeanplumSdkModule {
-  private nativeModule: NativeModulesStatic = {};
+export type VariableValue = string | boolean | number | Array<any> | object;
+
+interface AllVariablesValue {
+  [name: string]: VariableValue;
+}
+
+class LeanplumSdkModule extends NativeEventEmitter {
+  private nativeModule: any;
   PURCHASE_EVENT_NAME: string = 'Purchase';
   private static readonly VALUE_CHANGE_HANDLER: string = 'valueChangedHandler';
-  private static readonly START_RESPONSE_HANDLER: string =
-    'startResponseHandler';
   private static readonly ALL_VARIABLES_READY_HANDLER: string =
     'variablesReadyHandler';
 
@@ -27,7 +31,6 @@ class LeanplumSdkModule {
   >();
 
   valueChangedHandler(event: any) {
-    console.log('valueChangedHandler', event);
     for (var key in event) {
       if (event.hasOwnProperty(key)) {
         // console.log('valueChangedHandler-key', key);
@@ -53,19 +56,6 @@ class LeanplumSdkModule {
     }
   }
 
-  startResponseHandler(event: any) {
-    if (
-      LeanplumSdkModule.callbackFunction.has(
-        LeanplumSdkModule.START_RESPONSE_HANDLER,
-      )
-    ) {
-      const func = LeanplumSdkModule.callbackFunction.get(
-        LeanplumSdkModule.START_RESPONSE_HANDLER,
-      );
-      if (func != undefined) func.call(func, event['b']);
-    }
-  }
-
   variablesReadyHandler() {
     if (
       LeanplumSdkModule.callbackFunction.has(
@@ -79,24 +69,21 @@ class LeanplumSdkModule {
     }
   }
 
-  constructor(nativeModule: NativeModulesStatic) {
+  constructor(nativeModule: any) {
+    super(nativeModule);
     if (Platform.OS === 'android' || Platform.OS === 'ios') {
       this.nativeModule = nativeModule;
     } else {
       this.throwUnsupportedPlatform();
     }
 
-    DeviceEventEmitter.addListener(
+    this.setListenersNames();
+  }
+
+  setListenersNames(): void {
+    this.nativeModule.setListenersNames(
       LeanplumSdkModule.VALUE_CHANGE_HANDLER,
-      this.valueChangedHandler,
-    );
-    DeviceEventEmitter.addListener(
-      LeanplumSdkModule.START_RESPONSE_HANDLER,
-      this.startResponseHandler,
-    );
-    DeviceEventEmitter.addListener(
       LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
-      this.variablesReadyHandler,
     );
   }
 
@@ -156,7 +143,7 @@ class LeanplumSdkModule {
    * @param name name of the variable
    * @param defaultValue default value of the variable
    */
-  getVariable(name: String): Promise<any> {
+  getVariable(name: String): Promise<VariableValue> {
     return this.nativeModule.getVariable(name);
   }
 
@@ -167,7 +154,7 @@ class LeanplumSdkModule {
    * @param name name of the variable
    * @param defaultValue default value of the variable
    */
-  getVariables(): Promise<any> {
+  getVariables(): Promise<AllVariablesValue> {
     return this.nativeModule.getVariables();
   }
 
@@ -184,14 +171,14 @@ class LeanplumSdkModule {
    * @param name name of the variable on which we will register the handler
    * @param handler function that is going to be invoked when value is changed
    */
-  addValueChangedHandler(name: String, handler?: Function) {
-    if (handler != undefined)
-      LeanplumSdkModule.variableCallbackFunction.set(name, handler);
-    console.log('addValueChangedHandler: ', name);
-
-    this.nativeModule.addValueChangedHandler(
-      name,
-      LeanplumSdkModule.VALUE_CHANGE_HANDLER,
+  onValueChanged(
+    variableName: string,
+    callback: (value: VariableValue) => void,
+  ) {
+    this.nativeModule.onValueChanged(variableName);
+    this.addListener(
+      `${LeanplumSdkModule.VALUE_CHANGE_HANDLER}.${variableName}`,
+      callback,
     );
   }
 
@@ -200,16 +187,8 @@ class LeanplumSdkModule {
    *
    * @param handler callback that is going to be invoked when start finishes
    */
-  addStartResponseHandler(handler: Function) {
-    console.log('addStartResponseHandler');
-    LeanplumSdkModule.callbackFunction.set(
-      LeanplumSdkModule.START_RESPONSE_HANDLER,
-      handler,
-    );
-
-    this.nativeModule.addStartResponseHandler(
-      LeanplumSdkModule.START_RESPONSE_HANDLER,
-    );
+  onStartResponse(handler: (success: boolean) => void) {
+    this.nativeModule.onStartResponse(handler);
   }
 
   /**

@@ -30,6 +30,9 @@ const variables = {
 export const Variables = () => {
   useEffect(() => {
     Leanplum.setVariables(variables);
+    Leanplum.onValueChanged(STRING_VARIABLE_NAME, (value: any) =>
+      console.log({value, type: typeof value}),
+    );
   }, []);
 
   // valueChangedHandlerString = () => {

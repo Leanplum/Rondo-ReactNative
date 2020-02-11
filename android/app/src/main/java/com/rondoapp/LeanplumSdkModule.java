@@ -14,6 +14,7 @@ import android.location.Location;
 
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -25,12 +26,15 @@ import static com.leanplum.Leanplum.getContext;
 
 
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.leanplum.Leanplum;
 import com.leanplum.LeanplumInboxMessage;
 import com.leanplum.LeanplumLocationAccuracyType;
 import com.leanplum.annotations.Parser;
 import com.leanplum.Var;
 
+import com.leanplum.callbacks.StartCallback;
+import com.leanplum.callbacks.VariableCallback;
 import com.leanplum.internal.Constants;
 import com.rondoapp.utils.ArrayUtil;
 import com.rondoapp.utils.MapUtil;
@@ -45,9 +49,9 @@ import com.facebook.react.common.ReactConstants;
 public class LeanplumSdkModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
-    private static final String TAG = LeanplumSdkModule.class.getName();
-    //public static List variables = new ArrayList();
     public static Map<String, Object> variables = new HashMap<String, Object>();
+    private static String onVariableChangedListenerName;
+    private static String onVariablesChangedListenerName;
 
 
     public LeanplumSdkModule(ReactApplicationContext reactContext) {
@@ -58,6 +62,12 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     @Override
     public String getName() {
         return "LeanplumSdk";
+    }
+
+    @ReactMethod
+    public void setListenersNames(String onVariableChangedListenerName, String onVariablesChangedListenerName) {
+        LeanplumSdkModule.onVariableChangedListenerName = onVariableChangedListenerName;
+        LeanplumSdkModule.onVariablesChangedListenerName = onVariablesChangedListenerName;
     }
 
     @ReactMethod
@@ -140,6 +150,10 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getVariable(String name, Promise promise) {
+        promise.resolve(getVariableValue(name));
+    }
+
+    private Object getVariableValue(String name) {
         if (variables.containsKey(name)) {
             Var<?> variable = (Var<?>) variables.get(name);
             Object variableValue = variable.value();
@@ -154,8 +168,10 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
                 default:
                     value = variableValue;
             }
-            promise.resolve(value);
+            return value;
         }
+        // TODO throw an Error
+        return new Object();
     }
 
     @ReactMethod
@@ -179,30 +195,33 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
      * add value change callback for specific variable
      *
      * @param name  name of the variable on which we will register the handler
-     * @param event name of the event that will be propagated to RN
      */
     @ReactMethod
-    public void addValueChangedHandler(String name, String event) {
-        //for (Object varaible : variables) {
-        //  if (varaible instanceof Var<?>) {
-        Var<?> var = (Var<?>) variables.get(name);
-        if (var.name().equals(name)) {
-            CallBackManager callBackManager = new CallBackManager(reactContext);
-            callBackManager.addValueChangedHandler(var, event);
-        }
-        // }
-        //}
+    public void onValueChanged(String name) {
+        Var<Object> var = (Var<Object>) variables.get(name);
+        var.addValueChangedHandler(new VariableCallback<Object>() {
+            @Override
+            public void handle(Var<Object> var) {
+                reactContext
+                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        .emit(onVariableChangedListenerName + "." + name, getVariableValue(name));
+            }
+        });
     }
 
     /**
      * add callback when start finishes
      *
-     * @param event name of the event that will be propagated to RN
+     * @param successCallback Success Callback
      */
     @ReactMethod
-    public void addStartResponseHandler(String event) {
-        CallBackManager callBackManager = new CallBackManager(reactContext);
-        callBackManager.addStartResponseHandler(event);
+    public void onStartResponse(Callback successCallback) {
+        Leanplum.addStartResponseHandler(new StartCallback() {
+            @Override
+            public void onResponse(boolean success) {
+                successCallback.invoke(success);
+            }
+        });
     }
 
     /**
