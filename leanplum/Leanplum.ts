@@ -187,8 +187,8 @@ class LeanplumSdkModule extends NativeEventEmitter {
    *
    * @param handler callback that is going to be invoked when start finishes
    */
-  onStartResponse(handler: (success: boolean) => void) {
-    this.nativeModule.onStartResponse(handler);
+  onStartResponse(callback: (success: boolean) => void) {
+    this.nativeModule.onStartResponse(callback);
   }
 
   /**
@@ -196,16 +196,9 @@ class LeanplumSdkModule extends NativeEventEmitter {
    *
    * @param handler callback that is going to be invoked when all variables are ready
    */
-  addVariablesChangedHandler(handler: Function) {
-    console.log('addVariablesChangedHandler');
-    LeanplumSdkModule.callbackFunction.set(
-      LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
-      handler,
-    );
-
-    this.nativeModule.addVariablesChangedHandler(
-      LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER,
-    );
+  onVariablesChanged(callback: (value: AllVariablesValue) => void) {
+    this.nativeModule.onVariablesChanged();
+    this.addListener(LeanplumSdkModule.ALL_VARIABLES_READY_HANDLER, callback);
   }
 
   start(): void {

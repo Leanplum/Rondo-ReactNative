@@ -2,7 +2,6 @@ package com.rondoapp;
 
 import java.util.ArrayList;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
@@ -20,7 +19,6 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.ReadableArray;
 
 import static com.leanplum.Leanplum.getContext;
 
@@ -28,18 +26,16 @@ import static com.leanplum.Leanplum.getContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.leanplum.Leanplum;
-import com.leanplum.LeanplumInboxMessage;
 import com.leanplum.LeanplumLocationAccuracyType;
 import com.leanplum.annotations.Parser;
 import com.leanplum.Var;
 
 import com.leanplum.callbacks.StartCallback;
 import com.leanplum.callbacks.VariableCallback;
+import com.leanplum.callbacks.VariablesChangedCallback;
 import com.leanplum.internal.Constants;
 import com.rondoapp.utils.ArrayUtil;
 import com.rondoapp.utils.MapUtil;
-import com.rondoapp.utils.Type;
-import com.rondoapp.utils.CallBackManager;
 
 import android.util.Log;
 
@@ -126,28 +122,6 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         variables.put(name, var);
     }
 
-    /**
-     * Define/Set variable, we can use this method if we want to define variable
-     *
-     * @param name         name of the variable
-     * @param defaultValue default value of the variable
-     * @param type         type of the variable String | Number | Boolean
-     */
-    @ReactMethod
-    public void setVariable(String name, String defaultValue, String type) {
-        if (type.equalsIgnoreCase(Type.STRING.label)) {
-            variables.put(name, Var.define(name, defaultValue));
-        }
-
-        if (type.equalsIgnoreCase(Type.NUMBER.label)) {
-            variables.put(name, Var.define(name, Double.parseDouble(defaultValue)));
-        }
-
-        if (type.equalsIgnoreCase(Type.BOOLEAN.label)) {
-            variables.put(name, Var.define(name, Boolean.parseBoolean(defaultValue)));
-        }
-    }
-
     @ReactMethod
     public void getVariable(String name, Promise promise) {
         promise.resolve(getVariableValue(name));
@@ -176,6 +150,10 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getVariables(Promise promise) {
+        promise.resolve(getVariablesValues());
+    }
+
+    private WritableMap getVariablesValues() {
         WritableMap writableMap = Arguments.createMap();
         for (Entry<String, Object> entry : variables.entrySet()) {
             String key = entry.getKey();
@@ -183,7 +161,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
             WritableMap variableWritableMap = MapUtil.addValue(key, value.value());
             writableMap.merge(variableWritableMap);
         }
-        promise.resolve(writableMap);
+        return writableMap;
     }
 
     @ReactMethod
@@ -226,13 +204,17 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
 
     /**
      * add callback when all variables are ready
-     *
-     * @param event name of the event that will be propagated to RN
      */
     @ReactMethod
-    public void addVariablesChangedHandler(String event) {
-        CallBackManager callBackManager = new CallBackManager(reactContext);
-        callBackManager.addVariablesChangedHandler(event);
+    public void onVariablesChanged() {
+        Leanplum.addVariablesChangedHandler(new VariablesChangedCallback() {
+            @Override
+            public void variablesChanged() {
+                reactContext
+                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        .emit(onVariablesChangedListenerName, getVariablesValues());
+            }
+        });
     }
 
 
@@ -257,6 +239,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         Leanplum.disableLocationCollection();
     }
 
+    // TODO maybe it's not necessary
     /**
      * parse all variables that were defined using setVariable or setVariables methods
      */

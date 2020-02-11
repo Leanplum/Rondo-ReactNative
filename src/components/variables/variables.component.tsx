@@ -33,6 +33,7 @@ export const Variables = () => {
     Leanplum.onValueChanged(STRING_VARIABLE_NAME, (value: any) =>
       console.log({value, type: typeof value}),
     );
+    Leanplum.onVariablesChanged((value: any) => console.log({value}));
   }, []);
 
   // valueChangedHandlerString = () => {
