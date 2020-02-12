@@ -38,4 +38,9 @@ class LeanplumTypeUtils {
     }
     return lpVar;
   }
+  
+  static func convertImageToBase64(image: UIImage) -> String {
+    let imageData = image.pngData()
+    return imageData?.base64EncodedString() ?? ""
+  }
 }

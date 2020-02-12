@@ -101,18 +101,6 @@ class LeanplumSdkModule extends NativeEventEmitter {
   }
 
   /**
-   * Define/Set asset, we can use this method if we want to define asset
-   *
-   * @param name name of the variable
-   * @param defaultValue default value of the variable
-   */
-  setAsset(name: string, defaultValue: string): void {
-    LeanplumSdkModule.variableValue.set(name, defaultValue);
-    LeanplumSdkModule.variableAsset.set(name, '');
-    this.nativeModule.setAsset(name, defaultValue);
-  }
-
-  /**
    * Get value for specific variable, if we want to be sure that the method will return latest variable value
    * we need to invoke forceContentUpdate() before invoking getVariable
    *
@@ -134,9 +122,25 @@ class LeanplumSdkModule extends NativeEventEmitter {
     return await this.nativeModule.getVariables();
   }
 
-  getAsset(name: string) {
-    if (LeanplumSdkModule.variableAsset.has(name))
-      return LeanplumSdkModule.variableAsset.get(name);
+  /**
+   * Define/Set asset, we can use this method if we want to define asset
+   *
+   * @param name name of the variable
+   * @param defaultValue default filename of the asset
+   */
+  setVariableAsset(
+    name: string,
+    filename: string,
+    onAssetReadyCallback: (path: string) => void,
+  ): void {
+    // LeanplumSdkModule.variableValue.set(name, defaultValue);
+    // LeanplumSdkModule.variableAsset.set(name, '');
+    this.nativeModule.setVariableAsset(name, filename);
+    this.addListener(name, onAssetReadyCallback);
+  }
+
+  async getVariableAsset(name: string): Promise<string> {
+    return await this.nativeModule.getVariableAsset(name);
   }
 
   /**

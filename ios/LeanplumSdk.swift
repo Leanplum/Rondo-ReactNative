@@ -160,4 +160,26 @@ class LeanplumSdk: RCTEventEmitter {
       self.sendEvent(withName: self.onVariablesChangedListenerName, body: self.getVariablesValues())
     }
   }
+  
+  @objc
+  func setVariableAsset(_ name: String, filename: String) -> Void {
+    self.allSupportedEvents.append(name)
+    let lpVar = LPVar.define(name, withFile: filename)
+    self.variables[name] = lpVar
+    lpVar?.onFileReady({  
+      self.sendEvent(withName: name, body: lpVar?.fileValue())
+    })
+  }
+  
+  @objc
+  func getVariableAsset(_ name: String, resolver resolve: RCTPromiseResolveBlock,
+                   rejecter reject: RCTPromiseRejectBlock
+  ) {
+    if let lpVar = self.variables[name] {
+//      resolve(LeanplumTypeUtils.convertImageToBase64(image: lpVar.imageValue()))
+      resolve(lpVar.fileValue())
+    } else {
+      reject(self.undefinedVariableErrorMessage, "\(undefinedVariableErrorMessage): '\(name)'", self.undefinedVariableError)
+    }
+  }
 }

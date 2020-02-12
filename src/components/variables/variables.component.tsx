@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text, Platform} from 'react-native';
 import {Leanplum} from 'leanplum';
 import {Var} from './var.component';
-import {Button} from 'react-native-elements';
+import {Button, Image} from 'react-native-elements';
 
 const STRING_VARIABLE_NAME: string = 'var_text';
 const NUM_VARIABLE_NAME: string = 'var_number';
@@ -10,6 +10,10 @@ const BOOL_VARIABLE_NAME: string = 'var_bool';
 const MAP_VARIABLE_NAME: string = 'var_map';
 const ARR_VARIABLE_NAME: string = 'myArr';
 const ASSET_VARIABLE_NAME: string = 'var_file';
+
+const getNativeUri = (path: string) => {
+  return Platform.OS !== 'android' ? path : `asset:${path}`;
+};
 
 const state = {
   assetVarVal:
@@ -27,10 +31,23 @@ export const Variables = () => {
       var2: 'default var 2',
     },
   });
+  const [assetVariablePath, setAssetVariablePath] = useState('./delete.png');
+  const [assetReady, setAssetReady] = useState(false);
+
   useEffect(() => {
     Leanplum.setVariables(variables);
-    Leanplum.onVariablesChanged((value: any) =>
-      setVariables({...variables, ...value}),
+    Leanplum.onVariablesChanged((value: any) => {
+      // console.log({variables: value});
+      setVariables({...variables, ...value});
+    });
+    Leanplum.setVariableAsset(
+      ASSET_VARIABLE_NAME,
+      'delete.png',
+      (path: string) => {
+        setAssetVariablePath(path);
+        setAssetReady(true);
+        console.log(path);
+      },
     );
   }, []);
 
@@ -74,6 +91,16 @@ export const Variables = () => {
         name={MAP_VARIABLE_NAME}
         defaultValue={JSON.stringify(variables[MAP_VARIABLE_NAME])}
       />
+      {assetReady ? (
+        <Image
+          source={{uri: getNativeUri(assetVariablePath)}}
+          style={{width: 80, height: 80}}
+        />
+      ) : (
+        <Text>No asset ready</Text>
+      )}
+
+      {/* <Image source={require(assetVariablePath)} /> */}
       {/* <Var
         name={ASSET_VARIABLE_NAME}
         defaultValue={variables.assetVarName.toString()}
@@ -92,6 +119,15 @@ export const Variables = () => {
           Leanplum.forceContentUpdate();
         }}
       />
+      {/* <Button
+        title="get asset"
+        onPress={async () => {
+          const value = await Leanplum.getVariableAsset(ASSET_VARIABLE_NAME);
+          setAssetVariablePath(value);
+          setAssetReady(true);
+          console.log(value);
+        }}
+      /> */}
     </View>
   );
 };

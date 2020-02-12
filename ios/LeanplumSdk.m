@@ -29,5 +29,6 @@
   RCT_EXTERN_METHOD(onStartResponse: (RCTResponseSenderBlock)callback)
   RCT_EXTERN_METHOD(onValueChanged: (NSString *)variableName)
   RCT_EXTERN_METHOD(onVariablesChanged)
-
+  RCT_EXTERN_METHOD(setVariableAsset: (NSString *)name filename:(NSString *)filename)
+  RCT_EXTERN_METHOD(getVariableAsset: (NSString *)name resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 @end

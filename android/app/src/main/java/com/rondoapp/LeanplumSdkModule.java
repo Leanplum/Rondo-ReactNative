@@ -105,23 +105,6 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         }
     }
 
-    // TODO handle assets in RN
-
-    /**
-     * Define/Set asset, we can use this method if we want to define asset
-     *
-     * @param name         name of the variable
-     * @param defaultValue default value of the variable
-     */
-    @ReactMethod
-    public void setAsset(String name, String defaultValue) {
-        Log.d(ReactConstants.TAG, "add asset variable:" + name);
-        Var<String> var = Var.defineAsset(name, defaultValue);
-        Log.d(ReactConstants.TAG, "var value:" + var.value());
-        Log.d(ReactConstants.TAG, "var fileValue:" + var.fileValue());
-        variables.put(name, var);
-    }
-
     @ReactMethod
     public void getVariable(String name, Promise promise) {
         promise.resolve(getVariableValue(name));
@@ -164,6 +147,35 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         return writableMap;
     }
 
+    // TODO handle assets in RN
+
+    /**
+     * Define/Set asset, we can use this method if we want to define asset
+     *
+     * @param name         name of the variable
+     * @param defaultValue default value of the variable
+     */
+    @ReactMethod
+    public void setVariableAsset(String name, String defaultValue) {
+        Var<String> var = Var.defineAsset(name, defaultValue);
+        variables.put(name, var);
+        var.addFileReadyHandler(new VariableCallback<String>() {
+            @Override
+            public void handle(Var<String> var) {
+                reactContext
+                        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        .emit(name, var.fileValue());
+            }
+        });
+    }
+
+    @ReactMethod
+    public void getVariableAsset(String name, Promise promise) {
+        Var<?> variable = (Var<?>) variables.get(name);
+        assert variable != null;
+        promise.resolve(variable.fileValue());
+    }
+
     @ReactMethod
     public void start() {
         Leanplum.start(getContext());
@@ -172,7 +184,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     /**
      * add value change callback for specific variable
      *
-     * @param name  name of the variable on which we will register the handler
+     * @param name name of the variable on which we will register the handler
      */
     @ReactMethod
     public void onValueChanged(String name) {
@@ -240,6 +252,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     }
 
     // TODO maybe it's not necessary
+
     /**
      * parse all variables that were defined using setVariable or setVariables methods
      */
