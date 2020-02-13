@@ -37,11 +37,6 @@ import com.leanplum.internal.Constants;
 import com.rondoapp.utils.ArrayUtil;
 import com.rondoapp.utils.MapUtil;
 
-import android.util.Log;
-
-
-import com.facebook.react.common.ReactConstants;
-
 public class LeanplumSdkModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
@@ -140,14 +135,20 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
         WritableMap writableMap = Arguments.createMap();
         for (Entry<String, Object> entry : variables.entrySet()) {
             String key = entry.getKey();
-            Var<?> value = (Var<?>) entry.getValue();
-            WritableMap variableWritableMap = MapUtil.addValue(key, value.value());
-            writableMap.merge(variableWritableMap);
+            Var<?> variable = (Var<?>) entry.getValue();
+            if (variable.kind() == Constants.Kinds.FILE) {
+                continue;
+            } else {
+                WritableMap variableWritableMap = MapUtil.addValue(key, variable.value());
+                writableMap.merge(variableWritableMap);
+            }
         }
         return writableMap;
     }
 
-    // TODO handle assets in RN
+    private String getRnAssetPath(String path) {
+        return path.replace("/data/user/0", "file:///data/data");
+    }
 
     /**
      * Define/Set asset, we can use this method if we want to define asset
@@ -164,7 +165,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
             public void handle(Var<String> var) {
                 reactContext
                         .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit(name, var.fileValue());
+                        .emit(name, getRnAssetPath(var.fileValue()));
             }
         });
     }
@@ -172,8 +173,7 @@ public class LeanplumSdkModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getVariableAsset(String name, Promise promise) {
         Var<?> variable = (Var<?>) variables.get(name);
-        assert variable != null;
-        promise.resolve(variable.fileValue());
+        promise.resolve(getRnAssetPath(variable.fileValue()));
     }
 
     @ReactMethod

@@ -130,6 +130,9 @@ class LeanplumSdk: RCTEventEmitter {
   func getVariablesValues() -> [String: Any] {
     var allVariables = [String: Any]()
     for (key, value) in self.variables {
+      if(value.kind == "file") {
+        continue
+      }
       allVariables[key] = value.value
     }
     return allVariables
@@ -176,7 +179,6 @@ class LeanplumSdk: RCTEventEmitter {
                    rejecter reject: RCTPromiseRejectBlock
   ) {
     if let lpVar = self.variables[name] {
-//      resolve(LeanplumTypeUtils.convertImageToBase64(image: lpVar.imageValue()))
       resolve(lpVar.fileValue())
     } else {
       reject(self.undefinedVariableErrorMessage, "\(undefinedVariableErrorMessage): '\(name)'", self.undefinedVariableError)

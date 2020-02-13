@@ -9,16 +9,6 @@
 import Foundation
 import Leanplum
 
-enum LeanplumKinds: String {
-  case INT = "integer"
-  case FLOAT = "float"
-  case STRING = "string"
-  case BOOLEAN = "bool";
-  case DICTIONARY = "group"
-  case ARRAY = "list"
-  case FILE = "file"
-}
-
 class LeanplumTypeUtils {
   static func createVar(key: String, value: Any) -> LPVar? {
     var lpVar: LPVar;
@@ -37,10 +27,5 @@ class LeanplumTypeUtils {
       return nil
     }
     return lpVar;
-  }
-  
-  static func convertImageToBase64(image: UIImage) -> String {
-    let imageData = image.pngData()
-    return imageData?.base64EncodedString() ?? ""
   }
 }

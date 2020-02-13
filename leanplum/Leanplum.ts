@@ -15,36 +15,6 @@ class LeanplumSdkModule extends NativeEventEmitter {
   private static readonly ON_VARIABLES_CHANGE_LISTENER: string =
     'onVariablesChanged';
 
-  private static variableValue = new Map<string, VariableValue>();
-  private static variableAsset = new Map<string, string>();
-  private static variableCallbackFunction = new Map<string, Function>();
-
-  valueChangedHandler(event: any) {
-    for (var key in event) {
-      if (event.hasOwnProperty(key)) {
-        // console.log('valueChangedHandler-key', key);
-        // console.log(
-        //   'valueChangedHandler-variableAsset',
-        //   LeanplumSdkModule.variableAsset,
-        // );
-        if (LeanplumSdkModule.variableAsset.has(key)) {
-          LeanplumSdkModule.variableAsset.set(key, event[key][key + '-asset']);
-          LeanplumSdkModule.variableValue.set(key, event[key][key + '-value']);
-        } else {
-          try {
-            LeanplumSdkModule.variableValue.set(key, JSON.parse(event[key]));
-          } catch (e) {
-            LeanplumSdkModule.variableValue.set(key, event[key]);
-          }
-        }
-        if (LeanplumSdkModule.variableCallbackFunction.has(key)) {
-          const func = LeanplumSdkModule.variableCallbackFunction.get(key);
-          if (func != undefined) func.call(func);
-        }
-      }
-    }
-  }
-
   constructor(nativeModule: any) {
     super(nativeModule);
     if (Platform.OS === 'android' || Platform.OS === 'ios') {
@@ -133,8 +103,6 @@ class LeanplumSdkModule extends NativeEventEmitter {
     filename: string,
     onAssetReadyCallback: (path: string) => void,
   ): void {
-    // LeanplumSdkModule.variableValue.set(name, defaultValue);
-    // LeanplumSdkModule.variableAsset.set(name, '');
     this.nativeModule.setVariableAsset(name, filename);
     this.addListener(name, onAssetReadyCallback);
   }
