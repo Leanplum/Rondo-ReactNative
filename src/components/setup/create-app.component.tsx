@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Switch, Text} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import {Leanplum} from 'leanplum';
 
@@ -13,6 +13,8 @@ export const CreateApp = () => {
   const [developmentKey, setDevelopmentKey] = useState(
     'dev_S73p5EOeSmH5U2fmT5sH0DENA16qWSnWisUIJtO33qM',
   );
+
+  const [productionMode, setProductionMode] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -34,19 +36,24 @@ export const CreateApp = () => {
         value={developmentKey}
         onChangeText={text => setDevelopmentKey(text)}
       />
-      <Button
-        title="SET KEYS"
-        buttonStyle={styles.button}
-        disabled={appId === '' || productionKey === '' || developmentKey === ''}
-        onPress={() => {
-          Leanplum.setAppIdForDevelopmentMode(appId, developmentKey);
-          Leanplum.setAppIdForProductionMode(appId, productionKey);
-        }}
-      />
+      <View style={styles.switchView}>
+        <Text>Production Mode</Text>
+        <Switch
+          value={productionMode}
+          onValueChange={value => setProductionMode(value)}
+        />
+      </View>
       <Button
         title="CALL LEANPLUM - START"
         buttonStyle={styles.button}
         onPress={() => {
+          if (productionMode) {
+            console.log('prod');
+            Leanplum.setAppIdForProductionMode(appId, productionKey);
+          } else {
+            console.log('dev');
+            Leanplum.setAppIdForDevelopmentMode(appId, developmentKey);
+          }
           Leanplum.start();
         }}
       />
@@ -71,5 +78,12 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 10,
+  },
+  switchView: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10,
   },
 });
