@@ -15,14 +15,12 @@ export const Location = () => {
         autoCapitalize="none"
         value={latitude}
         onChangeText={text => setLatitude(text)}
-        keyboardType="decimal-pad"
       />
       <Input
         placeholder="Longitude"
         autoCapitalize="none"
         value={longitude}
         onChangeText={text => setLongitude(text)}
-        keyboardType="decimal-pad"
       />
       <Picker
         selectedValue={locationType}
