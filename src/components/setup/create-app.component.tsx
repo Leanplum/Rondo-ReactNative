@@ -48,10 +48,8 @@ export const CreateApp = () => {
         buttonStyle={styles.button}
         onPress={() => {
           if (productionMode) {
-            console.log('prod');
             Leanplum.setAppIdForProductionMode(appId, productionKey);
           } else {
-            console.log('dev');
             Leanplum.setAppIdForDevelopmentMode(appId, developmentKey);
           }
           Leanplum.start();
