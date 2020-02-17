@@ -3,3 +3,4 @@ export * from './location.component';
 export * from './user.component';
 export * from './attribute.component';
 export * from './purchase-event.component';
+export * from './state.component';

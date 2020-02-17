@@ -3,12 +3,19 @@ import {Text, StyleSheet, View, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-navigation';
 import {Divider} from 'react-native-elements';
 
-import {Event, Location, User, Attribute, PurchaseEvent} from 'components';
+import {
+  Event,
+  Location,
+  User,
+  Attribute,
+  PurchaseEvent,
+  State,
+} from 'components';
 
 export const AdHocScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.scrollView}>
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>
             You can type in custom events, sessions and attributes to send from
@@ -28,6 +35,9 @@ export const AdHocScreen = () => {
         <View style={styles.component}>
           <User />
         </View>
+        <View style={styles.component}>
+          <State />
+        </View>
         <View>
           <Attribute />
         </View>
@@ -39,8 +49,8 @@ export const AdHocScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  scrollView: {
     padding: 10,
   },
   divider: {
