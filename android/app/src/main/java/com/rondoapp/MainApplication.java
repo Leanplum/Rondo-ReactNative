@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.reactlibrary.LeanplumPackage;
+
 import com.leanplum.Leanplum;
 import com.leanplum.LeanplumActivityHelper;
 import com.leanplum.annotations.Parser;
@@ -31,7 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
                     @SuppressWarnings("UnnecessaryLocalVariable")
                     List<ReactPackage> packages = new PackageList(this).getPackages();
                     // Packages that cannot be autolinked yet can be added manually here, for example:
-                    packages.add(new LeanplumSdkPackage());
+//                    packages.add(new LeanplumPackage());
                     return packages;
                 }
 
@@ -56,21 +56,6 @@ public class MainApplication extends Application implements ReactApplication {
         Parser.parseVariables(this);
         //  For session lifecyle tracking.
         LeanplumActivityHelper.enableLifecycleCallbacks(this);
-
-
-        // Insert your API keys here.
-//        String appId = "";
-//        if (BuildConfig.DEBUG) {
-//            Leanplum.setAppIdForDevelopmentMode(appId, "");
-//        } else {
-//            Leanplum.setAppIdForProductionMode(appId, "");
-//        }
-
-        // Optional: Tracks all screens in your app as states in Leanplum.
-        // Leanplum.trackAllAppScreens();
-
-        // This will only run once per session, even if the activity is restarted.
-//        Leanplum.start(this);
     }
 
     /**
