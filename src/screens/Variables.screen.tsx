@@ -1,6 +1,7 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import {Variables} from 'components';
+import {useVariablesContext} from 'contexts';
 
 export const VariablesScreen = () => {
   return (
