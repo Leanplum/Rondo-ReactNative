@@ -10,6 +10,7 @@ import {
   Attribute,
   PurchaseEvent,
   State,
+  Device,
 } from 'components';
 
 export const AdHocScreen = () => {
@@ -34,6 +35,9 @@ export const AdHocScreen = () => {
         </View>
         <View style={styles.component}>
           <User />
+        </View>
+        <View style={styles.component}>
+          <Device />
         </View>
         <View style={styles.component}>
           <State />

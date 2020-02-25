@@ -23,4 +23,9 @@ export const startUp = ({
   Leanplum.setVariableAsset(ASSET_VARIABLE_NAME, path, (newPath: string) =>
     setPath(newPath),
   );
+  Leanplum.setAppIdForDevelopmentMode(
+    'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
+    'dev_S73p5EOeSmH5U2fmT5sH0DENA16qWSnWisUIJtO33qM',
+  );
+  Leanplum.start();
 };
