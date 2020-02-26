@@ -5,11 +5,15 @@ import {MessageItem} from './message-item.component';
 
 export const InboxComponent = () => {
   const [inbox, setInbox] = useState<Inbox>();
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function getInbox() {
+    setRefreshing(true);
+    const inboxValue: Inbox = await LeanplumInbox.inbox();
+    setInbox(inboxValue);
+    setRefreshing(false);
+  }
   useEffect(() => {
-    async function getInbox() {
-      const inboxValue: Inbox = await LeanplumInbox.inbox();
-      setInbox(inboxValue);
-    }
     getInbox();
   }, []);
 
@@ -23,8 +27,12 @@ export const InboxComponent = () => {
 
       <FlatList
         data={inbox?.allMessages}
-        renderItem={({item}) => <MessageItem message={item} />}
+        renderItem={({item}) => (
+          <MessageItem message={item} onMessageUpdate={() => getInbox()} />
+        )}
         keyExtractor={(item: Message) => item.messageId}
+        onRefresh={() => getInbox()}
+        refreshing={refreshing}
       />
     </SafeAreaView>
   );
