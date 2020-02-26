@@ -1,21 +1,20 @@
 import React, {useEffect} from 'react';
 import {ScrollView, SafeAreaView, StyleSheet} from 'react-native';
-import {CreateApp, Device} from 'components';
-import {requestLocationPermission} from 'utils';
-import {Leanplum} from 'react-native-leanplum';
+import {CreateApp, Session} from 'components';
+import {startUp} from 'utils';
+import {useVariablesContext, useAssetContext} from 'contexts';
 
 export const SetupScreen = () => {
+  const variablesContext = useVariablesContext();
+  const assetContext = useAssetContext();
   useEffect(() => {
-    requestLocationPermission();
-    Leanplum.onStartResponse((success: boolean) => {
-      console.log({success});
-    });
+    startUp({...variablesContext, ...assetContext});
   }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Device />
+        <Session />
         <CreateApp />
       </ScrollView>
     </SafeAreaView>

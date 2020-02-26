@@ -10,6 +10,7 @@ import {
   Attribute,
   PurchaseEvent,
   State,
+  Device,
 } from 'components';
 import {Leanplum} from 'react-native-leanplum';
 
@@ -35,6 +36,9 @@ export const AdHocScreen = () => {
         </View>
         <View style={styles.component}>
           <User />
+        </View>
+        <View style={styles.component}>
+          <Device />
         </View>
         <View style={styles.component}>
           <State />

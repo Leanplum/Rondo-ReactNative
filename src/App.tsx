@@ -4,5 +4,20 @@ import 'react-native-gesture-handler';
 import {createAppContainer} from 'react-navigation';
 
 import {AppNavigation} from 'navigations';
+import {VariablesProvider, AssetProvider} from 'contexts';
+import {CurrentTheme} from 'utils';
+import {ThemeProvider} from 'react-native-elements';
 
-export default createAppContainer(AppNavigation);
+const AppContainer = createAppContainer(AppNavigation);
+
+export default () => {
+  return (
+    <ThemeProvider theme={CurrentTheme}>
+      <VariablesProvider>
+        <AssetProvider>
+          <AppContainer />
+        </AssetProvider>
+      </VariablesProvider>
+    </ThemeProvider>
+  );
+};
