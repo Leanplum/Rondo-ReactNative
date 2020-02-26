@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
+import {InboxComponent} from 'components';
 
 export const InboxScreen = () => {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Inbox Screen</Text>
+    <View style={{flex: 1}}>
+      <InboxComponent />
     </View>
   );
 };

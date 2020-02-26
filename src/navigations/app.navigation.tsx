@@ -11,6 +11,7 @@ import {
   IScreen,
   AppScreens,
   VariablesScreen,
+  InboxScreen,
 } from 'screens';
 
 const defaultStackConfig: any = {
@@ -37,6 +38,13 @@ const AdHocStack = createStackNavigator(
   defaultStackConfig,
 );
 
+const InboxStack = createStackNavigator(
+  {
+    [Screens.Inbox]: InboxScreen,
+  },
+  defaultStackConfig,
+);
+
 const VariablesStack = createStackNavigator(
   {
     [Screens.Variables]: VariablesScreen,
@@ -48,6 +56,7 @@ export const AppNavigation = createBottomTabNavigator(
   {
     [Screens.Setup]: SetupStack,
     [Screens.AdHoc]: AdHocStack,
+    [Screens.Inbox]: InboxStack,
     [Screens.Variables]: VariablesStack,
   },
   {
