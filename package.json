@@ -21,14 +21,14 @@
     "react-native": "0.61.5",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.5.3",
+    "react-native-leanplum": "file:.yalc/react-native-leanplum",
     "react-native-reanimated": "^1.4.0",
     "react-native-safe-area-context": "^0.6.2",
     "react-native-screens": "^2.0.0-alpha.22",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^2.0.11",
-    "react-navigation-tabs": "^2.7.0",
-    "react-native-leanplum": "file:../react-native-leanplum"
+    "react-navigation-tabs": "^2.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -51,7 +51,8 @@
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.1.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.4",
+    "yalc": "^1.0.0-pre.35"
   },
   "husky": {
     "hooks": {

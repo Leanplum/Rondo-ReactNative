@@ -185,7 +185,7 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
   - React-jsinspector (0.61.5)
-  - react-native-leanplum (1.0.0):
+  - react-native-leanplum (1.0.0-4b34fb2d):
     - Leanplum-iOS-SDK (= 2.6.2)
     - React
   - react-native-safe-area-context (0.6.4):
@@ -370,7 +370,7 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
-  react-native-leanplum: 4bce9d9eb9cdef116e3f1315081fda9c0ecd82f6
+  react-native-leanplum: dab3d69a61d211b005ef25436db678839740c72d
   react-native-safe-area-context: 52342d2d80ea8faadd0ffa76d83b6051f20c5329
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
