@@ -17,6 +17,15 @@ export const startUp = ({
     console.log({success});
   });
   Leanplum.setVariables(variables);
+  Leanplum.onVariablesChangedAndNoDownloadsPending(() => {
+    console.log('onVariablesChangedAndNoDownloadsPending');
+  });
+  Leanplum.onceVariablesChangedAndNoDownloadsPending(() => {
+    console.log('onceVariablesChangedAndNoDownloadsPending');
+  });
+  Leanplum.onMessageDisplayed((message: any) => {
+    console.log({message});
+  });
   Leanplum.onVariablesChanged((value: any) => {
     setVariables(value);
   });
