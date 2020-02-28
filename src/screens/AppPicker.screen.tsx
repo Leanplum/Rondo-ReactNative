@@ -6,8 +6,10 @@ import {
   Text,
   FlatList,
 } from 'react-native';
-import {ListItem} from 'react-native-elements';
+import {ListItem, Button} from 'react-native-elements';
 import {AppItem} from 'components';
+import {NavigationStackProp} from 'react-navigation-stack';
+import {Screens} from './screens';
 
 export interface LeanplumAppConfig {
   productionKey: string;
@@ -16,7 +18,11 @@ export interface LeanplumAppConfig {
   name: string;
 }
 
-export const AppPickerScreen = ({navigation}: {navigation: any}) => {
+export const AppPickerScreen = ({
+  navigation,
+}: {
+  navigation: NavigationStackProp;
+}) => {
   const [apps, setApps] = useState<LeanplumAppConfig[]>([
     {
       productionKey: 'prod_rNf462v60Cl3KA9ntyCiQQup03VyZmkV1Ly21tgKfzg',
@@ -25,9 +31,23 @@ export const AppPickerScreen = ({navigation}: {navigation: any}) => {
       name: 'RN Rondo',
     },
   ]);
-  useEffect(() => {}, []);
+  const app: LeanplumAppConfig = navigation.getParam('app');
+
+  useEffect(() => {
+    if (app) {
+      setApps([...apps, app]);
+    }
+  }, [app]);
+
   return (
     <SafeAreaView style={styles.container}>
+      <Button
+        title="Create Leanplum App"
+        style={styles.button}
+        onPress={() => {
+          navigation.navigate(Screens.CreateApp);
+        }}
+      />
       <FlatList
         data={apps}
         renderItem={({item}) => <AppItem app={item} />}
@@ -41,5 +61,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  button: {
+    margin: 10,
   },
 });

@@ -9,7 +9,7 @@ import {
   SetupScreen,
   AdHocScreen,
   IScreen,
-  AppScreens,
+  AppTabScreens,
   VariablesScreen,
   InboxScreen,
   AppPickerScreen,
@@ -49,8 +49,8 @@ export const AppNavigation = createBottomTabNavigator(
       tabBarIcon: ({focused, horizontal, tintColor}) => {
         const {routeName} = navigation.state;
         const currentScreen =
-          AppScreens.find((screen: IScreen) => screen.name === routeName) ||
-          AppScreens[0];
+          AppTabScreens.find((screen: IScreen) => screen.name === routeName) ||
+          AppTabScreens[0];
         return <Icon name={currentScreen.icon} size={25} color={tintColor} />;
       },
     }),

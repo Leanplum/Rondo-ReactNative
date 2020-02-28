@@ -11,6 +11,7 @@ export enum Screens {
   Sdk = 'Sdk',
   Variables = 'Variables',
   AppPicker = 'AppPicker',
+  CreateApp = 'CreateApp',
 }
 
 export interface IScreen {
@@ -19,7 +20,7 @@ export interface IScreen {
   icon: string;
 }
 
-export const AppScreens: IScreen[] = [
+export const AppTabScreens: IScreen[] = [
   {name: Screens.Setup, component: SetupScreen, icon: 'settings'},
   {name: Screens.AdHoc, component: AdHocScreen, icon: 'square-edit-outline'},
   {name: Screens.Inbox, component: InboxScreen, icon: 'inbox-arrow-down'},
