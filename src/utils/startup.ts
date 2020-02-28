@@ -8,16 +8,21 @@ export const startUp = async ({
   setVariables,
   path,
   setPath,
+  productionMode,
 }: {
   variables: any;
   setVariables: any;
+  path: string;
+  setPath: any;
+  productionMode: boolean;
 }) => {
   requestLocationPermission();
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
-  await selectAppAndStart();
+  const app = await getApp();
+  startLeanplum(app, productionMode);
 };
 
-const selectAppAndStart = async () => {
+const getApp = async () => {
   const defaultApp: LeanplumAppConfig = {
     appId: 'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
     productionKey: 'prod_rNf462v60Cl3KA9ntyCiQQup03VyZmkV1Ly21tgKfzg',
@@ -31,10 +36,18 @@ const selectAppAndStart = async () => {
   }
 
   let currentApp = (await AppsStorage.currentApp()) || defaultApp;
-  Leanplum.setAppIdForDevelopmentMode(
-    currentApp?.appId,
-    currentApp?.developmentKey,
-  );
+  return currentApp;
+};
+
+export const startLeanplum = (
+  app: LeanplumAppConfig,
+  productionMode: boolean,
+) => {
+  if (productionMode) {
+    Leanplum.setAppIdForProductionMode(app.appId, app.productionKey);
+  } else {
+    Leanplum.setAppIdForDevelopmentMode(app.appId, app.developmentKey);
+  }
   Leanplum.start();
 };
 
@@ -45,7 +58,7 @@ const registerVariablesAndCallbacks = (
   setPath: any,
 ) => {
   Leanplum.onStartResponse((success: boolean) => {
-    console.log({success});
+    console.log({onStartResponse: success});
   });
   Leanplum.setVariables(variables);
   Leanplum.onVariablesChangedAndNoDownloadsPending(() => {

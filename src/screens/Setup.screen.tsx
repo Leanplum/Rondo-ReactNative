@@ -34,7 +34,7 @@ export const SetupScreen = ({
   const variablesContext = useVariablesContext();
   const assetContext = useAssetContext();
   useEffect(() => {
-    startUp({...variablesContext, ...assetContext});
+    startUp({...variablesContext, ...assetContext, productionMode});
   }, []);
 
   return (
@@ -45,7 +45,7 @@ export const SetupScreen = ({
           title="App Picker"
           style={styles.button}
           onPress={() => {
-            navigation.navigate(Screens.AppPicker);
+            navigation.navigate(Screens.AppPicker, {productionMode});
           }}
         />
         <View style={styles.switchView}>

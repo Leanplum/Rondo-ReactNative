@@ -11,7 +11,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {AppItem} from 'components';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {Screens} from './screens';
-import {AppsStorage, LeanplumAppConfig} from 'utils';
+import {AppsStorage, LeanplumAppConfig, startLeanplum} from 'utils';
+import {Leanplum} from 'react-native-leanplum';
 
 export const AppPickerScreen = ({
   navigation,
@@ -20,6 +21,16 @@ export const AppPickerScreen = ({
 }) => {
   const [apps, setApps] = useState<LeanplumAppConfig[]>([]);
   const app: LeanplumAppConfig = navigation.getParam('app');
+
+  const onAppSelected = async (appId: string) => {
+    console.log('onAppSelected');
+    await AppsStorage.selectApp(appId);
+    const appToStart = await AppsStorage.getApp(appId);
+    const productionMode = navigation.getParam('productionMode');
+    if (appToStart) {
+      startLeanplum(appToStart, productionMode);
+    }
+  };
 
   useEffect(() => {
     async function updateApps(newApp: LeanplumAppConfig) {
@@ -43,7 +54,7 @@ export const AppPickerScreen = ({
       />
       <FlatList
         data={apps}
-        renderItem={({item}) => (item ? <AppItem app={item} /> : null)}
+        renderItem={({item}) => <AppItem app={item} onPress={onAppSelected} />}
         keyExtractor={(item: LeanplumAppConfig) => item.appId}
       />
     </SafeAreaView>

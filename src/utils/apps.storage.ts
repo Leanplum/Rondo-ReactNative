@@ -32,4 +32,18 @@ export class AppsStorage {
       return undefined;
     }
   }
+
+  static async getApp(appId: string): Promise<LeanplumAppConfig | undefined> {
+    try {
+      const apps = await this.getAll();
+      const app = apps.find((app: LeanplumAppConfig) => app.appId === appId);
+      return app;
+    } catch (e) {
+      return undefined;
+    }
+  }
+
+  static async selectApp(id: string) {
+    await AsyncStorage.setItem(this.currentAppKey, id);
+  }
 }

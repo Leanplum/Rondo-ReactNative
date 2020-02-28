@@ -1,15 +1,22 @@
 import React from 'react';
-import {LeanplumAppConfig} from 'screens';
 import {ListItem} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
+import {LeanplumAppConfig} from 'utils';
 
-export const AppItem = ({app}: {app: LeanplumAppConfig}) => {
+export const AppItem = ({
+  app,
+  onPress,
+}: {
+  app: LeanplumAppConfig;
+  onPress: (appId: string) => void;
+}) => {
   return (
     <ListItem
       key={app.appId}
       title={app.name}
       subtitle={app.appId}
       subtitleStyle={styles.appSubtitle}
+      onPress={() => onPress(app.appId)}
       bottomDivider
     />
   );
