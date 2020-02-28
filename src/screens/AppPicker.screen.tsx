@@ -7,36 +7,29 @@ import {
   FlatList,
 } from 'react-native';
 import {ListItem, Button} from 'react-native-elements';
+import AsyncStorage from '@react-native-community/async-storage';
 import {AppItem} from 'components';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {Screens} from './screens';
-
-export interface LeanplumAppConfig {
-  productionKey: string;
-  developmentKey: string;
-  appId: string;
-  name: string;
-}
+import {AppsStorage, LeanplumAppConfig} from 'utils';
 
 export const AppPickerScreen = ({
   navigation,
 }: {
   navigation: NavigationStackProp;
 }) => {
-  const [apps, setApps] = useState<LeanplumAppConfig[]>([
-    {
-      productionKey: 'prod_rNf462v60Cl3KA9ntyCiQQup03VyZmkV1Ly21tgKfzg',
-      developmentKey: 'dev_S73p5EOeSmH5U2fmT5sH0DENA16qWSnWisUIJtO33qM',
-      appId: 'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
-      name: 'RN Rondo',
-    },
-  ]);
+  const [apps, setApps] = useState<LeanplumAppConfig[]>([]);
   const app: LeanplumAppConfig = navigation.getParam('app');
 
   useEffect(() => {
-    if (app) {
-      setApps([...apps, app]);
+    async function updateApps(newApp: LeanplumAppConfig) {
+      if (newApp) {
+        await AppsStorage.save(newApp);
+      }
+      const allApps = await AppsStorage.getAll();
+      setApps(allApps);
     }
+    updateApps(app);
   }, [app]);
 
   return (
@@ -50,7 +43,7 @@ export const AppPickerScreen = ({
       />
       <FlatList
         data={apps}
-        renderItem={({item}) => <AppItem app={item} />}
+        renderItem={({item}) => (item ? <AppItem app={item} /> : null)}
         keyExtractor={(item: LeanplumAppConfig) => item.appId}
       />
     </SafeAreaView>
