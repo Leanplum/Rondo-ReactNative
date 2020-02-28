@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {AppItem} from 'components';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {Screens} from './screens';
-import {AppsStorage, LeanplumAppConfig, startLeanplum} from 'utils';
+import {AppsStorage, LeanplumAppConfig, startCurrentApp} from 'utils';
 import {Leanplum} from 'react-native-leanplum';
 
 export const AppPickerScreen = ({
@@ -23,13 +23,9 @@ export const AppPickerScreen = ({
   const app: LeanplumAppConfig = navigation.getParam('app');
 
   const onAppSelected = async (appId: string) => {
-    console.log('onAppSelected');
     await AppsStorage.selectApp(appId);
-    const appToStart = await AppsStorage.getApp(appId);
     const productionMode = navigation.getParam('productionMode');
-    if (appToStart) {
-      startLeanplum(appToStart, productionMode);
-    }
+    await startCurrentApp(productionMode);
   };
 
   useEffect(() => {

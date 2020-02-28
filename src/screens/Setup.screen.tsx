@@ -8,7 +8,7 @@ import {
   Switch,
 } from 'react-native';
 import {CreateApp, Session} from 'components';
-import {startUp} from 'utils';
+import {startUp, startCurrentApp} from 'utils';
 import {useVariablesContext, useAssetContext} from 'contexts';
 import {Button} from 'react-native-elements';
 import {NavigationStackProp} from 'react-navigation-stack';
@@ -20,16 +20,6 @@ export const SetupScreen = ({
 }: {
   navigation: NavigationStackProp;
 }) => {
-  const [appId, setAppId] = useState(
-    'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
-  );
-  const [productionKey, setProductionKey] = useState(
-    'prod_rNf462v60Cl3KA9ntyCiQQup03VyZmkV1Ly21tgKfzg',
-  );
-  const [developmentKey, setDevelopmentKey] = useState(
-    'dev_S73p5EOeSmH5U2fmT5sH0DENA16qWSnWisUIJtO33qM',
-  );
-
   const [productionMode, setProductionMode] = useState(false);
   const variablesContext = useVariablesContext();
   const assetContext = useAssetContext();
@@ -58,13 +48,8 @@ export const SetupScreen = ({
         <Button
           title="CALL LEANPLUM - START"
           style={styles.button}
-          onPress={() => {
-            if (productionMode) {
-              Leanplum.setAppIdForProductionMode(appId, productionKey);
-            } else {
-              Leanplum.setAppIdForDevelopmentMode(appId, developmentKey);
-            }
-            Leanplum.start();
+          onPress={async () => {
+            await startCurrentApp(productionMode);
           }}
         />
         <Button

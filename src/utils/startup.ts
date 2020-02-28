@@ -18,11 +18,10 @@ export const startUp = async ({
 }) => {
   requestLocationPermission();
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
-  const app = await getApp();
-  startLeanplum(app, productionMode);
+  await startCurrentApp(productionMode);
 };
 
-const getApp = async () => {
+export const startCurrentApp = async (productionMode: boolean) => {
   const defaultApp: LeanplumAppConfig = {
     appId: 'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
     productionKey: 'prod_rNf462v60Cl3KA9ntyCiQQup03VyZmkV1Ly21tgKfzg',
@@ -36,13 +35,10 @@ const getApp = async () => {
   }
 
   let currentApp = (await AppsStorage.currentApp()) || defaultApp;
-  return currentApp;
+  startLeanplum(currentApp, productionMode);
 };
 
-export const startLeanplum = (
-  app: LeanplumAppConfig,
-  productionMode: boolean,
-) => {
+const startLeanplum = (app: LeanplumAppConfig, productionMode: boolean) => {
   if (productionMode) {
     Leanplum.setAppIdForProductionMode(app.appId, app.productionKey);
   } else {
