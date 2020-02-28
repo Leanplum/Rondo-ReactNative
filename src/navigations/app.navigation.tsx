@@ -25,26 +25,17 @@ export const defaultStackConfig: any = {
   },
 };
 
-const AdHocStack = createStackNavigator(
-  {
-    [Screens.AdHoc]: AdHocScreen,
-  },
-  defaultStackConfig,
-);
+const AdHocStack = createStackNavigator({
+  [Screens.AdHoc]: AdHocScreen,
+});
 
-const InboxStack = createStackNavigator(
-  {
-    [Screens.Inbox]: InboxScreen,
-  },
-  defaultStackConfig,
-);
+const InboxStack = createStackNavigator({
+  [Screens.Inbox]: InboxScreen,
+});
 
-const VariablesStack = createStackNavigator(
-  {
-    [Screens.Variables]: VariablesScreen,
-  },
-  defaultStackConfig,
-);
+const VariablesStack = createStackNavigator({
+  [Screens.Variables]: VariablesScreen,
+});
 
 export const AppNavigation = createBottomTabNavigator(
   {
@@ -62,7 +53,6 @@ export const AppNavigation = createBottomTabNavigator(
           AppScreens[0];
         return <Icon name={currentScreen.icon} size={25} color={tintColor} />;
       },
-
     }),
     tabBarOptions: {
       activeTintColor: 'white',

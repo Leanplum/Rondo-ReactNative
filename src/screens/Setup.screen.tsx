@@ -20,7 +20,7 @@ export const SetupScreen = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.scrollView}>
         <Session />
         <Button
           title="App Picker"
@@ -37,5 +37,8 @@ export const SetupScreen = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollView: {
+    padding: 10,
   },
 });
