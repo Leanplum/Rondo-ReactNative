@@ -17,24 +17,24 @@ export const startUp = ({
     console.log({success});
   });
   Leanplum.setVariables(variables);
-  Leanplum.onVariablesChangedAndNoDownloadsPending(() => {
-    console.log('onVariablesChangedAndNoDownloadsPending');
-  });
-  Leanplum.onceVariablesChangedAndNoDownloadsPending(() => {
-    console.log('onceVariablesChangedAndNoDownloadsPending');
-  });
-  Leanplum.onMessageDisplayed((message: any) => {
-    console.log({message});
-  });
-  Leanplum.onVariablesChanged((value: any) => {
-    setVariables(value);
-  });
-  Leanplum.setVariableAsset(ASSET_VARIABLE_NAME, path, (newPath: string) =>
-    setPath(newPath),
-  );
-  Leanplum.setAppIdForDevelopmentMode(
-    'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
-    'dev_S73p5EOeSmH5U2fmT5sH0DENA16qWSnWisUIJtO33qM',
-  );
-  Leanplum.start();
+  // Leanplum.onVariablesChangedAndNoDownloadsPending(() => {
+  //   console.log('onVariablesChangedAndNoDownloadsPending');
+  // });
+  // Leanplum.onceVariablesChangedAndNoDownloadsPending(() => {
+  //   console.log('onceVariablesChangedAndNoDownloadsPending');
+  // });
+  // Leanplum.onMessageDisplayed((message: any) => {
+  //   console.log({message});
+  // });
+  // Leanplum.onVariablesChanged((value: any) => {
+  //   setVariables(value);
+  // });
+  // Leanplum.setVariableAsset(ASSET_VARIABLE_NAME, path, (newPath: string) =>
+  //   setPath(newPath),
+  // );
+  // Leanplum.setAppIdForDevelopmentMode(
+  //   'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
+  //   'dev_S73p5EOeSmH5U2fmT5sH0DENA16qWSnWisUIJtO33qM',
+  // );
+  // Leanplum.start();
 };

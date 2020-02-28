@@ -12,24 +12,18 @@ import {
   AppScreens,
   VariablesScreen,
   InboxScreen,
+  AppPickerScreen,
 } from 'screens';
+import {SetupStack} from './setup.stack';
 
-const defaultStackConfig: any = {
+export const defaultStackConfig: any = {
   defaultNavigationOptions: {
-    title: 'Rondo',
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: CurrentTheme.colors?.primary,
     },
   },
 };
-
-const SetupStack = createStackNavigator(
-  {
-    [Screens.Setup]: SetupScreen,
-  },
-  defaultStackConfig,
-);
 
 const AdHocStack = createStackNavigator(
   {
@@ -68,6 +62,7 @@ export const AppNavigation = createBottomTabNavigator(
           AppScreens[0];
         return <Icon name={currentScreen.icon} size={25} color={tintColor} />;
       },
+
     }),
     tabBarOptions: {
       activeTintColor: 'white',

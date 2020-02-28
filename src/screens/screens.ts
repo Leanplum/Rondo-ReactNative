@@ -10,6 +10,7 @@ export enum Screens {
   Inbox = 'Inbox',
   Sdk = 'Sdk',
   Variables = 'Variables',
+  AppPicker = 'AppPicker',
 }
 
 export interface IScreen {
