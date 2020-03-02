@@ -8,7 +8,7 @@ export const AppItem = ({
   onPress,
 }: {
   app: LeanplumAppConfig;
-  onPress: (appId: string) => void;
+  onPress: (appSelected: LeanplumAppConfig) => void;
 }) => {
   return (
     <ListItem
@@ -16,7 +16,7 @@ export const AppItem = ({
       title={app.name}
       subtitle={app.appId}
       subtitleStyle={styles.appSubtitle}
-      onPress={() => onPress(app.appId)}
+      onPress={() => onPress(app)}
       bottomDivider
     />
   );

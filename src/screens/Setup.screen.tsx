@@ -8,7 +8,7 @@ import {
   Switch,
 } from 'react-native';
 import {CreateApp, Session} from 'components';
-import {startUp, startCurrentApp} from 'utils';
+import {startUp, startSession, AppsStorage, leanplumStart} from 'utils';
 import {useVariablesContext, useAssetContext} from 'contexts';
 import {Button} from 'react-native-elements';
 import {NavigationStackProp} from 'react-navigation-stack';
@@ -49,7 +49,10 @@ export const SetupScreen = ({
           title="CALL LEANPLUM - START"
           style={styles.button}
           onPress={async () => {
-            await startCurrentApp(productionMode);
+            const app = await AppsStorage.currentApp();
+            if (app) {
+              await leanplumStart(app, productionMode);
+            }
           }}
         />
         <Button

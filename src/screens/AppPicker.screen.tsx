@@ -1,18 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  Text,
-  FlatList,
-} from 'react-native';
-import {ListItem, Button} from 'react-native-elements';
-import AsyncStorage from '@react-native-community/async-storage';
+import {SafeAreaView, StyleSheet, FlatList} from 'react-native';
+import {Button} from 'react-native-elements';
 import {AppItem} from 'components';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {Screens} from './screens';
-import {AppsStorage, LeanplumAppConfig, startCurrentApp} from 'utils';
-import {Leanplum} from 'react-native-leanplum';
+import {AppsStorage, LeanplumAppConfig, leanplumStart} from 'utils';
 
 export const AppPickerScreen = ({
   navigation,
@@ -22,10 +14,9 @@ export const AppPickerScreen = ({
   const [apps, setApps] = useState<LeanplumAppConfig[]>([]);
   const app: LeanplumAppConfig = navigation.getParam('app');
 
-  const onAppSelected = async (appId: string) => {
-    await AppsStorage.selectApp(appId);
+  const onAppSelected = async (appSelected: LeanplumAppConfig) => {
     const productionMode = navigation.getParam('productionMode');
-    await startCurrentApp(productionMode);
+    await leanplumStart(appSelected, productionMode);
   };
 
   useEffect(() => {
