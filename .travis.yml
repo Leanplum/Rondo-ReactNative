@@ -1,0 +1,39 @@
+matrix:
+  include:
+    - language: objective-c
+      podfile: ios/Podfile
+      osx_image: xcode10.1
+      os: osx
+      before_install:
+        - echo "before_install"
+      install:
+        - echo "install"
+      script:
+        - echo "script"
+    - language: android
+      before_install:
+        - nvm install 8
+        - node --version
+      install:
+        - npm install
+        - npm run ci
+      android:
+        components:
+          - build-tools-28.0.3
+          - android-28
+          - extra-android-m2repository
+          - extra-google-google_play_services
+          - extra-google-m2repository
+          - addon-google_apis-google-16
+      script:
+        - npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+        - cd android && ./gradlew assembleDebug
+      deploy:
+        skip_cleanup: true
+        provider: releases
+        api_key:
+          secure: <API_KEY>
+        file: '$TRAVIS_BUILD_DIR/android/app/build/outputs/apk/debug/app-debug.apk'
+        on:
+          tags: true
+          repo: Leanplum/Rondo-ReactNative
