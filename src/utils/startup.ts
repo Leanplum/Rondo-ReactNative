@@ -26,6 +26,7 @@ export const startUp = async ({
 }) => {
   requestLocationPermission();
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
+  Leanplum.trackInAppPurchases();
   await storeDefaultApp();
   let currentApp = (await AppsStorage.currentApp()) || defaultApp;
   leanplumStart(currentApp, productionMode);
