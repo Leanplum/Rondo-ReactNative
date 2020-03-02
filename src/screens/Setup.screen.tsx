@@ -31,13 +31,15 @@ export const SetupScreen = ({
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <Session />
-        <Button
-          title="App Picker"
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate(Screens.AppPicker, {productionMode});
-          }}
-        />
+        <View style={styles.buttonView}>
+          <Button
+            title="App Picker"
+            onPress={() => {
+              navigation.navigate(Screens.AppPicker, {productionMode});
+            }}
+          />
+        </View>
+
         <View style={styles.switchView}>
           <Text>Production Mode</Text>
           <Switch
@@ -45,23 +47,26 @@ export const SetupScreen = ({
             onValueChange={value => setProductionMode(value)}
           />
         </View>
-        <Button
-          title="CALL LEANPLUM - START"
-          style={styles.button}
-          onPress={async () => {
-            const app = await AppsStorage.currentApp();
-            if (app) {
-              await leanplumStart(app, productionMode);
-            }
-          }}
-        />
-        <Button
-          title="FORCE UPDATE"
-          style={styles.button}
-          onPress={() => {
-            Leanplum.forceContentUpdate();
-          }}
-        />
+        <View style={styles.buttonView}>
+          <Button
+            title="CALL LEANPLUM - START"
+            onPress={async () => {
+              const app = await AppsStorage.currentApp();
+              if (app) {
+                await leanplumStart(app, productionMode);
+              }
+            }}
+          />
+        </View>
+
+        <View style={styles.buttonView}>
+          <Button
+            title="FORCE CONTENT UPDATE"
+            onPress={() => {
+              Leanplum.forceContentUpdate();
+            }}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -73,6 +78,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     padding: 10,
+    flex: 1,
+    flexDirection: 'column',
   },
   switchView: {
     flex: 1,
@@ -81,7 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 10,
   },
-  button: {
-    marginVertical: 20,
+  buttonView: {
+    marginVertical: 5,
   },
 });
