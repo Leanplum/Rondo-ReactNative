@@ -5,6 +5,5 @@ Internal [React Native SDK](https://github.com/Leanplum/Leanplum-ReactNative-SDK
 
 1. `$ yarn install` or `$ npm install`
 2. Add [React Native SDK](https://github.com/Leanplum/Leanplum-ReactNative-SDK) following [README.md](https://github.com/Leanplum/Leanplum-ReactNative-SDK/blob/master/README.md)
-3. `$ yarn start` or `$ npm run start`
-4. iOS: `$ yarn ios` or `$ npm run ios` or Android: `$ yarn android` or `$ npm run android`
+3. iOS: `$ yarn ios` or `$ npm run ios` or Android: `$ yarn android` or `$ npm run android`
 
