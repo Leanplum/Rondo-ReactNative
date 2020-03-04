@@ -9,14 +9,15 @@ import {
   SetupScreen,
   AdHocScreen,
   IScreen,
-  AppScreens,
+  AppTabScreens,
   VariablesScreen,
   InboxScreen,
+  AppPickerScreen,
 } from 'screens';
+import {SetupStack} from './setup.stack';
 
-const defaultStackConfig: any = {
+export const defaultStackConfig: any = {
   defaultNavigationOptions: {
-    title: 'Rondo',
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: CurrentTheme.colors?.primary,
@@ -24,33 +25,17 @@ const defaultStackConfig: any = {
   },
 };
 
-const SetupStack = createStackNavigator(
-  {
-    [Screens.Setup]: SetupScreen,
-  },
-  defaultStackConfig,
-);
+const AdHocStack = createStackNavigator({
+  [Screens.AdHoc]: AdHocScreen,
+});
 
-const AdHocStack = createStackNavigator(
-  {
-    [Screens.AdHoc]: AdHocScreen,
-  },
-  defaultStackConfig,
-);
+const InboxStack = createStackNavigator({
+  [Screens.Inbox]: InboxScreen,
+});
 
-const InboxStack = createStackNavigator(
-  {
-    [Screens.Inbox]: InboxScreen,
-  },
-  defaultStackConfig,
-);
-
-const VariablesStack = createStackNavigator(
-  {
-    [Screens.Variables]: VariablesScreen,
-  },
-  defaultStackConfig,
-);
+const VariablesStack = createStackNavigator({
+  [Screens.Variables]: VariablesScreen,
+});
 
 export const AppNavigation = createBottomTabNavigator(
   {
@@ -64,8 +49,8 @@ export const AppNavigation = createBottomTabNavigator(
       tabBarIcon: ({focused, horizontal, tintColor}) => {
         const {routeName} = navigation.state;
         const currentScreen =
-          AppScreens.find((screen: IScreen) => screen.name === routeName) ||
-          AppScreens[0];
+          AppTabScreens.find((screen: IScreen) => screen.name === routeName) ||
+          AppTabScreens[0];
         return <Icon name={currentScreen.icon} size={25} color={tintColor} />;
       },
     }),

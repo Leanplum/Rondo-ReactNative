@@ -47,6 +47,8 @@ target 'RondoApp' do
 
   pod 'react-native-leanplum', :path => '../node_modules/react-native-leanplum'
 
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
   target 'RondoAppTests' do
     inherit! :search_paths
     # Pods for testing

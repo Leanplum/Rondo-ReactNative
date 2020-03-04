@@ -1,20 +1,68 @@
 import {Leanplum} from 'react-native-leanplum';
 import {requestLocationPermission} from './location.permission';
 import {ASSET_VARIABLE_NAME} from 'utils';
+import {AppsStorage, LeanplumAppConfig} from './apps.storage';
+import {Alert} from 'react-native';
 
-export const startUp = ({
+const defaultApp: LeanplumAppConfig = {
+  appId: 'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
+  productionKey: 'prod_rNf462v60Cl3KA9ntyCiQQup03VyZmkV1Ly21tgKfzg',
+  developmentKey: 'dev_S73p5EOeSmH5U2fmT5sH0DENA16qWSnWisUIJtO33qM',
+  name: 'RN Rondo',
+};
+
+export const startUp = async ({
   variables,
   setVariables,
   path,
   setPath,
+  productionMode,
 }: {
   variables: any;
   setVariables: any;
+  path: string;
+  setPath: any;
+  productionMode: boolean;
 }) => {
   requestLocationPermission();
+  registerVariablesAndCallbacks(variables, setVariables, path, setPath);
+  Leanplum.trackInAppPurchases();
+  await storeDefaultApp();
+  let currentApp = (await AppsStorage.currentApp()) || defaultApp;
+  leanplumStart(currentApp, productionMode);
+};
 
+export const leanplumStart = async (
+  app: LeanplumAppConfig,
+  productionMode: boolean,
+) => {
+  if (productionMode) {
+    Leanplum.setAppIdForProductionMode(app.appId, app.productionKey);
+  } else {
+    Leanplum.setAppIdForDevelopmentMode(app.appId, app.developmentKey);
+  }
+  Leanplum.start();
+  await AppsStorage.selectApp(app.appId);
+};
+
+const storeDefaultApp = async () => {
+  const apps = await AppsStorage.getAll();
+  if (!apps.length) {
+    await AppsStorage.save(defaultApp);
+  }
+};
+
+const registerVariablesAndCallbacks = (
+  variables: any,
+  setVariables: any,
+  path: string,
+  setPath: any,
+) => {
   Leanplum.onStartResponse((success: boolean) => {
-    console.log({success});
+    const alertTitle = success
+      ? 'Leanplum session started'
+      : 'Leanplum session not started';
+    Alert.alert(alertTitle);
   });
   Leanplum.setVariables(variables);
   Leanplum.onVariablesChangedAndNoDownloadsPending(() => {
@@ -32,9 +80,4 @@ export const startUp = ({
   Leanplum.setVariableAsset(ASSET_VARIABLE_NAME, path, (newPath: string) =>
     setPath(newPath),
   );
-  Leanplum.setAppIdForDevelopmentMode(
-    'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
-    'dev_S73p5EOeSmH5U2fmT5sH0DENA16qWSnWisUIJtO33qM',
-  );
-  Leanplum.start();
 };
