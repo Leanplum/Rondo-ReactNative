@@ -2,9 +2,6 @@
   "name": "RondoApp",
   "version": "0.0.1",
   "private": true,
-  "engines": {
-    "node": ">=8.3"
-  },
   "scripts": {
     "android": "npx react-native run-android",
     "ios": "npx react-native run-ios",
@@ -25,7 +22,6 @@
     "react-native": "0.61.5",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.5.3",
-    "react-native-leanplum": "file:.yalc/react-native-leanplum",
     "react-native-reanimated": "^1.4.0",
     "react-native-safe-area-context": "^0.6.2",
     "react-native-screens": "^2.0.0-alpha.22",
