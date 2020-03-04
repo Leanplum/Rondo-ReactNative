@@ -11,7 +11,7 @@
     "start": "npx react-native start --reset-cache",
     "test": "npx jest",
     "lint": "npx tslint -p tsconfig.json -c tslint.json",
-    "tsc": "tsc",
+    "tsc": "npx tsc",
     "format": "npx prettier --write \"src/**/*.{ts,tsx}\" \"__{tests,mocks}__/**/*.{ts,tsx}\"",
     "check-format": "npx prettier --check \"src/**/*.{ts,tsx}\" \"__{tests,mocks}__/**/*.{ts,tsx}\"",
     "log-android": "npx react-native log-android",
