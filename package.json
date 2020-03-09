@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "ci": "react-native link react-native-leanplum && rm -rf node_modules/react-native-leanplum/node_modules",
     "android": "npx react-native run-android",
     "ios": "npx react-native run-ios",
     "start": "npx react-native start --reset-cache",
