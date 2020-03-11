@@ -17,7 +17,7 @@ matrix:
         - yarn install
         - cd ios && pod install && cd ..
       script:
-        - sh ios/ios.sh
+        - cd ios && sh ios.sh && cd ..
     - language: android
       before_install:
         - nvm install 8
