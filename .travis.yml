@@ -12,13 +12,12 @@ matrix:
         - openssl aes-256-cbc -K $encrypted_3b9f0b9d36d1_key -iv $encrypted_3b9f0b9d36d1_iv -in secrets.tar.enc -out secrets.tar -d
         - tar xvf secrets.tar
         - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.12.0
-        - brew install yarn --without-node
+        - brew install yarn
       install:
         - yarn install
         - cd ios && pod install && cd ..
-      script:
-        - yarn install
-        - cd ios && pod install && cd ..
+      cript:
+        - sh ios.sh
     - language: android
       before_install:
         - nvm install 8
