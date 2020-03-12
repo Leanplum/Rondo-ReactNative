@@ -4,7 +4,7 @@ set -x
 xcodebuild \
   -workspace RondoApp.xcworkspace \
   -scheme RondoApp \
-  -sdk iphoneos12.1 \
+  -sdk iphoneos13.2 \
   -configuration Release \
   -archivePath RondoApp.xcarchive \
   PROVISIONING_PROFILE="Rondo ReactNative AdHoc Distribution" \
