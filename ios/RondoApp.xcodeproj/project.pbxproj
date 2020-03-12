@@ -805,7 +805,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.leanplum.RondoApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.leanplum.rondo-reactnative";
 				PRODUCT_NAME = RondoApp;
 				SWIFT_OBJC_BRIDGING_HEADER = "RondoApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -831,8 +831,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.leanplum.RondoApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.leanplum.rondo-reactnative";
 				PRODUCT_NAME = RondoApp;
+				PROVISIONING_PROFILE_SPECIFIER = "Rondo ReactNative AdHoc Distribution";
 				SWIFT_OBJC_BRIDGING_HEADER = "RondoApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
