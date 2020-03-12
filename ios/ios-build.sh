@@ -9,4 +9,4 @@ xcodebuild \
   -archivePath RondoApp.xcarchive \
   PROVISIONING_PROFILE="Rondo ReactNative AdHoc Distribution" \
   CODE_SIGN_IDENTITY="iPhone Distribution: Leanplum, Inc. (4XLWYATZ5P)" \
-  archive
+  archive | xcpretty && exit ${PIPESTATUS[0]}
