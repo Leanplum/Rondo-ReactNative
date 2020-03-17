@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Switch, Text} from 'react-native';
 import {Input, Button, CheckBox} from 'react-native-elements';
-import {Leanplum} from 'react-native-leanplum';
 import {withNavigation} from 'react-navigation';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {Screens} from 'screens';
@@ -12,9 +11,9 @@ const CreateEnvComponent = ({
   navigation: NavigationStackProp;
 }) => {
   const [apiHost, setApiHost] = useState('');
-  const [apiSsl, setAppId] = useState<boolean>();
-  const [productionKey, setProductionKey] = useState('');
-  const [developmentKey, setDevelopmentKey] = useState('');
+  const [apiSsl, setApiSsl] = useState<boolean>(false);
+  const [socketHostname, setSocketHostname] = useState('');
+  const [socketPort, setSocketPort] = useState('');
 
   return (
     <View style={styles.container}>
@@ -24,35 +23,39 @@ const CreateEnvComponent = ({
         value={apiHost}
         onChangeText={text => setApiHost(text)}
       />
-      <CheckBox title="API SSL" checked={apiSsl} />
+      <CheckBox
+        title="API SSL"
+        checked={apiSsl}
+        containerStyle={[
+          styles.checkBoxContainer,
+          {backgroundColor: 'inherit'},
+        ]}
+        textStyle={styles.checkBoxTextStyle}
+        onPress={() => setApiSsl(!apiSsl)}
+      />
       <Input
         placeholder="SocketHostname"
         label="Socket Hostname:"
         autoCapitalize="none"
-        value={productionKey}
-        onChangeText={text => setProductionKey(text)}
+        value={socketHostname}
+        onChangeText={text => setSocketHostname(text)}
       />
       <Input
         placeholder="SocketPort"
         label="Socket Port:"
         autoCapitalize="none"
-        value={developmentKey}
-        onChangeText={text => setDevelopmentKey(text)}
+        value={socketPort}
+        onChangeText={text => setSocketPort(text)}
       />
       <Button
         title="Create"
         style={styles.saveButton}
         onPress={() => {
-          navigation.navigate(Screens.AppPicker, {
-            app: {name: apiHost, appId: apiSsl, productionKey, developmentKey},
+          navigation.navigate(Screens.EnvPicker, {
+            env: {apiHost, apiSsl, socketHostname, socketPort},
           });
         }}
-        disabled={
-          apiHost === '' ||
-          apiSsl === '' ||
-          productionKey === '' ||
-          developmentKey === ''
-        }
+        disabled={apiHost === '' || socketHostname === '' || socketPort === ''}
       />
     </View>
   );
@@ -66,5 +69,16 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     margin: 10,
+  },
+  checkBoxContainer: {
+    borderWidth: 0,
+    padding: 0,
+    margin: 10,
+  },
+  checkBoxTextStyle: {
+    color: '#86939e',
+    marginLeft: 0,
+    fontSize: 14,
+    marginTop: -2,
   },
 });
