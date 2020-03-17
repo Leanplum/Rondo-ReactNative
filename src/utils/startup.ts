@@ -3,12 +3,21 @@ import {requestLocationPermission} from './location.permission';
 import {ASSET_VARIABLE_NAME} from 'utils';
 import {AppsStorage, LeanplumAppConfig} from './apps.storage';
 import {Alert} from 'react-native';
+import {LeanplumEnvConfig, EnvsStorage} from './envs.storage';
+import {Device} from 'components';
 
 const defaultApp: LeanplumAppConfig = {
   appId: 'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
   productionKey: 'prod_rNf462v60Cl3KA9ntyCiQQup03VyZmkV1Ly21tgKfzg',
   developmentKey: 'dev_S73p5EOeSmH5U2fmT5sH0DENA16qWSnWisUIJtO33qM',
   name: 'RN Rondo',
+};
+
+const defaultEnv: LeanplumEnvConfig = {
+  apiHost: 'api.leanplum.com',
+  apiSsl: true,
+  socketHostname: 'dev.leanplum.com',
+  socketPort: 443,
 };
 
 export const startUp = async ({
@@ -28,13 +37,22 @@ export const startUp = async ({
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
   await storeDefaultApp();
   let currentApp = (await AppsStorage.currentApp()) || defaultApp;
-  leanplumStart(currentApp, productionMode);
+  let currentEnv = (await EnvsStorage.currentEnv()) || defaultEnv;
+  leanplumStart(currentApp, currentEnv, productionMode);
 };
 
 export const leanplumStart = async (
-  app: LeanplumAppConfig,
+  app: LeanplumAppConfig | undefined,
+  env: LeanplumEnvConfig | undefined,
   productionMode: boolean,
 ) => {
+  if (app == undefined) {
+    app = defaultApp;
+  }
+
+  if (env == undefined) {
+    env = defaultEnv;
+  }
   if (productionMode) {
     Leanplum.setAppIdForProductionMode(app.appId, app.productionKey);
   } else {

@@ -11,7 +11,9 @@ export enum Screens {
   Sdk = 'Sdk',
   Variables = 'Variables',
   AppPicker = 'AppPicker',
+  EnvPicker = 'EnvPicker',
   CreateApp = 'CreateApp',
+  CreateEnv = 'CreateEnv',
 }
 
 export interface IScreen {

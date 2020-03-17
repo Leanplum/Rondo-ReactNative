@@ -16,7 +16,7 @@ export const AppPickerScreen = ({
 
   const onAppSelected = async (appSelected: LeanplumAppConfig) => {
     const productionMode = navigation.getParam('productionMode');
-    await leanplumStart(appSelected, productionMode);
+    await leanplumStart(appSelected, undefined, productionMode);
   };
 
   useEffect(() => {

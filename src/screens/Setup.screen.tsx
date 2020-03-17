@@ -7,8 +7,8 @@ import {
   Text,
   Switch,
 } from 'react-native';
-import {CreateApp, Session} from 'components';
-import {startUp, startSession, AppsStorage, leanplumStart} from 'utils';
+import {Session} from 'components';
+import {startUp, AppsStorage, leanplumStart, EnvsStorage} from 'utils';
 import {useVariablesContext, useAssetContext} from 'contexts';
 import {Button} from 'react-native-elements';
 import {NavigationStackProp} from 'react-navigation-stack';
@@ -39,6 +39,14 @@ export const SetupScreen = ({
             }}
           />
         </View>
+        <View>
+          <Button
+            title="Env Picker"
+            onPress={() => {
+              navigation.navigate(Screens.EnvPicker, {productionMode});
+            }}
+          />
+        </View>
 
         <View style={styles.switchView}>
           <Text>Production Mode</Text>
@@ -52,8 +60,11 @@ export const SetupScreen = ({
             title="CALL LEANPLUM - START"
             onPress={async () => {
               const app = await AppsStorage.currentApp();
+              const env = await EnvsStorage.currentEnv();
+              console.log('currEnv', env);
+              console.log('currApp', app);
               if (app) {
-                await leanplumStart(app, productionMode);
+                await leanplumStart(app, env, productionMode);
               }
             }}
           />

@@ -13,6 +13,7 @@ import {
   VariablesScreen,
   InboxScreen,
   AppPickerScreen,
+  EnvPickerScreen,
 } from 'screens';
 import {SetupStack} from './setup.stack';
 
