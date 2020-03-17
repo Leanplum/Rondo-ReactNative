@@ -1,15 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, FlatList} from 'react-native';
-import {Button, Input} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import {EnvItem} from 'components';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {Screens} from './screens';
-import {
-  EnvsStorage,
-  LeanplumAppConfig,
-  leanplumStart,
-  LeanplumEnvConfig,
-} from 'utils';
+import {EnvsStorage, leanplumStart, LeanplumEnvConfig} from 'utils';
 
 export const EnvPickerScreen = ({
   navigation,
@@ -21,18 +16,18 @@ export const EnvPickerScreen = ({
 
   const onEnvSelected = async (envSelected: LeanplumEnvConfig) => {
     const productionMode = navigation.getParam('productionMode');
-    await leanplumStart(undefined, envSelected, productionMode);
+    //await leanplumStart(undefined, envSelected, productionMode);
   };
 
   useEffect(() => {
-    async function updateApps(newEnv: LeanplumEnvConfig) {
+    async function updateEnvs(newEnv: LeanplumEnvConfig) {
       if (newEnv) {
         await EnvsStorage.save(newEnv);
       }
       const allEnvs = await EnvsStorage.getAll();
       setEnv(allEnvs);
     }
-    updateApps(env);
+    updateEnvs(env);
   }, [env]);
 
   return (

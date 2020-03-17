@@ -13,9 +13,8 @@ export const EnvItem = ({
   return (
     <ListItem
       key={env.apiHost}
-      title={env.socketHostname}
-      subtitle={env.socketPort.toString()}
-      subtitleStyle={styles.appSubtitle}
+      title={env.apiHost}
+      titleStyle={styles.titleStyle}
       onPress={() => onPress(env)}
       bottomDivider
     />
@@ -23,5 +22,7 @@ export const EnvItem = ({
 };
 
 const styles = StyleSheet.create({
-  appSubtitle: {color: 'grey', fontSize: 13},
+  titleStyle: {
+    textAlign: 'center'
+  },
 });

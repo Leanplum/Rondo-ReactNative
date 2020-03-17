@@ -4,7 +4,6 @@ import {ASSET_VARIABLE_NAME} from 'utils';
 import {AppsStorage, LeanplumAppConfig} from './apps.storage';
 import {Alert} from 'react-native';
 import {LeanplumEnvConfig, EnvsStorage} from './envs.storage';
-import {Device} from 'components';
 
 const defaultApp: LeanplumAppConfig = {
   appId: 'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
@@ -17,7 +16,21 @@ const defaultEnv: LeanplumEnvConfig = {
   apiHost: 'api.leanplum.com',
   apiSsl: true,
   socketHostname: 'dev.leanplum.com',
-  socketPort: 443,
+  socketPort: '443',
+};
+
+const QaEnv: LeanplumEnvConfig = {
+  apiHost: 'leanplum-qa-1372.appspot.com',
+  apiSsl: true,
+  socketHostname: 'dev-qa-1372.leanplum.com',
+  socketPort: '443',
+};
+
+const StageEnv: LeanplumEnvConfig = {
+  apiHost: 'leanplum-staging.appspot.com',
+  apiSsl: true,
+  socketHostname: 'dev-staging.leanplum.com',
+  socketPort: '443',
 };
 
 export const startUp = async ({
@@ -36,6 +49,7 @@ export const startUp = async ({
   requestLocationPermission();
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
   await storeDefaultApp();
+  await storeDefaultEnv();
   let currentApp = (await AppsStorage.currentApp()) || defaultApp;
   let currentEnv = (await EnvsStorage.currentEnv()) || defaultEnv;
   leanplumStart(currentApp, currentEnv, productionMode);
@@ -66,6 +80,15 @@ const storeDefaultApp = async () => {
   const apps = await AppsStorage.getAll();
   if (!apps.length) {
     await AppsStorage.save(defaultApp);
+  }
+};
+
+const storeDefaultEnv = async () => {
+  const envs = await EnvsStorage.getAll();
+  if (!envs.length) {
+    await EnvsStorage.save(defaultEnv);
+    await EnvsStorage.save(QaEnv);
+    await EnvsStorage.save(StageEnv);
   }
 };
 

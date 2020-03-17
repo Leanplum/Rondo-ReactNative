@@ -4,8 +4,8 @@ export interface LeanplumEnvConfig {
   apiHost: string;
   apiSsl: boolean;
   socketHostname: string;
-  socketPort: number;
-}
+  socketPort: string;
+};
 
 export class EnvsStorage {
   private static readonly envsKey = 'envs';
@@ -25,16 +25,16 @@ export class EnvsStorage {
   static async currentEnv(): Promise<LeanplumEnvConfig | undefined> {
     try {
       const envId = await AsyncStorage.getItem(this.currentEnvKey);
+      console.log(envId)
       const envs = await this.getAll();
       const env = envs.find((env: LeanplumEnvConfig) => env.apiHost === envId);
-      console.log('currEnv', env);
       return env;
     } catch (e) {
       return undefined;
     }
   }
 
-  static async getApp(envId: string): Promise<LeanplumEnvConfig | undefined> {
+  static async getEnv(envId: string): Promise<LeanplumEnvConfig | undefined> {
     try {
       const envs = await this.getAll();
       const env = envs.find((env: LeanplumEnvConfig) => env.apiHost === envId);
@@ -44,7 +44,7 @@ export class EnvsStorage {
     }
   }
 
-  static async selectApp(id: string) {
+  static async selectEnv(id: string) {
     await AsyncStorage.setItem(this.currentEnvKey, id);
   }
 }
