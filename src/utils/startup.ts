@@ -1,4 +1,4 @@
-import {Leanplum} from 'react-native-leanplum';
+import {Leanplum} from '@leanplum/react-native-sdk';
 import {requestLocationPermission} from './location.permission';
 import {ASSET_VARIABLE_NAME} from 'utils';
 import {AppsStorage, LeanplumAppConfig} from './apps.storage';

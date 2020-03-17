@@ -12,7 +12,7 @@ import {
   State,
   Device,
 } from 'components';
-import {Leanplum} from 'react-native-leanplum';
+import {Leanplum} from '@leanplum/react-native-sdk';
 
 export const AdHocScreen = () => {
   return (

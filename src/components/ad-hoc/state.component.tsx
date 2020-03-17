@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text, Input, Button} from 'react-native-elements';
-import {Leanplum} from 'react-native-leanplum';
+import {Leanplum} from '@leanplum/react-native-sdk';
 
 export const State = () => {
   const [state, setStateName] = React.useState<string | null>(null);

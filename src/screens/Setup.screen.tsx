@@ -13,7 +13,7 @@ import {useVariablesContext, useAssetContext} from 'contexts';
 import {Button} from 'react-native-elements';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {Screens} from './screens';
-import {Leanplum} from 'react-native-leanplum';
+import {Leanplum} from '@leanplum/react-native-sdk';
 
 export const SetupScreen = ({
   navigation,

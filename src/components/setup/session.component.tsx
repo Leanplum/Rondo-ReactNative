@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text, Divider, ThemeContext} from 'react-native-elements';
-import {Leanplum} from 'react-native-leanplum';
+import {Leanplum} from '@leanplum/react-native-sdk';
 import {withNavigation, NavigationScreenProp} from 'react-navigation';
 import {AppsStorage, LeanplumAppConfig} from 'utils';
 

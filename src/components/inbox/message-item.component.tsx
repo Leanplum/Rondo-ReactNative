@@ -1,6 +1,6 @@
 import React from 'react';
 import {ListItem} from 'react-native-elements';
-import {LeanplumInbox, Message} from 'react-native-leanplum';
+import {LeanplumInbox, Message} from '@leanplum/react-native-sdk';
 
 export const MessageItem = ({
   message,

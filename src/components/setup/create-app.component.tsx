@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Switch, Text} from 'react-native';
 import {Input, Button} from 'react-native-elements';
-import {Leanplum} from 'react-native-leanplum';
+import {Leanplum} from '@leanplum/react-native-sdk';
 import {withNavigation} from 'react-navigation';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {Screens} from 'screens';

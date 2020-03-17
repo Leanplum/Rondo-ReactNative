@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Text, Input, Button, ThemeContext} from 'react-native-elements';
-import {Leanplum} from 'react-native-leanplum';
+import {Leanplum} from '@leanplum/react-native-sdk';
 
 export const Event = () => {
   const [event, setEvent] = useState('');

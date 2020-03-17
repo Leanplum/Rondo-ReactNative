@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, FlatList, Text, View, StyleSheet} from 'react-native';
-import {LeanplumInbox, Message, Inbox} from 'react-native-leanplum';
+import {LeanplumInbox, Message, Inbox} from '@leanplum/react-native-sdk';
 import {MessageItem} from './message-item.component';
 
 export const InboxComponent = () => {

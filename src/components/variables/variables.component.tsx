@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text, Platform} from 'react-native';
-import {Leanplum} from 'react-native-leanplum';
+import {Leanplum} from '@leanplum/react-native-sdk';
 import {Var} from './var.component';
 import {Button, Image} from 'react-native-elements';
 import {useVariablesContext, useAssetContext} from 'contexts';
