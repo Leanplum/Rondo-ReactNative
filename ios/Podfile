@@ -45,7 +45,7 @@ target 'RondoApp' do
 
   pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
 
-  pod 'react-native-leanplum', :path => '../node_modules/react-native-leanplum'
+  # pod 'react-native-leanplum', :path => '../node_modules/react-native-leanplum'
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
