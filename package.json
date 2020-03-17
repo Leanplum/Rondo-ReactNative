@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "ci": "react-native link react-native-leanplum && rm -rf node_modules/react-native-leanplum/node_modules",
+    "ci": "react-native link @leanplum/react-native-sdk && rm -rf node_modules/@leanplum/react-native-sdk/node_modules",
     "android": "npx react-native run-android",
     "ios": "npx react-native run-ios",
     "start": "npx react-native start --reset-cache",
@@ -30,7 +30,7 @@
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^2.0.11",
     "react-navigation-tabs": "^2.7.0",
-    "react-native-leanplum": "^2.0.6"
+    "@leanplum/react-native-sdk": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
