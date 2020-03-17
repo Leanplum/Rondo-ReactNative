@@ -1,10 +1,19 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {AppsStorage, LeanplumAppConfig} from 'utils';
+
+import {SdkComponent} from 'components';
 
 export const SdkScreen = () => {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Sdk Screen</Text>
-    </View>
-  );
+  const [app, setApp] = useState<LeanplumAppConfig>();
+
+  useEffect(() => {
+    getSession();
+  }, []);
+
+  async function getSession() {
+    const app = await AppsStorage.currentApp();
+    setApp(app);
+  }
+
+  return <SdkComponent app={app} />;
 };

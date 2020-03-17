@@ -14,6 +14,9 @@ export enum Screens {
   EnvPicker = 'EnvPicker',
   CreateApp = 'CreateApp',
   CreateEnv = 'CreateEnv',
+  Triggers = 'Triggers',
+  Messages = 'Messages',
+  Push = 'Push',
 }
 
 export interface IScreen {
