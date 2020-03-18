@@ -6,15 +6,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {CurrentTheme} from 'utils';
 import {
   Screens,
-  SetupScreen,
   AdHocScreen,
   IScreen,
   AppTabScreens,
   VariablesScreen,
   InboxScreen,
-  AppPickerScreen,
 } from 'screens';
 import {SetupStack} from './setup.stack';
+import {SdkStack} from './sdk.stack';
 
 export const defaultStackConfig: any = {
   defaultNavigationOptions: {
@@ -43,6 +42,7 @@ export const AppNavigation = createBottomTabNavigator(
     [Screens.AdHoc]: AdHocStack,
     [Screens.Inbox]: InboxStack,
     [Screens.Variables]: VariablesStack,
+    [Screens.Sdk]: SdkStack,
   },
   {
     defaultNavigationOptions: ({navigation}) => ({
