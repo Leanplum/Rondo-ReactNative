@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 import {Buttons} from './buttons.component';
@@ -27,7 +27,7 @@ export const SdkComponent = ({app, env}: {app: any; env: any}) => {
       <View style={styles.container}>
         <Text style={styles.textCenter}>SDK Version: 2.6.2</Text>
         <Text style={styles.textCenter}>Leanplum App: {app?.name}</Text>
-        <Text style={styles.textCenter}>API URL: </Text>
+        <Text style={styles.textCenter}>API URL: {env?.apiHost}</Text>
       </View>
       <View style={styles.buttonContainer}>
         <Buttons sourceData={buttonsData} />

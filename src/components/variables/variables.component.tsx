@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {View, StyleSheet, Text, Platform} from 'react-native';
 import {Leanplum} from '@leanplum/react-native-sdk';
 import {Var} from './var.component';
