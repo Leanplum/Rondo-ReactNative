@@ -27,7 +27,7 @@ matrix:
         on:
           tags: true
           repo: Leanplum/Rondo-ReactNative
-          branch: travis-build
+          branch: develop
     - language: android
       before_install:
         - nvm install 8
@@ -57,4 +57,4 @@ matrix:
         on:
           tags: true
           repo: Leanplum/Rondo-ReactNative
-          branch: travis-build
+          branch: develop
