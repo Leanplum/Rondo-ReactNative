@@ -4,8 +4,8 @@ export interface LeanplumEnvConfig {
   apiHost: string;
   apiSsl: boolean;
   socketHostname: string;
-  socketPort: string;
-};
+  socketPort: number;
+}
 
 export class EnvsStorage {
   private static readonly envsKey = 'envs';

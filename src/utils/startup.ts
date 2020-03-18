@@ -16,21 +16,21 @@ const defaultEnv: LeanplumEnvConfig = {
   apiHost: 'api.leanplum.com',
   apiSsl: true,
   socketHostname: 'dev.leanplum.com',
-  socketPort: '443',
+  socketPort: 443,
 };
 
 const QaEnv: LeanplumEnvConfig = {
   apiHost: 'leanplum-qa-1372.appspot.com',
   apiSsl: true,
   socketHostname: 'dev-qa-1372.leanplum.com',
-  socketPort: '443',
+  socketPort: 443,
 };
 
 const StageEnv: LeanplumEnvConfig = {
   apiHost: 'leanplum-staging.appspot.com',
   apiSsl: true,
   socketHostname: 'dev-staging.leanplum.com',
-  socketPort: '443',
+  socketPort: 443,
 };
 
 export const startUp = async ({
@@ -66,13 +66,16 @@ export const leanplumStart = async (
 
   if (env == undefined) {
     env = defaultEnv;
-  };
+  }
 
   if (productionMode) {
     Leanplum.setAppIdForProductionMode(app.appId, app.productionKey);
   } else {
     Leanplum.setAppIdForDevelopmentMode(app.appId, app.developmentKey);
   }
+
+  Leanplum.setSocketConnectionSettings(env.socketHostname, env.socketPort);
+  Leanplum.setApiConnectionSettings(env.apiHost, 'api', env.apiSsl);
   Leanplum.start();
   await AppsStorage.selectApp(app.appId);
   await EnvsStorage.selectEnv(env.apiHost);
