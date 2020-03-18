@@ -61,8 +61,6 @@ export const SetupScreen = ({
             onPress={async () => {
               const app = await AppsStorage.currentApp();
               const env = await EnvsStorage.currentEnv();
-              console.log('currEnv', env);
-              console.log('currApp', app);
               if (app) {
                 await leanplumStart(app, env, productionMode);
               }

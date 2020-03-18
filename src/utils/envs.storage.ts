@@ -25,7 +25,6 @@ export class EnvsStorage {
   static async currentEnv(): Promise<LeanplumEnvConfig | undefined> {
     try {
       const envId = await AsyncStorage.getItem(this.currentEnvKey);
-      console.log(envId)
       const envs = await this.getAll();
       const env = envs.find((env: LeanplumEnvConfig) => env.apiHost === envId);
       return env;

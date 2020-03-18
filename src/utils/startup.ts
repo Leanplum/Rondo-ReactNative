@@ -66,7 +66,8 @@ export const leanplumStart = async (
 
   if (env == undefined) {
     env = defaultEnv;
-  }
+  };
+
   if (productionMode) {
     Leanplum.setAppIdForProductionMode(app.appId, app.productionKey);
   } else {
@@ -74,6 +75,7 @@ export const leanplumStart = async (
   }
   Leanplum.start();
   await AppsStorage.selectApp(app.appId);
+  await EnvsStorage.selectEnv(env.apiHost);
 };
 
 const storeDefaultApp = async () => {

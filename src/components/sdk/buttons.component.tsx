@@ -17,12 +17,12 @@ const ButtonsComponent = ({
       renderItem={({item}) => (
         <Button
           title={item.name}
+          containerStyle={styles.button}
           onPress={
             item.onPress === 'navigation'
               ? () => navigation.navigate(item.name)
               : item.onPress
           }
-          style={styles.button}
         />
       )}
       keyExtractor={item => item.id}
