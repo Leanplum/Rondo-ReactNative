@@ -12,4 +12,5 @@ Internal [React Native SDK](https://github.com/Leanplum/Leanplum-ReactNative-SDK
 
 1. `$ yarn install` or `$ npm install`
 2. `$ yarn ci`
-3. iOS: `$ yarn ios` or `$ npm run ios` or Android: `$ yarn android` or `$ npm run android`
+3. For iOS only `$ cd ios && pod install && cd ..`
+4. iOS: `$ yarn ios` or `$ npm run ios` or Android: `$ yarn android` or `$ npm run android`

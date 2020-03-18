@@ -4,7 +4,7 @@ import {Button} from 'react-native-elements';
 import {AppItem} from 'components';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {Screens} from './screens';
-import {AppsStorage, LeanplumAppConfig, leanplumStart, EnvsStorage} from 'utils';
+import {AppsStorage, LeanplumAppConfig} from 'utils';
 
 export const AppPickerScreen = ({
   navigation,
@@ -15,9 +15,7 @@ export const AppPickerScreen = ({
   const app: LeanplumAppConfig = navigation.getParam('app');
 
   const onAppSelected = async (appSelected: LeanplumAppConfig) => {
-    const productionMode = navigation.getParam('productionMode');
-    const envSelected = await EnvsStorage.currentEnv();
-    await leanplumStart(appSelected, envSelected, productionMode);
+    await AppsStorage.selectApp(appSelected.appId);
   };
 
   useEffect(() => {

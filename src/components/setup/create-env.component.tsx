@@ -13,14 +13,14 @@ const CreateEnvComponent = ({
   const [apiHost, setApiHost] = useState('');
   const [apiSsl, setApiSsl] = useState<boolean>(false);
   const [socketHostname, setSocketHostname] = useState('');
-  const [socketPort, setSocketPort] = useState('');
+  const [socketPort, setSocketPort] = useState(443);
 
   return (
     <View style={styles.container}>
       <Input
         placeholder="API Host"
         label="API Host"
-        value={apiHost}
+        autoCapitalize="none"
         onChangeText={text => setApiHost(text)}
       />
       <CheckBox
@@ -34,18 +34,16 @@ const CreateEnvComponent = ({
         onPress={() => setApiSsl(!apiSsl)}
       />
       <Input
-        placeholder="SocketHostname"
+        placeholder="Socket Hostname"
         label="Socket Hostname:"
         autoCapitalize="none"
-        value={socketHostname}
         onChangeText={text => setSocketHostname(text)}
       />
       <Input
-        placeholder="SocketPort"
+        placeholder="Socket Port"
         label="Socket Port:"
         autoCapitalize="none"
-        value={socketPort}
-        onChangeText={text => setSocketPort(text)}
+        onChangeText={number => setSocketPort(Number(number))}
       />
       <Button
         title="Create"
@@ -55,7 +53,7 @@ const CreateEnvComponent = ({
             env: {apiHost, apiSsl, socketHostname, socketPort},
           });
         }}
-        disabled={apiHost === '' || socketHostname === '' || socketPort === ''}
+        disabled={apiHost === '' || socketHostname === ''}
       />
     </View>
   );
