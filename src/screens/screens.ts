@@ -10,6 +10,13 @@ export enum Screens {
   Inbox = 'Inbox',
   Sdk = 'Sdk',
   Variables = 'Variables',
+  AppPicker = 'AppPicker',
+  EnvPicker = 'EnvPicker',
+  CreateApp = 'CreateApp',
+  CreateEnv = 'CreateEnv',
+  Triggers = 'Triggers',
+  Messages = 'Messages',
+  Push = 'Push',
 }
 
 export interface IScreen {
@@ -18,7 +25,7 @@ export interface IScreen {
   icon: string;
 }
 
-export const AppScreens: IScreen[] = [
+export const AppTabScreens: IScreen[] = [
   {name: Screens.Setup, component: SetupScreen, icon: 'settings'},
   {name: Screens.AdHoc, component: AdHocScreen, icon: 'square-edit-outline'},
   {name: Screens.Inbox, component: InboxScreen, icon: 'inbox-arrow-down'},

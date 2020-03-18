@@ -3,19 +3,20 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {withTheme, CurrentTheme} from 'utils';
+import {CurrentTheme} from 'utils';
 import {
   Screens,
-  SetupScreen,
   AdHocScreen,
   IScreen,
-  AppScreens,
+  AppTabScreens,
   VariablesScreen,
+  InboxScreen,
 } from 'screens';
+import {SetupStack} from './setup.stack';
+import {SdkStack} from './sdk.stack';
 
-const defaultStackConfig: any = {
+export const defaultStackConfig: any = {
   defaultNavigationOptions: {
-    title: 'Rondo',
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: CurrentTheme.colors?.primary,
@@ -23,40 +24,33 @@ const defaultStackConfig: any = {
   },
 };
 
-const SetupStack = createStackNavigator(
-  {
-    [Screens.Setup]: withTheme(SetupScreen),
-  },
-  defaultStackConfig,
-);
+const AdHocStack = createStackNavigator({
+  [Screens.AdHoc]: AdHocScreen,
+});
 
-const AdHocStack = createStackNavigator(
-  {
-    [Screens.AdHoc]: withTheme(AdHocScreen),
-  },
-  defaultStackConfig,
-);
+const InboxStack = createStackNavigator({
+  [Screens.Inbox]: InboxScreen,
+});
 
-const VariablesStack = createStackNavigator(
-  {
-    [Screens.Variables]: withTheme(VariablesScreen),
-  },
-  defaultStackConfig,
-);
+const VariablesStack = createStackNavigator({
+  [Screens.Variables]: VariablesScreen,
+});
 
 export const AppNavigation = createBottomTabNavigator(
   {
     [Screens.Setup]: SetupStack,
     [Screens.AdHoc]: AdHocStack,
+    [Screens.Inbox]: InboxStack,
     [Screens.Variables]: VariablesStack,
+    [Screens.Sdk]: SdkStack,
   },
   {
     defaultNavigationOptions: ({navigation}) => ({
       tabBarIcon: ({focused, horizontal, tintColor}) => {
         const {routeName} = navigation.state;
         const currentScreen =
-          AppScreens.find((screen: IScreen) => screen.name === routeName) ||
-          AppScreens[0];
+          AppTabScreens.find((screen: IScreen) => screen.name === routeName) ||
+          AppTabScreens[0];
         return <Icon name={currentScreen.icon} size={25} color={tintColor} />;
       },
     }),
