@@ -43,7 +43,7 @@ const CreateEnvComponent = ({
         placeholder="Socket Port"
         label="Socket Port:"
         autoCapitalize="none"
-        onChangeText={number => setSocketPort(Number(number))}
+        onChangeText={number => setSocketPort(+number)}
       />
       <Button
         title="Create"
