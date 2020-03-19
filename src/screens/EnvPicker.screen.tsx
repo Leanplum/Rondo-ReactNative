@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, FlatList} from 'react-native';
+import {SafeAreaView, StyleSheet, FlatList, Text} from 'react-native';
 import {Button} from 'react-native-elements';
 import {EnvItem} from 'components';
 import {NavigationStackProp} from 'react-navigation-stack';
@@ -38,6 +38,9 @@ export const EnvPickerScreen = ({
           navigation.navigate(Screens.CreateEnv);
         }}
       />
+      <Text style={styles.textCenter}>
+        The app should be restarted (kill) to apply the changes after selection.
+      </Text>
       <FlatList
         data={envs}
         renderItem={({item}) => <EnvItem env={item} onPress={onEnvSelected} />}
@@ -54,5 +57,9 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 10,
+  },
+  textCenter: {
+    textAlign: 'center',
+    marginBottom: 10,
   },
 });

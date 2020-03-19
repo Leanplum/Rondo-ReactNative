@@ -22,6 +22,8 @@ export const SdkComponent = ({app, env}: {app: any; env: any}) => {
     },
   ];
 
+  // The SDK Version is hardcoded because there is not property returned from the SDK.
+
   return (
     <View>
       <View style={styles.container}>

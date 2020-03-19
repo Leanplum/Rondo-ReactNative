@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Switch, Text} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import {Input, Button, CheckBox} from 'react-native-elements';
 import {withNavigation} from 'react-navigation';
 import {NavigationStackProp} from 'react-navigation-stack';
@@ -43,7 +43,7 @@ const CreateEnvComponent = ({
         placeholder="Socket Port"
         label="Socket Port:"
         autoCapitalize="none"
-        onChangeText={number => setSocketPort(Number(number))}
+        onChangeText={number => setSocketPort(+number)}
       />
       <Button
         title="Create"
@@ -78,5 +78,5 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     fontSize: 14,
     marginTop: -2,
-  },
+  }
 });

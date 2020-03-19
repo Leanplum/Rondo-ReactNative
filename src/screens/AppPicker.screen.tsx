@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, FlatList} from 'react-native';
+import {SafeAreaView, StyleSheet, FlatList, Text} from 'react-native';
 import {Button} from 'react-native-elements';
 import {AppItem} from 'components';
 import {NavigationStackProp} from 'react-navigation-stack';
@@ -38,6 +38,9 @@ export const AppPickerScreen = ({
           navigation.navigate(Screens.CreateApp);
         }}
       />
+      <Text style={styles.textCenter}>
+        The app should be restarted (kill) to apply the changes after selection.
+      </Text>
       <FlatList
         data={apps}
         renderItem={({item}) => <AppItem app={item} onPress={onAppSelected} />}
@@ -54,5 +57,9 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 10,
+  },
+  textCenter: {
+    textAlign: 'center',
+    marginBottom: 10,
   },
 });
