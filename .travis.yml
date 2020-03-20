@@ -18,7 +18,7 @@ matrix:
         - cd ios && pod install && cd ..
       script:
         - cd ios && sh ios.sh && cd ..
-      before_deploy:
+      after_script:
         - echo "$LEANPLUM_SDK_VERSION"
         - git tag $LEANPLUM_SDK_VERSION
       deploy:
@@ -52,7 +52,7 @@ matrix:
           --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest
           android/app/src/main/res/
         - cd android && ./gradlew assembleDebug
-      before_deploy:
+      after_script:
         - echo "$LEANPLUM_SDK_VERSION"
         - git tag $LEANPLUM_SDK_VERSION
       deploy:
