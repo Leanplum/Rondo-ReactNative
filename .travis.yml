@@ -30,6 +30,7 @@ matrix:
         name: 'React Native SDK $LEANPLUM_SDK_VERSION'
         tag: '$LEANPLUM_SDK_VERSION'
         on:
+          branch: develop
           condition: '-n "$LEANPLUM_SDK_VERSION"'
     - language: android
       before_install:
@@ -63,4 +64,5 @@ matrix:
         name: 'React Native SDK $LEANPLUM_SDK_VERSION'
         tag: '$LEANPLUM_SDK_VERSION'
         on:
+          branch: develop
           condition: '-n "$LEANPLUM_SDK_VERSION"'
