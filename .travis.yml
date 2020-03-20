@@ -25,9 +25,9 @@ matrix:
           secure: MWlFQyijuDqSehsQCHuLM3TbW4S587HlCvgKLu4yFGtHbYhC5sXwQDZCSss/7NQseWNa8pQz/NxMN4AtxEvZQIvi/yQ6R3DdyfpY3nmpJCgpLz4lIAGnkirugpVczvf9myS9oBNreIM2X9tjqqrwtFUnxetBepdoE/gKkH1ek6hZac6IyQyPu6ObFFrxVBzE6+L1KVCZY75Q1RFbgSPgj5ZquGX9l792AYEPD6rb5QY0U0yD5qTHqIZJquy0XlO7xukZCsYIRsCq0VStlqC+2udm+0sjcmjqWunQDPHylBQySnTk7CRAqziUnSfbmugvgnwW2evMAr+aFioBDAKBL00WCZ+nppO1dI1a05iESjvMfld5+wk6xBDjtk1A3CT+2+0YRtdrFU6KkdK/kNtbQNpsv0TFC58ILnY8cZLPurzr4khwIbSTKjygm5Xdbi1ZddxfxjsGPycRVq+/kkhaeGbHwhAVickA8e9uCV8gA4rR4OsKvoovp5AoAGhrYdBaKFybkf+4IPkOPq8kSVPixLJPlYtgvLHI6J8Nub+Ln+74aQouOE++hm3oWFvNrLqcvGHFZ8URky/N9C3OFmv43qcj6upiJzFTB2T4v0Lj5u0HxeRzn71rOZq/WIu6A8/OI0Lto7gPl7PnPtTTW6s+wMa/la+g0/6RCpFKP9CcsCI=
         file: '$TRAVIS_BUILD_DIR/ios/build/RondoApp.ipa'
         on:
-          tags: true
           repo: Leanplum/Rondo-ReactNative
           branch: develop
+          tag: '$LEANPLUM_SDK_VERSION'
     - language: android
       before_install:
         - nvm install 8
@@ -55,6 +55,6 @@ matrix:
           secure: MWlFQyijuDqSehsQCHuLM3TbW4S587HlCvgKLu4yFGtHbYhC5sXwQDZCSss/7NQseWNa8pQz/NxMN4AtxEvZQIvi/yQ6R3DdyfpY3nmpJCgpLz4lIAGnkirugpVczvf9myS9oBNreIM2X9tjqqrwtFUnxetBepdoE/gKkH1ek6hZac6IyQyPu6ObFFrxVBzE6+L1KVCZY75Q1RFbgSPgj5ZquGX9l792AYEPD6rb5QY0U0yD5qTHqIZJquy0XlO7xukZCsYIRsCq0VStlqC+2udm+0sjcmjqWunQDPHylBQySnTk7CRAqziUnSfbmugvgnwW2evMAr+aFioBDAKBL00WCZ+nppO1dI1a05iESjvMfld5+wk6xBDjtk1A3CT+2+0YRtdrFU6KkdK/kNtbQNpsv0TFC58ILnY8cZLPurzr4khwIbSTKjygm5Xdbi1ZddxfxjsGPycRVq+/kkhaeGbHwhAVickA8e9uCV8gA4rR4OsKvoovp5AoAGhrYdBaKFybkf+4IPkOPq8kSVPixLJPlYtgvLHI6J8Nub+Ln+74aQouOE++hm3oWFvNrLqcvGHFZ8URky/N9C3OFmv43qcj6upiJzFTB2T4v0Lj5u0HxeRzn71rOZq/WIu6A8/OI0Lto7gPl7PnPtTTW6s+wMa/la+g0/6RCpFKP9CcsCI=
         file: '$TRAVIS_BUILD_DIR/android/app/build/outputs/apk/debug/app-debug.apk'
         on:
-          tags: true
           repo: Leanplum/Rondo-ReactNative
           branch: develop
+          tag: '$LEANPLUM_SDK_VERSION'
