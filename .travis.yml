@@ -20,7 +20,8 @@ matrix:
         - cd ios && sh ios.sh && cd ..
       after_script:
         - echo "$LEANPLUM_SDK_VERSION"
-        - git tag $LEANPLUM_SDK_VERSION
+        - chmod +x verifyTag.sh
+        - ./verifyTag.sh
       deploy:
         skip_cleanup: true
         provider: releases
@@ -54,7 +55,8 @@ matrix:
         - cd android && ./gradlew assembleDebug
       after_script:
         - echo "$LEANPLUM_SDK_VERSION"
-        - git tag $LEANPLUM_SDK_VERSION
+        - chmod +x verifyTag.sh
+        - ./verifyTag.sh
       deploy:
         skip_cleanup: true
         provider: releases
