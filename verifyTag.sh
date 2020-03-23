@@ -1,10 +1,10 @@
 #!/bin/bash
 if [[ -n "${LEANPLUM_SDK_VERSION}" ]]; then
     if git tag $LEANPLUM_SDK_VERSION; then 
-        echo 'TAG VERIFY TRUE'
+        export DEPLOY_APP="true"
     else 
-        echo 'TAG VERIFY FALSE'
+        export DEPLOY_APP="false"
     fi
 else
-    echo 'LEANPLUM_SDK_VERSION DOES NOT EXIST'
+    export DEPLOY_APP="false"
 fi

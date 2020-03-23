@@ -22,6 +22,7 @@ matrix:
         - echo "$LEANPLUM_SDK_VERSION"
         - chmod +x verifyTag.sh
         - ./verifyTag.sh
+        - echo "$DEPLOY_APP"
       deploy:
         skip_cleanup: true
         provider: releases
@@ -57,6 +58,7 @@ matrix:
         - echo "$LEANPLUM_SDK_VERSION"
         - chmod +x verifyTag.sh
         - ./verifyTag.sh
+        - echo "$DEPLOY_APP"
       deploy:
         skip_cleanup: true
         provider: releases
