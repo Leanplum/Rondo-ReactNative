@@ -4,6 +4,8 @@ matrix:
       podfile: ios/Podfile
       osx_image: xcode11.3
       os: osx
+      env:
+        - DEPLOY_APP=false
       sudo: true
       cache:
         - yarn
@@ -35,6 +37,8 @@ matrix:
           branch: develop
           condition: '-n "$LEANPLUM_SDK_VERSION"'
     - language: android
+      env:
+        - DEPLOY_APP=false
       before_install:
         - nvm install 8
         - node --version
