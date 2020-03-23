@@ -4,8 +4,6 @@ matrix:
       podfile: ios/Podfile
       osx_image: xcode11.3
       os: osx
-      env:
-        - DEPLOY_APP=false
       sudo: true
       cache:
         - yarn
@@ -22,9 +20,7 @@ matrix:
         - cd ios && sh ios.sh && cd ..
       after_script:
         - echo "$LEANPLUM_SDK_VERSION"
-        - chmod +x verifyTag.sh
-        - ./verifyTag.sh
-        - echo "$DEPLOY_APP"
+        - git tag $LEANPLUM_SDK_VERSION
       deploy:
         skip_cleanup: true
         provider: releases
@@ -37,8 +33,6 @@ matrix:
           branch: develop
           condition: '-n "$LEANPLUM_SDK_VERSION"'
     - language: android
-      env:
-        - DEPLOY_APP=false
       before_install:
         - nvm install 8
         - node --version
@@ -60,9 +54,7 @@ matrix:
         - cd android && ./gradlew assembleDebug && cd ..
       after_script:
         - echo "$LEANPLUM_SDK_VERSION"
-        - chmod +x verifyTag.sh
-        - ./verifyTag.sh
-        - echo "$DEPLOY_APP"
+        - git tag $LEANPLUM_SDK_VERSION
       deploy:
         skip_cleanup: true
         provider: releases
