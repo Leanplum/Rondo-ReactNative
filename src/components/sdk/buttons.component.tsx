@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, Platform} from 'react-native';
 import {Button} from 'react-native-elements';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {withNavigation} from 'react-navigation';
@@ -11,9 +11,13 @@ const ButtonsComponent = ({
   navigation: NavigationStackProp;
   sourceData: Object;
 }) => {
+  let filteredData = sourceData;
+  if (Platform.OS === "android") {
+    filteredData = filteredData = sourceData.filter(item => item.iOSOnly === undefined)
+  };
   return (
     <FlatList
-      data={sourceData}
+      data={filteredData}
       renderItem={({item}) => (
         <Button
           title={item.name}
@@ -25,7 +29,7 @@ const ButtonsComponent = ({
           }
         />
       )}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.id.toString()}
     />
   );
 };

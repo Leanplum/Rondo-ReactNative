@@ -5,11 +5,25 @@ import {AppsStorage, LeanplumAppConfig} from './apps.storage';
 import {Alert} from 'react-native';
 import {LeanplumEnvConfig, EnvsStorage} from './envs.storage';
 
-const defaultApp: LeanplumAppConfig = {
-  appId: 'app_mdPnGAyQhzV5CcibMb9d9GDQ7oj1J94odFm6lunFd2I',
-  productionKey: 'prod_rNf462v60Cl3KA9ntyCiQQup03VyZmkV1Ly21tgKfzg',
-  developmentKey: 'dev_S73p5EOeSmH5U2fmT5sH0DENA16qWSnWisUIJtO33qM',
-  name: 'RN Rondo',
+const musalaApp: LeanplumAppConfig = {
+  appId: 'app_qA781mPlJYjzlZLDlTh68cdNDUOf31kcTg1TCbSXSS0',
+  productionKey: 'prod_kInQHXLJ0Dju7QJRocsD5DYMdYAVbdGGwhl6doTfH0k',
+  developmentKey: 'dev_WqNqX0qOOHyTEQtwKXs5ldhqErHfixvcSAMlYgyIL0U',
+  name: 'Musala QA',
+};
+
+const qaApp: LeanplumAppConfig = {
+  appId: 'app_ve9UCNlqI8dy6Omzfu1rEh6hkWonNHVZJIWtLLt6aLs',
+  productionKey: 'prod_D5ECYBLrRrrOYaFZvAFFHTg1JyZ2Llixe5s077Lw3rM',
+  developmentKey: 'dev_cKF5HMpLGqhbovlEGMKjgTuf8AHfr2Jar6rrnNhtzQ0',
+  name: 'Rondo QA Produciton',
+};
+
+const prodApp: LeanplumAppConfig = {
+  appId: 'app_UQcFGVeXzOCVsovrlUebad9R67hFJqzDegfQPZRnVZM',
+  productionKey: 'prod_lL8RSFzmHy0iVYXQpzjUVEHDlaUz5idT0H7BVs6Bn1Q',
+  developmentKey: 'dev_b9qX0tcazL5PCQFuZ7pxsfT6XHA7xQkaFtYVrgt4Kq0',
+  name: 'Rondo QA Automation',
 };
 
 const defaultEnv: LeanplumEnvConfig = {
@@ -19,14 +33,14 @@ const defaultEnv: LeanplumEnvConfig = {
   socketPort: 443,
 };
 
-const QaEnv: LeanplumEnvConfig = {
+const qaEnv: LeanplumEnvConfig = {
   apiHost: 'leanplum-qa-1372.appspot.com',
   apiSsl: true,
   socketHostname: 'dev-qa-1372.leanplum.com',
   socketPort: 443,
 };
 
-const StageEnv: LeanplumEnvConfig = {
+const stageEnv: LeanplumEnvConfig = {
   apiHost: 'leanplum-staging.appspot.com',
   apiSsl: true,
   socketHostname: 'dev-staging.leanplum.com',
@@ -50,7 +64,7 @@ export const startUp = async ({
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
   await storeDefaultApp();
   await storeDefaultEnv();
-  let currentApp = (await AppsStorage.currentApp()) || defaultApp;
+  let currentApp = (await AppsStorage.currentApp()) || musalaApp;
   let currentEnv = (await EnvsStorage.currentEnv()) || defaultEnv;
   leanplumStart(currentApp, currentEnv, productionMode);
 };
@@ -61,7 +75,7 @@ export const leanplumStart = async (
   productionMode: boolean,
 ) => {
   if (app == undefined) {
-    app = defaultApp;
+    app = musalaApp;
   }
 
   if (env == undefined) {
@@ -84,7 +98,9 @@ export const leanplumStart = async (
 const storeDefaultApp = async () => {
   const apps = await AppsStorage.getAll();
   if (!apps.length) {
-    await AppsStorage.save(defaultApp);
+    await AppsStorage.save(musalaApp);
+    await AppsStorage.save(qaApp);
+    await AppsStorage.save(prodApp);
   }
 };
 
@@ -92,8 +108,8 @@ const storeDefaultEnv = async () => {
   const envs = await EnvsStorage.getAll();
   if (!envs.length) {
     await EnvsStorage.save(defaultEnv);
-    await EnvsStorage.save(QaEnv);
-    await EnvsStorage.save(StageEnv);
+    await EnvsStorage.save(qaEnv);
+    await EnvsStorage.save(stageEnv);
   }
 };
 
