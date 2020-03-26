@@ -16,7 +16,7 @@ export const ListComponent = ({sourceData}: {sourceData: Object}) => {
           <Text style={styles.text}>{item.name}</Text>
         </TouchableOpacity>
       )}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.id.toString()}
     />
   );
 };
