@@ -1,0 +1,45 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+
+platform :ios do
+  desc "Installs the certificates locally"
+  private_lane :install_certificates do
+  tmp_keychain = "temporary_keychain"
+  create_keychain(
+    name: tmp_keychain,
+    password: tmp_keychain,
+    default_keychain: true,
+    timeout: 3600,
+    unlock: true,
+    )
+  match(
+    type: "appstore",
+    keychain_name: tmp_keychain,
+    keychain_password: tmp_keychain,
+    readonly: true
+  )
+  end
+  
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+	install_certificates  	
+    increment_build_number(xcodeproj: "RondoApp.xcodeproj", build_number: latest_testflight_build_number + 1)
+    build_app(workspace: "RondoApp.xcworkspace", scheme: "RondoApp")
+    upload_to_testflight
+  end
+end

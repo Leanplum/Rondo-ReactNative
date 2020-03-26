@@ -185,7 +185,7 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
   - React-jsinspector (0.61.5)
-  - react-native-leanplum (2.0.7):
+  - react-native-leanplum (1.0.2):
     - Leanplum-iOS-SDK (= 2.6.2)
     - React
   - react-native-safe-area-context (0.6.4):
@@ -259,7 +259,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
-  - react-native-leanplum (from `../node_modules/react-native-leanplum`)
+  - "react-native-leanplum (from `../node_modules/@leanplum/react-native-sdk`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -317,7 +317,7 @@ EXTERNAL SOURCES:
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-leanplum:
-    :path: "../node_modules/react-native-leanplum"
+    :path: "../node_modules/@leanplum/react-native-sdk"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-RCTActionSheet:
@@ -375,7 +375,7 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
-  react-native-leanplum: ca6e5c8e38b632ba104d80dc2a177906fa19a891
+  react-native-leanplum: e744beb5bb855c9d8343d7b254147300c162de37
   react-native-safe-area-context: 52342d2d80ea8faadd0ffa76d83b6051f20c5329
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
@@ -396,6 +396,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: e6f4b03981ea7dfb19b3903bf1d5b957fdf317f5
+PODFILE CHECKSUM: b7d919aa7eeea9578edf2ce8251885197cca8e89
 
 COCOAPODS: 1.8.4
