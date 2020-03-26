@@ -9,29 +9,30 @@ matrix:
         - yarn
         - cocoapods
       before_install:
-        - openssl aes-256-cbc -K $encrypted_3b9f0b9d36d1_key -iv $encrypted_3b9f0b9d36d1_iv -in secrets.tar.enc -out ios/secrets.tar -d
-        - tar xvf ios/secrets.tar -C ios/
         - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.12.0
         - brew install yarn
+        - cd ios && gem install bundler && cd ..
       install:
         - yarn install
-        - cd ios && pod install && cd ..
+        - cd ios && bundle install && pod install && cd ..
+
       script:
-        - cd ios && sh ios.sh && cd ..
+        - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
+        - cd ios && bundle exec fastlane beta && cd ..
       after_script:
         - echo "$LEANPLUM_SDK_VERSION"
         - git tag $LEANPLUM_SDK_VERSION
-      deploy:
-        skip_cleanup: true
-        provider: releases
-        api_key:
-          secure: MWlFQyijuDqSehsQCHuLM3TbW4S587HlCvgKLu4yFGtHbYhC5sXwQDZCSss/7NQseWNa8pQz/NxMN4AtxEvZQIvi/yQ6R3DdyfpY3nmpJCgpLz4lIAGnkirugpVczvf9myS9oBNreIM2X9tjqqrwtFUnxetBepdoE/gKkH1ek6hZac6IyQyPu6ObFFrxVBzE6+L1KVCZY75Q1RFbgSPgj5ZquGX9l792AYEPD6rb5QY0U0yD5qTHqIZJquy0XlO7xukZCsYIRsCq0VStlqC+2udm+0sjcmjqWunQDPHylBQySnTk7CRAqziUnSfbmugvgnwW2evMAr+aFioBDAKBL00WCZ+nppO1dI1a05iESjvMfld5+wk6xBDjtk1A3CT+2+0YRtdrFU6KkdK/kNtbQNpsv0TFC58ILnY8cZLPurzr4khwIbSTKjygm5Xdbi1ZddxfxjsGPycRVq+/kkhaeGbHwhAVickA8e9uCV8gA4rR4OsKvoovp5AoAGhrYdBaKFybkf+4IPkOPq8kSVPixLJPlYtgvLHI6J8Nub+Ln+74aQouOE++hm3oWFvNrLqcvGHFZ8URky/N9C3OFmv43qcj6upiJzFTB2T4v0Lj5u0HxeRzn71rOZq/WIu6A8/OI0Lto7gPl7PnPtTTW6s+wMa/la+g0/6RCpFKP9CcsCI=
-        file: '$TRAVIS_BUILD_DIR/ios/build/RondoApp.ipa'
-        name: 'React Native SDK $LEANPLUM_SDK_VERSION'
-        tag: '$LEANPLUM_SDK_VERSION'
-        on:
-          branch: develop
-          condition: '-n "$LEANPLUM_SDK_VERSION"'
+      # deploy:
+      #   skip_cleanup: true
+      #   provider: releases
+      #   api_key:
+      #     secure: MWlFQyijuDqSehsQCHuLM3TbW4S587HlCvgKLu4yFGtHbYhC5sXwQDZCSss/7NQseWNa8pQz/NxMN4AtxEvZQIvi/yQ6R3DdyfpY3nmpJCgpLz4lIAGnkirugpVczvf9myS9oBNreIM2X9tjqqrwtFUnxetBepdoE/gKkH1ek6hZac6IyQyPu6ObFFrxVBzE6+L1KVCZY75Q1RFbgSPgj5ZquGX9l792AYEPD6rb5QY0U0yD5qTHqIZJquy0XlO7xukZCsYIRsCq0VStlqC+2udm+0sjcmjqWunQDPHylBQySnTk7CRAqziUnSfbmugvgnwW2evMAr+aFioBDAKBL00WCZ+nppO1dI1a05iESjvMfld5+wk6xBDjtk1A3CT+2+0YRtdrFU6KkdK/kNtbQNpsv0TFC58ILnY8cZLPurzr4khwIbSTKjygm5Xdbi1ZddxfxjsGPycRVq+/kkhaeGbHwhAVickA8e9uCV8gA4rR4OsKvoovp5AoAGhrYdBaKFybkf+4IPkOPq8kSVPixLJPlYtgvLHI6J8Nub+Ln+74aQouOE++hm3oWFvNrLqcvGHFZ8URky/N9C3OFmv43qcj6upiJzFTB2T4v0Lj5u0HxeRzn71rOZq/WIu6A8/OI0Lto7gPl7PnPtTTW6s+wMa/la+g0/6RCpFKP9CcsCI=
+      #   file: '$TRAVIS_BUILD_DIR/ios/build/RondoApp.ipa'
+      #   name: 'React Native SDK $LEANPLUM_SDK_VERSION'
+      #   tag: '$LEANPLUM_SDK_VERSION'
+      #   on:
+      #     branch: develop
+      #     condition: '-n "$LEANPLUM_SDK_VERSION"'
     - language: android
       before_install:
         - nvm install 8
