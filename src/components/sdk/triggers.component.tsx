@@ -15,11 +15,11 @@ export const TriggersComponent = () => {
       name: 'Advance to "testState"',
       onPress: () => Leanplum.advanceTo('testState'),
     },
-    // {
-    //   id: 3,
-    //   name: 'Change User Attribute',
-    //   onPress: () => Leanplum.setUserAttributes({"age": "4"})
-    // },
+    {
+      id: 3,
+      name: 'Change User Attribute',
+      onPress: () => Leanplum.setUserAttributes({age: Math.random().toString()})
+    },
     {
       id: 4,
       name: 'Work 3 times per session',
