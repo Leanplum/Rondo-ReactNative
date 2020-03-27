@@ -64,7 +64,7 @@ export const startUp = async ({
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
   await storeDefaultApp();
   await storeDefaultEnv();
-  let currentApp = (await AppsStorage.currentApp()) || musalaApp;
+  let currentApp = (await AppsStorage.currentApp()) || qaApp;
   let currentEnv = (await EnvsStorage.currentEnv()) || defaultEnv;
   leanplumStart(currentApp, currentEnv, productionMode);
 };
@@ -75,7 +75,7 @@ export const leanplumStart = async (
   productionMode: boolean,
 ) => {
   if (app == undefined) {
-    app = musalaApp;
+    app = qaApp;
   }
 
   if (env == undefined) {
