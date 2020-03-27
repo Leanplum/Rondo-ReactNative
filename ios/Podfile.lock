@@ -19,9 +19,9 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - Leanplum-iOS-Location (2.5.1):
+  - Leanplum-iOS-Location (2.6.4):
     - Leanplum-iOS-SDK
-  - Leanplum-iOS-SDK (2.6.2)
+  - Leanplum-iOS-SDK (2.6.4)
   - RCTRequired (0.61.5)
   - RCTTypeSafety (0.61.5):
     - FBLazyVector (= 0.61.5)
@@ -185,8 +185,9 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
   - React-jsinspector (0.61.5)
-  - react-native-leanplum (1.0.2):
-    - Leanplum-iOS-SDK (= 2.6.2)
+  - react-native-leanplum (1.0.4):
+    - Leanplum-iOS-Location (= 2.6.4)
+    - Leanplum-iOS-SDK (= 2.6.4)
     - React
   - react-native-safe-area-context (0.6.4):
     - React
@@ -247,7 +248,7 @@ DEPENDENCIES:
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - Leanplum-iOS-Location (= 2.5.1)
+  - Leanplum-iOS-Location (= 2.6.4)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -364,8 +365,8 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 118d0d177724c2d67f08a59136eb29ef5943ec75
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
-  Leanplum-iOS-Location: e43c0735913074e887947fdc7df6b2845194c176
-  Leanplum-iOS-SDK: 8ca2b882407802d6046a547f4fa08d3ddc795edf
+  Leanplum-iOS-Location: 3ee8890eae3302e4f5eff089d3e013a034cc1fa5
+  Leanplum-iOS-SDK: a8f97c7cab22e95a6ff7724cf7f9976b9aae8b51
   RCTRequired: b153add4da6e7dbc44aebf93f3cf4fcae392ddf1
   RCTTypeSafety: 9aa1b91d7f9310fc6eadc3cf95126ffe818af320
   React: b6a59ef847b2b40bb6e0180a97d0ca716969ac78
@@ -375,7 +376,7 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
-  react-native-leanplum: e744beb5bb855c9d8343d7b254147300c162de37
+  react-native-leanplum: dc106dad514198aabd8d046f201d215d1cfc0b07
   react-native-safe-area-context: 52342d2d80ea8faadd0ffa76d83b6051f20c5329
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
@@ -396,6 +397,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: b7d919aa7eeea9578edf2ce8251885197cca8e89
+PODFILE CHECKSUM: bcad91c62acc51d1762fb42df14495e7134c3c3f
 
 COCOAPODS: 1.8.4

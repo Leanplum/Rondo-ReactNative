@@ -47,6 +47,8 @@
 	<string>Rondo needs access for your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Rondo needs access for your location foreground</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Rondo needs access for your location</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

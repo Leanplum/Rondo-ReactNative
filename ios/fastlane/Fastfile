@@ -39,7 +39,17 @@ platform :ios do
   lane :beta do
 	install_certificates  	
     increment_build_number(xcodeproj: "RondoApp.xcodeproj", build_number: latest_testflight_build_number + 1)
-    build_app(workspace: "RondoApp.xcworkspace", scheme: "RondoApp")
+    disable_automatic_code_signing
+    build_app(
+      workspace: "RondoApp.xcworkspace", 
+      scheme: "RondoApp", 
+      export_options: {
+        method: "app-store",
+        provisioningProfiles: { 
+          "com.leanplum.rondo-reactnative" => "match AppStore com.leanplum.rondo-reactnative",
+        }
+      })
+    enable_automatic_code_signing
     upload_to_testflight
   end
 end
