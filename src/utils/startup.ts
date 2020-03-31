@@ -20,9 +20,9 @@ const qaApp: LeanplumAppConfig = {
 };
 
 const rnApp: LeanplumAppConfig = {
-  appId: 'app_ve9UCNlqI8dy6Omzfu1rEh6hkWonNHVZJIWtLLt6aLs',
-  productionKey: 'prod_D5ECYBLrRrrOYaFZvAFFHTg1JyZ2Llixe5s077Lw3rM',
-  developmentKey: 'dev_cKF5HMpLGqhbovlEGMKjgTuf8AHfr2Jar6rrnNhtzQ0',
+  appId: 'app_shxl80IUpE1HjYhhN2SciY13T0gmKXkbHzqrNzoTOCQ',
+  productionKey: 'prod_7iNXSEWVdxZDATwaJvr2QfwT5b7pD5Xh3iLXrt5X8ZM',
+  developmentKey: 'dev_jgkNruibwmMDzVlkabAjL4fW2GCbX6iVzB05u9yeQC4',
   name: 'Rondo QA RN Production',
 };
 
