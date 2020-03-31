@@ -16,7 +16,14 @@ const qaApp: LeanplumAppConfig = {
   appId: 'app_ve9UCNlqI8dy6Omzfu1rEh6hkWonNHVZJIWtLLt6aLs',
   productionKey: 'prod_D5ECYBLrRrrOYaFZvAFFHTg1JyZ2Llixe5s077Lw3rM',
   developmentKey: 'dev_cKF5HMpLGqhbovlEGMKjgTuf8AHfr2Jar6rrnNhtzQ0',
-  name: 'Rondo QA Produciton',
+  name: 'Rondo QA Production',
+};
+
+const rnApp: LeanplumAppConfig = {
+  appId: 'app_ve9UCNlqI8dy6Omzfu1rEh6hkWonNHVZJIWtLLt6aLs',
+  productionKey: 'prod_D5ECYBLrRrrOYaFZvAFFHTg1JyZ2Llixe5s077Lw3rM',
+  developmentKey: 'dev_cKF5HMpLGqhbovlEGMKjgTuf8AHfr2Jar6rrnNhtzQ0',
+  name: 'Rondo QA RN Production',
 };
 
 const prodApp: LeanplumAppConfig = {
@@ -64,7 +71,7 @@ export const startUp = async ({
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
   await storeDefaultApp();
   await storeDefaultEnv();
-  let currentApp = (await AppsStorage.currentApp()) || qaApp;
+  let currentApp = (await AppsStorage.currentApp()) || rnApp;
   let currentEnv = (await EnvsStorage.currentEnv()) || defaultEnv;
   leanplumStart(currentApp, currentEnv, productionMode);
 };
@@ -75,7 +82,7 @@ export const leanplumStart = async (
   productionMode: boolean,
 ) => {
   if (app == undefined) {
-    app = qaApp;
+    app = rnApp;
   }
 
   if (env == undefined) {
@@ -100,6 +107,7 @@ const storeDefaultApp = async () => {
   if (!apps.length) {
     await AppsStorage.save(musalaApp);
     await AppsStorage.save(qaApp);
+    await AppsStorage.save(rnApp);
     await AppsStorage.save(prodApp);
   }
 };
