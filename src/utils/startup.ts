@@ -2,9 +2,17 @@ import {Leanplum} from '@leanplum/react-native-sdk';
 import {requestLocationPermission} from './location.permission';
 import {ASSET_VARIABLE_NAME} from 'utils';
 import {AppsStorage, LeanplumAppConfig} from './apps.storage';
-import {Alert} from 'react-native';
+import {Alert,Platform} from 'react-native';
 import {LeanplumEnvConfig, EnvsStorage} from './envs.storage';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import App from 'src/App';
+
+const rondoRn: LeanplumAppConfig = {
+  appId: 'app_shxl80IUpE1HjYhhN2SciY13T0gmKXkbHzqrNzoTOCQ',
+  productionKey: 'prod_7iNXSEWVdxZDATwaJvr2QfwT5b7pD5Xh3iLXrt5X8ZM',
+  developmentKey: 'dev_jgkNruibwmMDzVlkabAjL4fW2GCbX6iVzB05u9yeQC4',
+  name: 'Rondo RN',
+};
 
 const musalaApp: LeanplumAppConfig = {
   appId: 'app_qA781mPlJYjzlZLDlTh68cdNDUOf31kcTg1TCbSXSS0',
@@ -65,7 +73,7 @@ export const startUp = async ({
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
   await storeDefaultApp();
   await storeDefaultEnv();
-  let currentApp = (await AppsStorage.currentApp()) || qaApp;
+  let currentApp = (await AppsStorage.currentApp()) || rondoRn;
   let currentEnv = (await EnvsStorage.currentEnv()) || defaultEnv;
   leanplumStart(currentApp, currentEnv, productionMode);
 };
@@ -76,7 +84,7 @@ export const leanplumStart = async (
   productionMode: boolean,
 ) => {
   if (app == undefined) {
-    app = qaApp;
+    app = rondoRn;
   }
 
   if (env == undefined) {
@@ -99,6 +107,7 @@ export const leanplumStart = async (
 const storeDefaultApp = async () => {
   const apps = await AppsStorage.getAll();
   if (!apps.length) {
+    await AppsStorage.save(rondoRn);
     await AppsStorage.save(musalaApp);
     await AppsStorage.save(qaApp);
     await AppsStorage.save(prodApp);
@@ -142,5 +151,5 @@ const registerVariablesAndCallbacks = (
   Leanplum.setVariableAsset(ASSET_VARIABLE_NAME, path, (newPath: string) =>
     setPath(newPath),
   );
-  PushNotificationIOS.requestPermissions();
+  Platform.OS === 'ios' ? PushNotificationIOS.requestPermissions() : null;
 };
