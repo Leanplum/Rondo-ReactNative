@@ -22,21 +22,26 @@ export const MessagesComponent = () => {
     },
     {
       id: 4,
+      name: 'openURL',
+      onPress: () => Leanplum.track('openURL'),
+    },
+    {
+      id: 5,
       name: 'interstitial',
       onPress: () => Leanplum.track('interstitial'),
     },
     {
-      id: 5,
+      id: 6,
       name: 'richInterstitial',
       onPress: () => Leanplum.track('richInterstitial'),
     },
     {
-      id: 6,
+      id: 7,
       name: 'webInterstitial',
       onPress: () => Leanplum.track('webInterstitial'),
     },
     {
-      id: 7,
+      id: 8,
       name: 'banner',
       onPress: () => Leanplum.track('banner'),
     },
