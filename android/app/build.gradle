@@ -1,5 +1,7 @@
 apply plugin: "com.android.application"
 
+apply plugin: 'com.google.gms.google-services'
+
 import com.android.build.OutputFile
 
 /**
@@ -128,7 +130,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.rondoapp"
+        applicationId "com.leanplum.rondoreactnative"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -194,8 +196,8 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     // For use react-navigation
-    implementation 'androidx.appcompat:appcompat:1.2.0-alpha01'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03'
+    implementation 'androidx.appcompat:appcompat:1.2.0-alpha03'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-beta01'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
@@ -205,15 +207,16 @@ dependencies {
         implementation jscFlavor
     }
 
-    implementation 'com.leanplum:leanplum-fcm:5.3.1'
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.leanplum:leanplum-fcm:5.3.3'
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.4'
 
     // Location services.
     // Only include if you need location-based messaging.
     // Minimum supported version of play location is:
     // 10.0.1 for FCM.
-   implementation 'com.leanplum:leanplum-location:5.2.3'
-   implementation 'com.google.android.gms:play-services-location:16.0.0'
+   implementation 'com.leanplum:leanplum-location:5.3.3'
+   implementation 'com.google.android.gms:play-services-location:17.0.0'
 }
 
 // Run this once to be able to run the application with BUCK
@@ -226,5 +229,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
-
-apply plugin: 'com.google.gms.google-services'
