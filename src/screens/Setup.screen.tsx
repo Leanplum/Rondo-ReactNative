@@ -6,6 +6,7 @@ import {
   View,
   Text,
   Switch,
+  Platform
 } from 'react-native';
 import {Session} from 'components';
 import {startUp, AppsStorage, leanplumStart, EnvsStorage} from 'utils';
@@ -13,7 +14,7 @@ import {useVariablesContext, useAssetContext} from 'contexts';
 import {Button} from 'react-native-elements';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {Screens} from './screens';
-import {Leanplum} from '@leanplum/react-native-sdk';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 export const SetupScreen = ({
   navigation,
@@ -57,7 +58,7 @@ export const SetupScreen = ({
         </View>
         <View style={styles.buttonView}>
           <Button
-            title="CALL LEANPLUM - START"
+            title="Call Start"
             onPress={async () => {
               const app = await AppsStorage.currentApp();
               const env = await EnvsStorage.currentEnv();
@@ -67,15 +68,17 @@ export const SetupScreen = ({
             }}
           />
         </View>
-
+        {Platform.OS === 'ios' ?
         <View style={styles.buttonView}>
           <Button
-            title="FORCE CONTENT UPDATE"
+            title="iOS Push Permission"
             onPress={() => {
-              Leanplum.forceContentUpdate();
+              PushNotificationIOS.requestPermissions();
             }}
           />
         </View>
+        :
+        null}
       </ScrollView>
     </SafeAreaView>
   );

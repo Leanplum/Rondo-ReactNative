@@ -2,8 +2,9 @@ import {Leanplum} from '@leanplum/react-native-sdk';
 import {requestLocationPermission} from './location.permission';
 import {ASSET_VARIABLE_NAME} from 'utils';
 import {AppsStorage, LeanplumAppConfig} from './apps.storage';
-import {Alert} from 'react-native';
+import {Alert,Platform} from 'react-native';
 import {LeanplumEnvConfig, EnvsStorage} from './envs.storage';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 const musalaApp: LeanplumAppConfig = {
   appId: 'app_qA781mPlJYjzlZLDlTh68cdNDUOf31kcTg1TCbSXSS0',
@@ -149,4 +150,5 @@ const registerVariablesAndCallbacks = (
   Leanplum.setVariableAsset(ASSET_VARIABLE_NAME, path, (newPath: string) =>
     setPath(newPath),
   );
+  Platform.OS === 'ios' ? PushNotificationIOS.requestPermissions() : null;
 };
