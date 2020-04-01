@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.rondoapp">
+    package="com.leanplum.rondoreactnative">
 
     <uses-sdk tools:overrideLibrary="com.leanplum, com.google.android.gms" />
 

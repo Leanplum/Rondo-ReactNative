@@ -1,34 +1,63 @@
 {
   "project_info": {
-    "project_number": "42998245338",
-    "firebase_url": "https://rn-leanplum.firebaseio.com",
-    "project_id": "rn-leanplum",
-    "storage_bucket": "rn-leanplum.appspot.com"
+    "project_number": "65133373290",
+    "firebase_url": "https://leanplum-rondo.firebaseio.com",
+    "project_id": "leanplum-rondo",
+    "storage_bucket": "leanplum-rondo.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:42998245338:android:2be831dfabd44d86a5c2e3",
+        "mobilesdk_app_id": "1:65133373290:android:0bd55090869d4009",
         "android_client_info": {
-          "package_name": "com.rondoapp"
+          "package_name": "com.leanplum.rondo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "42998245338-4hebp4kaj6j8v32ur4puesccmg722t8i.apps.googleusercontent.com",
+          "client_id": "65133373290-pfrvgkm2chmop96l5p4b3vr6evrnio39.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDmvhRhRiDem2v7GjLlIAHwY7X2KiBm3Uc"
+          "current_key": "AIzaSyDnGCehLvdd_0OiRQUs5dNWQjpKayKdP_U"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "42998245338-4hebp4kaj6j8v32ur4puesccmg722t8i.apps.googleusercontent.com",
+              "client_id": "65133373290-pfrvgkm2chmop96l5p4b3vr6evrnio39.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65133373290:android:0dc48628afed2d99fc6713",
+        "android_client_info": {
+          "package_name": "com.leanplum.rondoreactnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "65133373290-pfrvgkm2chmop96l5p4b3vr6evrnio39.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnGCehLvdd_0OiRQUs5dNWQjpKayKdP_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "65133373290-pfrvgkm2chmop96l5p4b3vr6evrnio39.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
