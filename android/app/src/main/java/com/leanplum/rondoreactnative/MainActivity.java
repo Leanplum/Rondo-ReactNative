@@ -1,4 +1,4 @@
-package com.rondoapp;
+package com.leanplum.rondoreactnative;
 
 import com.facebook.react.ReactActivity;
 
