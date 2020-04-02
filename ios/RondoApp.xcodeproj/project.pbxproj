@@ -31,6 +31,8 @@
 		9BC291E1F34C42119EED1A81 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FD7E526B6CD498F8B5BACB8 /* SimpleLineIcons.ttf */; };
 		9E6A50FE5EAA44B78F4841B0 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D4D760514C440E0834D533B /* FontAwesome5_Regular.ttf */; };
 		A41E3704BDC5472986FD89CF /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24A6FADF35CF45BD94FE6C4B /* Octicons.ttf */; };
+		A84B1F8F2435A5D3002D8FAF /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = A84B1F8E2435A5D3002D8FAF /* NotificationService.m */; };
+		A84B1F932435A5D3002D8FAF /* Rich Push.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A84B1F8B2435A5D3002D8FAF /* Rich Push.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AB13438E3356453F96DD5EF5 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C1542CD0CD14368AA843F65 /* AntDesign.ttf */; };
 		BBF9DCC5F3604593991E36A7 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07539174A53B44788BF349CD /* MaterialCommunityIcons.ttf */; };
 		DC61BD2FE4DF4F3AB182601A /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAD66BD15E1143378A066BA8 /* Feather.ttf */; };
@@ -53,7 +55,28 @@
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "RondoApp-tvOS";
 		};
+		A84B1F912435A5D3002D8FAF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A84B1F8A2435A5D3002D8FAF;
+			remoteInfo = "Rich Push";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A84B1F832435A5BC002D8FAF /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A84B1F932435A5D3002D8FAF /* Rich Push.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -88,6 +111,10 @@
 		7011EE30C953604FD673D421 /* Pods_RondoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RondoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D4D760514C440E0834D533B /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		A5A530EFB04347A8A829EC52 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		A84B1F8B2435A5D3002D8FAF /* Rich Push.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Rich Push.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A84B1F8D2435A5D3002D8FAF /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
+		A84B1F8E2435A5D3002D8FAF /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
+		A84B1F902435A5D3002D8FAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAAAD6D0694ADBEB695CB148 /* libPods-RondoApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RondoApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC94EEC2CE21A0A16EDC189F /* Pods-RondoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RondoAppTests.release.xcconfig"; path = "Target Support Files/Pods-RondoAppTests/Pods-RondoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		B01666569EB34E6C9918A440 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -132,6 +159,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BB6EA0DFD2915924C86517F /* libPods-RondoApp-tvOSTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A84B1F882435A5D3002D8FAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +230,7 @@
 				13B07FAE1A68108700A75B9A /* RondoApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* RondoAppTests */,
+				A84B1F8C2435A5D3002D8FAF /* Rich Push */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				E0476CA8EAA5D0CE632CAAD1 /* Pods */,
@@ -213,8 +248,19 @@
 				00E356EE1AD99517003FC87E /* RondoAppTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* RondoApp-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* RondoApp-tvOSTests.xctest */,
+				A84B1F8B2435A5D3002D8FAF /* Rich Push.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A84B1F8C2435A5D3002D8FAF /* Rich Push */ = {
+			isa = PBXGroup;
+			children = (
+				A84B1F8D2435A5D3002D8FAF /* NotificationService.h */,
+				A84B1F8E2435A5D3002D8FAF /* NotificationService.m */,
+				A84B1F902435A5D3002D8FAF /* Info.plist */,
+			);
+			path = "Rich Push";
 			sourceTree = "<group>";
 		};
 		DFA5B945594B4FBE942C5D4D /* Resources */ = {
@@ -288,10 +334,12 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				80A89C68F9B8A74144680EC5 /* [CP] Embed Pods Frameworks */,
+				A84B1F832435A5BC002D8FAF /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A84B1F922435A5D3002D8FAF /* PBXTargetDependency */,
 			);
 			name = RondoApp;
 			productName = RondoApp;
@@ -337,6 +385,23 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* RondoApp-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		A84B1F8A2435A5D3002D8FAF /* Rich Push */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A84B1F942435A5D3002D8FAF /* Build configuration list for PBXNativeTarget "Rich Push" */;
+			buildPhases = (
+				A84B1F872435A5D3002D8FAF /* Sources */,
+				A84B1F882435A5D3002D8FAF /* Frameworks */,
+				A84B1F892435A5D3002D8FAF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Rich Push";
+			productName = "Rich Push";
+			productReference = A84B1F8B2435A5D3002D8FAF /* Rich Push.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -366,6 +431,11 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
+					A84B1F8A2435A5D3002D8FAF = {
+						CreatedOnToolsVersion = 11.4;
+						DevelopmentTeam = 4XLWYATZ5P;
+						ProvisioningStyle = Manual;
+					};
 				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "RondoApp" */;
@@ -385,6 +455,7 @@
 				00E356ED1AD99517003FC87E /* RondoAppTests */,
 				2D02E47A1E0B4A5D006451C7 /* RondoApp-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* RondoApp-tvOSTests */,
+				A84B1F8A2435A5D3002D8FAF /* Rich Push */,
 			);
 		};
 /* End PBXProject section */
@@ -431,6 +502,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2D02E48E1E0B4A5D006451C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A84B1F892435A5D3002D8FAF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -713,6 +791,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A84B1F872435A5D3002D8FAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A84B1F8F2435A5D3002D8FAF /* NotificationService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -725,6 +811,11 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* RondoApp-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		A84B1F922435A5D3002D8FAF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A84B1F8A2435A5D3002D8FAF /* Rich Push */;
+			targetProxy = A84B1F912435A5D3002D8FAF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1055,6 +1146,60 @@
 			};
 			name = Release;
 		};
+		A84B1F952435A5D3002D8FAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 4XLWYATZ5P;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Rich Push/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.leanplum.rondo-reactnative.RichPush";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.leanplum.rondo-reactnative.RichPush";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A84B1F962435A5D3002D8FAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 4XLWYATZ5P;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Rich Push/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.leanplum.rondo-reactnative.RichPush";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.leanplum.rondo-reactnative.RichPush";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1099,6 +1244,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A84B1F942435A5D3002D8FAF /* Build configuration list for PBXNativeTarget "Rich Push" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A84B1F952435A5D3002D8FAF /* Debug */,
+				A84B1F962435A5D3002D8FAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
