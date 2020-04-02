@@ -28,12 +28,10 @@ matrix:
         - git tag $LEANPLUM_SDK_VERSION
 
       deploy:
+        if: branch = master AND env(LEANPLUM_SDK_VERSION) IS present
         skip_cleanup: true
         provider: script
         script: cd ios && bundle exec fastlane testflight && cd ..
-        on:
-          branch: master
-          condition: '-n "$LEANPLUM_SDK_VERSION"'
       # deploy:
       #   skip_cleanup: true
       #   provider: releases
@@ -70,12 +68,11 @@ matrix:
         - echo "$LEANPLUM_SDK_VERSION"
         - git tag $LEANPLUM_SDK_VERSION
       deploy:
+        if: branch = master AND env(LEANPLUM_SDK_VERSION) IS present
         skip_cleanup: true
         provider: releases
         api_key: $GITHUB_TOKEN
         file: '$TRAVIS_BUILD_DIR/android/app/build/outputs/apk/debug/app-debug.apk'
         name: 'React Native SDK $LEANPLUM_SDK_VERSION'
         tag: '$LEANPLUM_SDK_VERSION'
-        on:
-          branch: master
-          condition: '-n "$LEANPLUM_SDK_VERSION"'
+        
