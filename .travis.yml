@@ -8,20 +8,32 @@ matrix:
       cache:
         - yarn
         - cocoapods
+      
       before_install:
         - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 8.12.0
         - brew install yarn
         - cd ios && gem install bundler && cd ..
+      
       install:
         - yarn install
+        - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
         - cd ios && bundle install && pod install && cd ..
+        - cd ios && bundle exec fastlane install_certificates && cd ..
 
       script:
-        - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
-        - cd ios && bundle exec fastlane beta && cd ..
+        - cd ios && bundle exec fastlane release && cd ..
+      
       after_script:
         - echo "$LEANPLUM_SDK_VERSION"
         - git tag $LEANPLUM_SDK_VERSION
+
+      deploy:
+        skip_cleanup: true
+        provider: script
+        script: cd ios && bundle exec fastlane testflight && cd ..
+        on:
+          branch: master
+          condition: '-n "$LEANPLUM_SDK_VERSION"'
       # deploy:
       #   skip_cleanup: true
       #   provider: releases
@@ -33,6 +45,7 @@ matrix:
       #   on:
       #     branch: develop
       #     condition: '-n "$LEANPLUM_SDK_VERSION"'
+    
     - language: android
       before_install:
         - nvm install 8
