@@ -1,12 +1,17 @@
-import React, {useContext, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text, Input, Button, ThemeContext} from 'react-native-elements';
+import {Text, Input, Button} from 'react-native-elements';
 import {Leanplum} from '@leanplum/react-native-sdk';
+import {AppsStorage} from 'utils';
 
 export const Event = () => {
   const [event, setEvent] = useState('');
   const [parameterKey, setParameterKey] = useState('');
   const [parameterValue, setParameterValue] = useState('');
+  useEffect(() => {
+    AppsStorage.getTrackEvent().then(event => setEvent(event || ''))
+  }, []);
+
   return (
     <View>
       <Text style={styles.header}>Send Track Event</Text>
@@ -32,7 +37,10 @@ export const Event = () => {
         title="SEND TRACK EVENT"
         buttonStyle={styles.button}
         disabled={event === ''}
-        onPress={() => Leanplum.track(event, {[parameterKey]: parameterValue})}
+        onPress={() => {
+          AppsStorage.setTrackEvent(event)
+          Leanplum.track(event, {[parameterKey]: parameterValue})
+        }}
       />
     </View>
   );

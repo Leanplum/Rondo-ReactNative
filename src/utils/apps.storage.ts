@@ -46,4 +46,22 @@ export class AppsStorage {
   static async selectApp(id: string) {
     await AsyncStorage.setItem(this.currentAppKey, id);
   }
+
+  static async getProductionMode() {
+    const productionMode = await AsyncStorage.getItem("productionMode");
+    return productionMode;
+  }
+
+  static async setProductionMode(mode: string) {
+    await AsyncStorage.setItem("productionMode", mode);
+  }
+
+  static async getTrackEvent() {
+    const productionMode = await AsyncStorage.getItem("trackEvent");
+    return productionMode;
+  }
+
+  static async setTrackEvent(event: string) {
+    await AsyncStorage.setItem("trackEvent", event);
+  }
 }

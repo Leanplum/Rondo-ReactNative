@@ -25,7 +25,8 @@ export const SetupScreen = ({
   const variablesContext = useVariablesContext();
   const assetContext = useAssetContext();
   useEffect(() => {
-    startUp({...variablesContext, ...assetContext, productionMode});
+    AppsStorage.getProductionMode().then(mode => setProductionMode(mode === "true"))
+    startUp({...variablesContext, ...assetContext});
   }, []);
 
   return (
@@ -53,7 +54,10 @@ export const SetupScreen = ({
           <Text>Production Mode</Text>
           <Switch
             value={productionMode}
-            onValueChange={value => setProductionMode(value)}
+            onValueChange={value => {
+              setProductionMode(value)
+              AppsStorage.setProductionMode(value.toString())
+            }}
           />
         </View>
         <View style={styles.buttonView}>

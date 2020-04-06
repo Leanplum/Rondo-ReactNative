@@ -60,20 +60,20 @@ export const startUp = async ({
   setVariables,
   path,
   setPath,
-  productionMode,
 }: {
   variables: any;
   setVariables: any;
   path: string;
   setPath: any;
-  productionMode: boolean;
 }) => {
   requestLocationPermission();
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
   await storeDefaultApp();
   await storeDefaultEnv();
+  await setProductionMode();
   let currentApp = (await AppsStorage.currentApp()) || rnApp;
   let currentEnv = (await EnvsStorage.currentEnv()) || defaultEnv;
+  let productionMode = (await AppsStorage.getProductionMode() === "true");
   leanplumStart(currentApp, currentEnv, productionMode);
 };
 
@@ -89,7 +89,7 @@ export const leanplumStart = async (
   if (env == undefined) {
     env = defaultEnv;
   }
-
+  
   if (productionMode) {
     Leanplum.setAppIdForProductionMode(app.appId, app.productionKey);
   } else {
@@ -121,6 +121,15 @@ const storeDefaultEnv = async () => {
     await EnvsStorage.save(stageEnv);
   }
 };
+
+const setProductionMode = async () => {
+  const mode = await AppsStorage.getProductionMode();
+  if(mode === null || undefined) {
+    await AppsStorage.setProductionMode("false")
+  } else {
+    await AppsStorage.setProductionMode(mode.toString())
+  }
+}
 
 const registerVariablesAndCallbacks = (
   variables: any,
