@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import packageJson from '../../../package.json';
 
 import {Buttons} from './buttons.component';
 
@@ -27,7 +28,7 @@ export const SdkComponent = ({app, env}: {app: any; env: any}) => {
   return (
     <View>
       <View style={styles.container}>
-        <Text style={styles.textCenter}>SDK Version: 2.6.2</Text>
+        <Text style={styles.textCenter}>SDK Version: {packageJson.dependencies["@leanplum/react-native-sdk"]}</Text>
         <Text style={styles.textCenter}>Leanplum App: {app?.name}</Text>
         <Text style={styles.textCenter}>API URL: {env?.apiHost}</Text>
       </View>
