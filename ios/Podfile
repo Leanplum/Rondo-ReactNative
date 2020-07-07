@@ -37,7 +37,7 @@ target 'RondoApp' do
   use_frameworks!
 
   # Uncomment one of the following for Location Services.
-  pod 'Leanplum-iOS-Location', '2.7.3'
+  pod 'Leanplum-iOS-Location', '2.6.4'
   # pod 'Leanplum-iOS-LocationAndBeacons', '2.5.1'
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
