@@ -20,7 +20,7 @@
     "@react-native-community/masked-view": "^0.1.5",
     "@react-native-community/push-notification-ios": "^1.0.5",
     "react": "16.9.0",
-    "react-native": "0.61.5",
+    "react-native": "0.62",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.5.3",
     "react-native-reanimated": "^1.4.0",
