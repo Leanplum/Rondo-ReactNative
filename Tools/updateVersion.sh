@@ -1,4 +1,11 @@
-if [ -z "$LEANPLUM_SDK_VERSION" ]; then version="latest"; else version="$LEANPLUM_SDK_VERSION"; fi
+if [ -z "$LEANPLUM_SDK_VERSION" ]; then
+  version="latest"; 
+  if [ ! -z "$TRAVIS_TAG" ]; then
+    version="$TRAVIS_TAG"; 
+  fi
+else 
+  version="$LEANPLUM_SDK_VERSION"; 
+fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # mac os 
