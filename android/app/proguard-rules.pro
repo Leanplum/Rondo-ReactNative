@@ -8,3 +8,9 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+-keepclassmembers class *
+{
+  @com.leanplum.annotations.* <fields>;
+}
+-keep class com.leanplum.** { *; }
+-dontwarn com.leanplum.**
