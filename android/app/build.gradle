@@ -207,7 +207,7 @@ dependencies {
         implementation jscFlavor
     }
 
-    implementation 'com.leanplum:leanplum-fcm:5.3.3'
+    implementation 'com.leanplum:leanplum-fcm:5.4.2'
     implementation 'com.google.firebase:firebase-analytics:17.3.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.4'
 
@@ -215,7 +215,7 @@ dependencies {
     // Only include if you need location-based messaging.
     // Minimum supported version of play location is:
     // 10.0.1 for FCM.
-   implementation 'com.leanplum:leanplum-location:5.3.3'
+   implementation 'com.leanplum:leanplum-location:5.4.2'
    implementation 'com.google.android.gms:play-services-location:17.0.0'
 }
 
