@@ -42,14 +42,14 @@ const defaultEnv: LeanplumEnvConfig = {
 };
 
 const qaEnv: LeanplumEnvConfig = {
-  apiHost: 'leanplum-qa-1372.appspot.com',
+  apiHost: 'api-qa.leanplum.com',
   apiSsl: true,
-  socketHostname: 'dev-qa-1372.leanplum.com',
+  socketHostname: 'dev-qa.leanplum.com',
   socketPort: 443,
 };
 
 const stageEnv: LeanplumEnvConfig = {
-  apiHost: 'leanplum-staging.appspot.com',
+  apiHost: 'api-staging.leanplum.com',
   apiSsl: true,
   socketHostname: 'dev-staging.leanplum.com',
   socketPort: 443,
