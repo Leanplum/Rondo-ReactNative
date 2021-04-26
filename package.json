@@ -29,7 +29,7 @@
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^2.0.11",
     "react-navigation-tabs": "^2.7.0",
-    "@leanplum/react-native-sdk": "^1.1.2-beta1"
+    "@leanplum/react-native-sdk": "1.1.2-beta1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
