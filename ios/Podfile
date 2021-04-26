@@ -37,16 +37,10 @@ target 'RondoApp' do
   use_frameworks!
 
   # Uncomment one of the following for Location Services.
-  pod 'Leanplum-iOS-Location', '3.0.0'
+  pod 'Leanplum-iOS-Location', '3.1.2'
   # pod 'Leanplum-iOS-LocationAndBeacons', '3.0.0'
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
-
-  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
-
-  # pod 'react-native-leanplum', :path => '../node_modules/react-native-leanplum'
-
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
   target 'RondoAppTests' do

@@ -12,7 +12,7 @@
 #import <React/RCTRootView.h>
 #import <Leanplum/Leanplum.h>
 #import <LeanplumLocation/LPLocationManager.h>
-#import <RNCPushNotificationIOS.h>
+
 #if RCT_DEV
 #import <React/RCTDevLoadingView.h>
 #endif
@@ -36,6 +36,8 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  [UNUserNotificationCenter currentNotificationCenter].delegate = self;
   
   return YES;
 }
@@ -49,39 +51,25 @@
 #endif
 }
 
-// Required to register for notifications
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+-(void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-  [RNCPushNotificationIOS didRegisterUserNotificationSettings:notificationSettings];
+  completionHandler(UIBackgroundFetchResultNewData);
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+        withCompletionHandler:(void (^)(void))completionHandler
 {
-    [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
-    // Needs to be called if swizzling is disabled in Info.plist otherwise it won’t affect SDK if swizzling is enabled.
-    [Leanplum didReceiveRemoteNotification:userInfo
 
-fetchCompletionHandler:completionHandler];
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center
+      willPresentNotification:(UNNotification *)notification
+        withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
 {
-    // Needs to be called if swizzling is disabled in Info.plist otherwise it won’t affect SDK if swizzling is enabled.
-    [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-    [Leanplum didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-}
 
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
-{
-    [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
-    // Needs to be called if swizzling is disabled in Info.plist otherwise it won’t affect SDK if swizzling is enabled.
-    [Leanplum didFailToRegisterForRemoteNotificationsWithError:error];
-}
-
-// Required for the localNotification event.
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-  [RNCPushNotificationIOS didReceiveLocalNotification:notification];
 }
 
 @end

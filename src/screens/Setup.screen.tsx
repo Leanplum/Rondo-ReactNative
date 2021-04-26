@@ -14,7 +14,7 @@ import {useVariablesContext, useAssetContext} from 'contexts';
 import {Button} from 'react-native-elements';
 import {NavigationStackProp} from 'react-navigation-stack';
 import {Screens} from './screens';
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import { Leanplum } from '@leanplum/react-native-sdk';
 
 export const SetupScreen = ({
   navigation,
@@ -77,7 +77,7 @@ export const SetupScreen = ({
           <Button
             title="iOS Push Permission"
             onPress={() => {
-              PushNotificationIOS.requestPermissions();
+              Leanplum.registerForRemoteNotifications();
             }}
           />
         </View>
