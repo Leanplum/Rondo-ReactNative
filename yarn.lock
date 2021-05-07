@@ -863,7 +863,7 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@leanplum/react-native-sdk@^1.1.2-beta1":
+"@leanplum/react-native-sdk@1.1.2-beta1":
   version "1.1.2-beta1"
   resolved "https://registry.yarnpkg.com/@leanplum/react-native-sdk/-/react-native-sdk-1.1.2-beta1.tgz#65f75ec5c62139212d8df36e7922509abb074a83"
   integrity sha512-ajnAoLcOWE7bwvOwejsesjozBKqAVysW6vUQu7SIbBiSpfKfVZzglWwI2/u/Kq1xEawOIN5/0lVLMCN+dz0KIg==
@@ -5900,8 +5900,9 @@ typescript@^3.7.4:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
 
 ua-parser-js@^0.7.18:
-  version "0.7.21"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.21.tgz#853cf9ce93f642f67174273cc34565ae6f308777"
+  version "0.7.28"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.28.tgz#8ba04e653f35ce210239c64661685bf9121dec31"
+  integrity sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==
 
 uglify-es@^3.1.9:
   version "3.3.9"
