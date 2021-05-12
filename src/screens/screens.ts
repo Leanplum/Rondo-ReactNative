@@ -26,7 +26,7 @@ export interface IScreen {
 }
 
 export const AppTabScreens: IScreen[] = [
-  {name: Screens.Setup, component: SetupScreen, icon: 'settings'},
+  {name: Screens.Setup, component: SetupScreen, icon: 'cog'},
   {name: Screens.AdHoc, component: AdHocScreen, icon: 'square-edit-outline'},
   {name: Screens.Inbox, component: InboxScreen, icon: 'inbox-arrow-down'},
   {name: Screens.Variables, component: VariablesScreen, icon: 'variable'},
