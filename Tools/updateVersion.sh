@@ -1,10 +1,9 @@
-if [ -z "$LEANPLUM_SDK_VERSION" ]; then
-  version="latest"; 
+# if version is specified, use it, otherwise use the one that is set in package.json
+if [ -n "$LEANPLUM_SDK_VERSION" ]; then
+  version="$LEANPLUM_SDK_VERSION";
   if [ ! -z "$TRAVIS_TAG" ]; then
     version="$TRAVIS_TAG"; 
   fi
-else 
-  version="$LEANPLUM_SDK_VERSION"; 
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
