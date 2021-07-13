@@ -19,7 +19,7 @@ matrix:
       install:
         - yarn install
         - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
-        - cd ios && bundle install && bundle update fastlane && pod install && cd ..
+        - cd ios && bundle install && bundle update fastlane && pod install --repo-update && cd ..
         - cd ios && bundle exec fastlane install_certificates && bundle exec fastlane match appstore && cd ..
 
       script:
