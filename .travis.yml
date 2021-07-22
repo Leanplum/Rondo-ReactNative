@@ -13,13 +13,13 @@ matrix:
         - gem install cocoapods
         - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 14.17.0
         - brew install yarn
-        - cd ios && gem install bundler && cd ..
+        - cd ios && gem install bundler && pod repo update && cd ..
         - ./Tools/updateVersion.sh
       
       install:
         - yarn install
         - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
-        - cd ios && bundle install && bundle update fastlane && pod install --repo-update && cd ..
+        - cd ios && bundle install && bundle update fastlane && pod install && cd ..
         - cd ios && bundle exec fastlane install_certificates && bundle exec fastlane match appstore && cd ..
 
       script:
