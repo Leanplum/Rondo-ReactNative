@@ -971,10 +971,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@leanplum/react-native-sdk@1.1.2-beta7":
-  version "1.1.2-beta7"
-  resolved "https://registry.yarnpkg.com/@leanplum/react-native-sdk/-/react-native-sdk-1.1.2-beta7.tgz#76269b6b1a666c6f296977f83f4cd1109e1a7cc1"
-  integrity sha512-jSvXqLstg+hoVBGED4qr9cT0dxgvfIxxM2kyrZp2FzAkSf7LQpiMKnrViqgBrdCuCnHldzrTCV7oSXo+YgOG4A==
+"@leanplum/react-native-sdk@1.2.0-beta8":
+  version "1.2.0-beta8"
+  resolved "https://registry.yarnpkg.com/@leanplum/react-native-sdk/-/react-native-sdk-1.2.0-beta8.tgz#8ab5d669a80d7be6489b6682299f124ecdebc8d1"
+  integrity sha512-PM3j+UEOn3T+o2WG6lv32Rq5eLZmt6tpjHO81e2ycQo9WjQLFP+z5e9WJ7+yjj+s/cPKOo4Kw/dhk/xML4/HvQ==
 
 "@marionebl/sander@^0.6.0":
   version "0.6.1"

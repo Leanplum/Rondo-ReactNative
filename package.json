@@ -16,7 +16,7 @@
     "log-ios": "npx react-native log-ios"
   },
   "dependencies": {
-    "@leanplum/react-native-sdk": "1.1.2-beta7",
+    "@leanplum/react-native-sdk": "1.2.0-beta8",
     "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/masked-view": "^0.1.5",
     "fbjs": "^3.0.0",
