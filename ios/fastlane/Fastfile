@@ -65,7 +65,7 @@ platform :ios do
   end
 
   desc "Push a new beta build to TestFlight"
-  lane :testflight do
+  lane :distribute_to_testflight do
     upload_to_testflight
   end
 

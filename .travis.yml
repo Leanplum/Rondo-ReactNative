@@ -29,7 +29,7 @@ matrix:
       deploy:
         skip_cleanup: true
         provider: script
-        script: cd ios && bundle exec fastlane testflight && cd ..
+        script: cd ios && bundle exec fastlane distribute_to_testflight && cd ..
         on:
           branch: master
           condition: '-n "$LEANPLUM_SDK_VERSION"'
