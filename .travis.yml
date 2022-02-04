@@ -20,6 +20,8 @@ matrix:
       install:
         - yarn install
         - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
+        # https://stackoverflow.com/questions/69427082/problem-with-cocoapods-showing-error-couldnt-determine-repo-type-for-url-whe
+        - chmod 0600 ~/.netrc
         - cd ios && bundle install && bundle update fastlane && pod install && cd ..
         - cd ios && bundle exec fastlane install_certificates && bundle exec fastlane match appstore && cd ..
 
