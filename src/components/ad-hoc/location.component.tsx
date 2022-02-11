@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
-import {View, StyleSheet, Picker} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import {Picker} from '@react-native-picker/picker'
 import {Text, Input, Button, ThemeContext} from 'react-native-elements';
 import {Leanplum} from '@leanplum/react-native-sdk';
 
