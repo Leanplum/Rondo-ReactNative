@@ -2,6 +2,8 @@ apply plugin: "com.android.application"
 
 apply plugin: 'com.google.gms.google-services'
 
+apply plugin: 'com.huawei.agconnect'
+
 import com.android.build.OutputFile
 
 /**
@@ -222,6 +224,8 @@ dependencies {
 
     implementation "com.leanplum:leanplum-fcm:${LEANPLUM_SDK_VERSION}"
     implementation "com.leanplum:leanplum-mipush:${LEANPLUM_SDK_VERSION}"
+    implementation "com.leanplum:leanplum-hms:${LEANPLUM_SDK_VERSION}"
+    implementation 'com.huawei.agconnect:agconnect-core:1.5.2.300'
     implementation 'com.google.firebase:firebase-analytics:17.3.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.4'
 
