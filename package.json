@@ -16,7 +16,7 @@
     "log-ios": "npx react-native log-ios"
   },
   "dependencies": {
-    "@leanplum/react-native-sdk": "file:.yalc/@leanplum/react-native-sdk",
+    "@leanplum/react-native-sdk": "1.2.1",
     "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/masked-view": "^0.1.5",
     "@react-native-picker/picker": "^2.2.1",
