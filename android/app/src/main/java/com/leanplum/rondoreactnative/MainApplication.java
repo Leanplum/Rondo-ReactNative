@@ -13,6 +13,7 @@ import com.facebook.react.bridge.JSIModulePackage;
 import com.facebook.soloader.SoLoader;
 import com.leanplum.Leanplum;
 import com.leanplum.LeanplumActivityHelper;
+import com.leanplum.LeanplumMiPushHandler;
 import com.leanplum.annotations.Parser;
 
 import com.leanplum.internal.Log;
@@ -90,6 +91,8 @@ public class MainApplication extends Application implements ReactApplication {
         initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
 
         Leanplum.setLogLevel(Log.Level.DEBUG);
+        // Using "LP Rondo RN" app from Xiaomi Push Console
+        LeanplumMiPushHandler.setApplication("2882303761520135704", "5882013525704");
         Leanplum.setApplicationContext(this);
         Parser.parseVariables(this);
         //  For session lifecyle tracking.
