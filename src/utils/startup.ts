@@ -95,9 +95,6 @@ export const leanplumStart = async (
     Leanplum.setAppIdForDevelopmentMode(app.appId, app.developmentKey);
   }
 
-  // Using "LP Rondo RN" app from Xiaomi Push Console
-  Leanplum.setMiPushApplication('2882303761520135704', '5882013525704');
-
   Leanplum.setSocketConnectionSettings(env.socketHostname, env.socketPort);
   Leanplum.setApiConnectionSettings(env.apiHost, 'api', env.apiSsl);
   Leanplum.start();
