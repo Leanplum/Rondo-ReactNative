@@ -2,7 +2,7 @@ matrix:
   include:
     - language: objective-c
       podfile: ios/Podfile
-      osx_image: xcode12
+      osx_image: xcode13.1
       os: osx
       sudo: true
       cache:
@@ -55,6 +55,11 @@ matrix:
 
       jdk:
         - oraclejdk11
+
+      licenses:
+        - 'android-sdk-preview-license-.+'
+        - 'android-sdk-license-.+'
+        - 'google-gdk-license-.+'
 
       install:
         - npm install
