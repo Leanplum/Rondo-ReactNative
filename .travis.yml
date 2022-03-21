@@ -52,7 +52,10 @@ matrix:
         - nvm install 14.17.0
         - node --version
         - ./Tools/updateVersion.sh
-      
+
+      jdk:
+        - oraclejdk11
+
       install:
         - npm install
         - npm run ci
