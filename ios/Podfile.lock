@@ -72,7 +72,7 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - Leanplum-iOS-SDK (3.2.1)
+  - Leanplum-iOS-SDK (4.1.0)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.180)
   - RCT-Folly (2021.06.28.00-v2):
@@ -273,8 +273,8 @@ PODS:
   - React-jsinspector (0.67.2)
   - React-logger (0.67.2):
     - glog
-  - react-native-leanplum (1.3.0-custom1):
-    - Leanplum-iOS-SDK (= 3.2.1)
+  - react-native-leanplum (1.3.0-custom7):
+    - Leanplum-iOS-SDK (= 4.1.0)
     - React-Core
   - react-native-safe-area-context (3.2.0):
     - React-Core
@@ -429,7 +429,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - "react-native-leanplum (from `../.yalc/@leanplum/react-native-sdk`)"
+  - "react-native-leanplum (from `../node_modules/@leanplum/react-native-sdk`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -506,7 +506,7 @@ EXTERNAL SOURCES:
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-leanplum:
-    :path: "../.yalc/@leanplum/react-native-sdk"
+    :path: "../node_modules/@leanplum/react-native-sdk"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-perflogger:
@@ -567,7 +567,7 @@ SPEC CHECKSUMS:
   FlipperKit: d8d346844eca5d9120c17d441a2f38596e8ed2b9
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 85ecdd10ee8d8ec362ef519a6a45ff9aa27b2e85
-  Leanplum-iOS-SDK: cdf2399abbea271ec50fbc6e274baea1fc9e0bfe
+  Leanplum-iOS-SDK: 63f7d4717db7072f0fea9b5123c44a430f0a2927
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   RCT-Folly: 803a9cfd78114b2ec0f140cfa6fa2a6bafb2d685
@@ -582,7 +582,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 52beb652bbc61201bd70cbe4f0b8edb607e8da4f
   React-jsinspector: 595f76eba2176ebd8817a1fffd47b84fbdab9383
   React-logger: 23de8ea0f44fa00ee77e96060273225607fd4d78
-  react-native-leanplum: a2b92a9d4001694ddb17a211cf96d3c4d5c471d9
+  react-native-leanplum: b92f8d5a522f4139c9ad857cf1f3d582086a1255
   react-native-safe-area-context: f0906bf8bc9835ac9a9d3f97e8bde2a997d8da79
   React-perflogger: 3c9bb7372493e49036f07a82c44c8cf65cbe88db
   React-RCTActionSheet: 052606483045a408693aa7e864410b4a052f541a
@@ -606,6 +606,6 @@ SPEC CHECKSUMS:
   Yoga: 9b6696970c3289e8dea34b3eda93f23e61fb8121
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 899e2b0e92c020b89bd79a9abfc2d7f6f974597b
+PODFILE CHECKSUM: faf99ba73cec0a7da0ab07cea7a1fce23d6db4fc
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
