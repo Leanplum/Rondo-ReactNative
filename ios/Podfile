@@ -24,6 +24,19 @@ target 'RondoApp' do
   #use_flipper!()
   use_flipper!({ "Flipper-DoubleConversion" => "1.1.7" })
 
+  dynamic_frameworks = ['Leanplum-iOS-SDK']
+  pre_install do |installer|
+    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+    installer.pod_targets.each do |pod|
+        if dynamic_frameworks.include?(pod.name)
+          puts "Setting dynamic linking for #{pod.name}"
+          def pod.build_type;
+            Pod::BuildType.dynamic_framework
+          end
+        end
+      end
+  end
+  
   post_install do |installer|
     react_native_post_install(installer)
   end
