@@ -48,16 +48,6 @@ matrix:
       #     condition: '-n "$LEANPLUM_SDK_VERSION"'
     
     - language: android
-      env:
-        global:
-          - JAVA_TOOL_OPTIONS=-Dhttps.protocols=TLSv1.2
-          - BUILD_API=31
-          - BUILD_TOOLS=31.0.0
-          - ANDROID_HOME=/usr/local/android-sdk
-          - TOOLS=${ANDROID_HOME}/cmdline-tools/latest
-          # PATH order is important, the 'emulator' script exists in more than one place
-          - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
-      
       jdk:
         - oraclejdk11
       
@@ -71,6 +61,13 @@ matrix:
         - 'google-gdk-license-.+'
       
       before_install:
+        # environment variables
+        - export JAVA_TOOL_OPTIONS=-Dhttps.protocols=TLSv1.2
+        - export BUILD_API=31
+        - export BUILD_TOOLS=31.0.0
+        - export ANDROID_HOME=/usr/local/android-sdk
+        - export TOOLS=${ANDROID_HOME}/cmdline-tools/latest
+        - export PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
         # Install cmdline-tools (older tools doesn't support Java 11)
         - wget -q "https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip" -O android-commandline-tools-linux.zip
         - mkdir -p ${ANDROID_HOME}/cmdline-tools
@@ -94,7 +91,6 @@ matrix:
         - npm run ci
 
       script:
-        - sdkmanager --list
         - mkdir -p android/app/src/main/assets
         - npx react-native bundle --platform android --dev false --entry-file index.js
           --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest
