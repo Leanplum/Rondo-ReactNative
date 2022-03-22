@@ -48,10 +48,33 @@ matrix:
       #     condition: '-n "$LEANPLUM_SDK_VERSION"'
     
     - language: android
+      dist: trusty
+      android:
+        components:
+          - tools
+          - platform-tools
+          - tools
+          - extra-google-google_play_services
+          - extra-google-m2repository
+        licenses:
+          - 'android-sdk-preview-license-.+'
+          - 'android-sdk-license-.+'
+          - 'google-gdk-license-.+'
       before_install:
+        - touch $HOME/.android/repositories.cfg
+        - yes | sdkmanager "platforms;android-31"
+        - yes | sdkmanager "build-tools;31.0.0"
         - nvm install 14.17.0
         - node --version
         - ./Tools/updateVersion.sh
+
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+      cache:
+        directories:
+          - $HOME/.android/build-cache
 
       jdk:
         - oraclejdk11
@@ -60,20 +83,9 @@ matrix:
         - npm install
         - npm run ci
       
-      android:
-        components:
-          - build-tools-31.0.0
-          - android-31
-          - extra-android-m2repository
-          - extra-google-google_play_services
-          - extra-google-m2repository
-          - addon-google_apis-google-16
-        licenses:
-          - 'android-sdk-preview-license-.+'
-          - 'android-sdk-license-.+'
-          - 'google-gdk-license-.+'
-      
+
       script:
+        - sdkmanager --list
         - mkdir -p android/app/src/main/assets
         - npx react-native bundle --platform android --dev false --entry-file index.js
           --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest
