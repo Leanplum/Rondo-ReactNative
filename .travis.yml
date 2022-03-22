@@ -48,41 +48,50 @@ matrix:
       #     condition: '-n "$LEANPLUM_SDK_VERSION"'
     
     - language: android
-      dist: trusty
+      env:
+        global:
+          - JAVA_TOOL_OPTIONS=-Dhttps.protocols=TLSv1.2
+          - BUILD_API=31
+          - BUILD_TOOLS=31.0.0
+          - ANDROID_HOME=/usr/local/android-sdk
+          - TOOLS=${ANDROID_HOME}/cmdline-tools/latest
+          # PATH order is important, the 'emulator' script exists in more than one place
+          - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
+      
+      jdk:
+        - oraclejdk11
+      
       android:
         components:
           - tools
-          - platform-tools
-          - tools
-          - extra-google-google_play_services
-          - extra-google-m2repository
-        licenses:
-          - 'android-sdk-preview-license-.+'
-          - 'android-sdk-license-.+'
-          - 'google-gdk-license-.+'
+      
+      licenses:
+        - 'android-sdk-preview-license-.+'
+        - 'android-sdk-license-.+'
+        - 'google-gdk-license-.+'
+      
       before_install:
-        - touch $HOME/.android/repositories.cfg
-        - yes | sdkmanager "platforms;android-31"
-        - yes | sdkmanager "build-tools;31.0.0"
+        # Install cmdline-tools (older tools doesn't support Java 11)
+        - wget -q "https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip" -O android-commandline-tools-linux.zip
+        - mkdir -p ${ANDROID_HOME}/cmdline-tools
+        - unzip -q android-commandline-tools-linux.zip -d ${ANDROID_HOME}/cmdline-tools
+        - mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest
         - nvm install 14.17.0
         - node --version
         - ./Tools/updateVersion.sh
-
-      before_cache:
-        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
-      cache:
-        directories:
-          - $HOME/.android/build-cache
-
-      jdk:
-        - oraclejdk11
+      
+      before_script:
+        # Install Android SDK
+        - echo 'count=0' > /home/travis/.android/repositories.cfg # avoid harmless sdkmanager warning
+        - echo y | ${TOOLS}/bin/sdkmanager "platform-tools" >/dev/null
+        - echo y | ${TOOLS}/bin/sdkmanager "tools" >/dev/null
+        - echo y | ${TOOLS}/bin/sdkmanager "build-tools;$BUILD_TOOLS" >/dev/null
+        - echo y | ${TOOLS}/bin/sdkmanager "platforms;android-$BUILD_API" >/dev/null
+        - echo y | ${TOOLS}/bin/sdkmanager "extras;android;m2repository" >/dev/null
 
       install:
         - npm install
         - npm run ci
-      
 
       script:
         - sdkmanager --list
