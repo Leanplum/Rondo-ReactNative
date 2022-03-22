@@ -56,11 +56,6 @@ matrix:
       jdk:
         - oraclejdk11
 
-      licenses:
-        - 'android-sdk-preview-license-.+'
-        - 'android-sdk-license-.+'
-        - 'google-gdk-license-.+'
-
       install:
         - npm install
         - npm run ci
@@ -73,6 +68,10 @@ matrix:
           - extra-google-google_play_services
           - extra-google-m2repository
           - addon-google_apis-google-16
+        licenses:
+          - 'android-sdk-preview-license-.+'
+          - 'android-sdk-license-.+'
+          - 'google-gdk-license-.+'
       
       script:
         - mkdir -p android/app/src/main/assets
