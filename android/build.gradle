@@ -46,5 +46,8 @@ allprojects {
         maven {
             url 'https://developer.huawei.com/repo/'
         }
+        maven {
+            url "https://repo.leanplum.com/"
+        }
     }
 }
