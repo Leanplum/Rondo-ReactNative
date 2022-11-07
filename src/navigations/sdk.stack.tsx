@@ -4,6 +4,7 @@ import {
   TriggersScreen,
   MessagesScreen,
   PushScreen,
+  QueueScreen,
 } from 'screens';
 import {createStackNavigator} from 'react-navigation-stack';
 
@@ -25,6 +26,12 @@ export const SdkStack = createStackNavigator({
     screen: PushScreen,
     navigationOptions: {
       title: 'Push Notifications',
+    },
+  },
+  [Screens.Queue]: {
+    screen: QueueScreen,
+    navigationOptions: {
+      title: 'Queue Configuration',
     },
   },
 });

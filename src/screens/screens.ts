@@ -17,6 +17,7 @@ export enum Screens {
   Triggers = 'Triggers',
   Messages = 'Messages',
   Push = 'Push',
+  Queue = 'Queue',
 }
 
 export interface IScreen {
