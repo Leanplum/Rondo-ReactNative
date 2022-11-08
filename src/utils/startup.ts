@@ -152,9 +152,6 @@ const registerVariablesAndCallbacks = (
   Leanplum.onceVariablesChangedAndNoDownloadsPending(() => {
     console.log('onceVariablesChangedAndNoDownloadsPending');
   });
-  Leanplum.onMessageDisplayed((message: any) => {
-    console.log({message});
-  });
   Leanplum.onVariablesChanged((value: any) => {
     setVariables(value);
   });
@@ -166,7 +163,9 @@ const registerVariablesAndCallbacks = (
 const registerMessageDisplayListener = () => {
   globalScope.setOnMessageDisplayed = (enable: boolean) => {
     if (enable) {
-      Leanplum.onMessageDisplayed(data => console.log('message displayed'));
+      Leanplum.onMessageDisplayed(data =>
+        console.log('message displayed: ', data),
+      );
     } else {
       Leanplum.onMessageDisplayed(null);
     }
@@ -175,7 +174,9 @@ const registerMessageDisplayListener = () => {
 
   globalScope.setOnMessageDismissed = (enable: boolean) => {
     if (enable) {
-      Leanplum.onMessageDismissed(data => console.log('message dismissed'));
+      Leanplum.onMessageDismissed(data =>
+        console.log('message dismissed: ', data),
+      );
     } else {
       Leanplum.onMessageDismissed(null);
     }
@@ -184,7 +185,9 @@ const registerMessageDisplayListener = () => {
 
   globalScope.setOnMessageAction = (enable: boolean) => {
     if (enable) {
-      Leanplum.onMessageAction(data => console.log('message action'));
+      Leanplum.onMessageAction(data =>
+        console.log('message action: ', data),
+      );
     } else {
       Leanplum.onMessageAction(null);
     }
