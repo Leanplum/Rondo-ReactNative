@@ -11,6 +11,7 @@ import {
   AppTabScreens,
   VariablesScreen,
   InboxScreen,
+  MigrationScreen
 } from 'screens';
 import {SetupStack} from './setup.stack';
 import {SdkStack} from './sdk.stack';
@@ -36,6 +37,10 @@ const VariablesStack = createStackNavigator({
   [Screens.Variables]: VariablesScreen,
 });
 
+const MigrationStack = createStackNavigator({
+  [Screens.Migration]: MigrationScreen,
+});
+
 export const AppNavigation = createBottomTabNavigator(
   {
     [Screens.Setup]: SetupStack,
@@ -43,6 +48,7 @@ export const AppNavigation = createBottomTabNavigator(
     [Screens.Inbox]: InboxStack,
     [Screens.Variables]: VariablesStack,
     [Screens.Sdk]: SdkStack,
+    [Screens.Migration]: MigrationStack
   },
   {
     defaultNavigationOptions: ({navigation}) => ({

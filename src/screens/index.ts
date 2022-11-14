@@ -12,3 +12,4 @@ export * from './Triggers.screen';
 export * from './Messages.screen';
 export * from './Push.screen';
 export * from './Queue.screen';
+export * from './Migration.screen';
