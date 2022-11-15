@@ -45,7 +45,7 @@ export const MigrationScreen = () => {
     const attributeParams = Object.assign({}, trackParams, additionalParams);
 
     const DOB = {
-        "DOB": Date.parse("01/10/1999 GMT")
+        "DOB": new Date(Date.parse("1999-01-10"))
     };
 
     return (
