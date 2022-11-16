@@ -31,7 +31,7 @@ export const MigrationScreen = () => {
     const trackParams: any = {
         "string_param_str": "str",
         "bool_param_true": true,
-        "date_param_now": Date(),
+        "date_param_now": new Date(),
         "null": null
     };
     trackParams[intParam] = Number.MAX_SAFE_INTEGER;
