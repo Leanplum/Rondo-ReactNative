@@ -9,8 +9,6 @@ import {
 import { ThemeContext, Button } from 'react-native-elements';
 import { Leanplum, MigrationConfig } from '@leanplum/react-native-sdk';
 
-const globalScope: any = global;
-
 export const MigrationScreen = () => {
     const [migrationConfig, setMigrationConfig] = useState<MigrationConfig>();
   
@@ -77,6 +75,17 @@ export const MigrationScreen = () => {
                     </View>
                 </View>
                 <View>
+                    <Text style={{ color: theme?.colors?.primary }}>
+                        Disable forwarding of FCM message payloads to CT (Restart app to revert effect):
+                    </Text>
+                    <View style={styles.buttonView}>
+                        <Button
+                            title="Disable Android FCM Forwarding"
+                            onPress={() =>
+                                Leanplum.disableAndroidFcmForwarding()
+                            }
+                        />
+                    </View>
                     <Text style={{ color: theme?.colors?.primary }}>
                         User Attributes
                     </Text>

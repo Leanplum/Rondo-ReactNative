@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {Text, Input, Button} from 'react-native-elements';
 import {Leanplum} from '@leanplum/react-native-sdk';
 
@@ -18,7 +18,13 @@ export const Device = () => {
         title="SET DEVICE ID"
         buttonStyle={styles.button}
         disabled={deviceId === ''}
-        onPress={() => Leanplum.setDeviceId(deviceId)}
+        onPress={() => {
+          if (Platform.OS === 'android') {
+            Leanplum.forceNewDeviceId(deviceId);
+          } else {
+            Leanplum.setDeviceId(deviceId);
+          }
+        }}
       />
     </View>
   );

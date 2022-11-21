@@ -1,4 +1,5 @@
 import {Leanplum} from '@leanplum/react-native-sdk';
+import CleverTap from 'clevertap-react-native';
 import {requestLocationPermission} from './location.permission';
 import {ASSET_VARIABLE_NAME} from 'utils';
 import {AppsStorage, LeanplumAppConfig} from './apps.storage';
@@ -76,6 +77,7 @@ export const startUp = async ({
   let currentApp = (await AppsStorage.currentApp()) || rnApp;
   let currentEnv = (await EnvsStorage.currentEnv()) || defaultEnv;
   let productionMode = (await AppsStorage.getProductionMode() === "true");
+  initCleverTap();
   leanplumStart(currentApp, currentEnv, productionMode);
 };
 
@@ -197,4 +199,19 @@ const registerMessageDisplayListener = () => {
   globalScope.setOnMessageDisplayed(true);
   globalScope.setOnMessageDismissed(true);
   globalScope.setOnMessageAction(true);
+};
+
+const initCleverTap = () => {
+  Leanplum.onCleverTapReady(() => {
+    console.log('onCleverTapReady() invoked');
+    if (Platform.OS === 'android') {
+      CleverTap.createNotificationChannel(
+          'YourChannelId',
+          'Your Channel Name',
+          'Your Channel Description',
+          5,
+          true,
+      );
+    }
+  });
 };

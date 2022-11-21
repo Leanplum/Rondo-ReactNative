@@ -26,7 +26,7 @@ buildscript {
         // For Firebase Cloud Messaging.
         classpath 'com.google.gms:google-services:4.3.3'
         // Huawei Messaging
-        classpath 'com.huawei.agconnect:agcp:1.5.2.300'
+        classpath 'com.huawei.agconnect:agcp:1.6.5.300'
     }
 }
 
