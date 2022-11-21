@@ -131,7 +131,7 @@ export const MigrationScreen = () => {
                     </View>
                     <View style={styles.buttonView}>
                     <Button
-                        title="track(event info)"
+                        title="track(event all-type-params)"
                         buttonStyle={styles.button}
                         onPress={() =>
                             Leanplum.track("track(event all-type-params)", trackParams)
@@ -148,7 +148,7 @@ export const MigrationScreen = () => {
                         title="advance(event)"
                         buttonStyle={styles.button}
                         onPress={() =>
-                            Leanplum.advanceTo("advance(state)")
+                            Leanplum.advanceTo("advance(event)")
                         }
                     />
                     </View>
@@ -186,28 +186,28 @@ export const MigrationScreen = () => {
                     </Text>
                     <View style={styles.buttonView}>
                     <Button
-                        title="trackPurchase(event 0 null null)"
+                        title="trackPurchase(0 null null event)"
                         buttonStyle={styles.button}
                         onPress={() =>
-                            Leanplum.trackPurchase(0.0, null, null, "trackPurchase(event 0 null null)")
+                            Leanplum.trackPurchase(0.0, null, null, "trackPurchase(0 null null event)")
                         }
                     />
                     </View>
                     <View style={styles.buttonView}>
                     <Button
-                        title="trackPurchase(event value currency one-param)"
+                        title="trackPurchase(value currency one-param event)"
                         buttonStyle={styles.button}
                         onPress={() =>
-                            Leanplum.trackPurchase(2.5, "BGN", singleParam, "trackPurchase(event value currency one-param)")
+                            Leanplum.trackPurchase(2.5, "BGN", singleParam, "trackPurchase(value currency one-param event)")
                         }
                     />
                     </View>
                     <View style={styles.buttonView}></View>
                     <Button
-                        title="trackPurchase(event value currency all-type-params)"
+                        title="trackPurchase(value currency all-type-params event)"
                         buttonStyle={styles.button}
                         onPress={() =>
-                            Leanplum.trackPurchase(2.5, "BGN", trackParams, "trackPurchase(event value currency all-type-params)")
+                            Leanplum.trackPurchase(2.5, "BGN", trackParams, "trackPurchase(value currency all-type-params event)")
                         }
                     />
                 </View>
