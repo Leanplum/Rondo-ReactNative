@@ -71,6 +71,7 @@ export const startUp = async ({
   requestLocationPermission();
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
   registerMessageDisplayListener();
+  registerPushClickedListener();
   await storeDefaultApp();
   await storeDefaultEnv();
   await setProductionMode();
@@ -215,3 +216,11 @@ const initCleverTap = () => {
     }
   });
 };
+
+const registerPushClickedListener = () => {
+  console.log("registerPushClickedListener");
+  CleverTap.addListener(CleverTap.CleverTapPushNotificationClicked, (e) => {
+    console.log("CleverTapPushNotificationClicked");
+    console.log(e);
+  });
+}
