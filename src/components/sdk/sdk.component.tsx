@@ -21,6 +21,11 @@ export const SdkComponent = ({app, env}: {app: any; env: any}) => {
       name: 'Push',
       onPress: 'navigation',
     },
+    {
+      id: 4,
+      name: 'Queue',
+      onPress: 'navigation',
+    },
   ];
 
   // The SDK Version is hardcoded because there is not property returned from the SDK.

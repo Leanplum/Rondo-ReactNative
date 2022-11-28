@@ -1,9 +1,12 @@
 import {Leanplum} from '@leanplum/react-native-sdk';
+import CleverTap from 'clevertap-react-native';
 import {requestLocationPermission} from './location.permission';
 import {ASSET_VARIABLE_NAME} from 'utils';
 import {AppsStorage, LeanplumAppConfig} from './apps.storage';
 import {Alert,Platform} from 'react-native';
 import {LeanplumEnvConfig, EnvsStorage} from './envs.storage';
+
+const globalScope: any = global;
 
 const musalaApp: LeanplumAppConfig = {
   appId: 'app_qA781mPlJYjzlZLDlTh68cdNDUOf31kcTg1TCbSXSS0',
@@ -67,12 +70,15 @@ export const startUp = async ({
 }) => {
   requestLocationPermission();
   registerVariablesAndCallbacks(variables, setVariables, path, setPath);
+  registerMessageDisplayListener();
+  registerPushClickedListener();
   await storeDefaultApp();
   await storeDefaultEnv();
   await setProductionMode();
   let currentApp = (await AppsStorage.currentApp()) || rnApp;
   let currentEnv = (await EnvsStorage.currentEnv()) || defaultEnv;
   let productionMode = (await AppsStorage.getProductionMode() === "true");
+  initCleverTap();
   leanplumStart(currentApp, currentEnv, productionMode);
 };
 
@@ -149,9 +155,6 @@ const registerVariablesAndCallbacks = (
   Leanplum.onceVariablesChangedAndNoDownloadsPending(() => {
     console.log('onceVariablesChangedAndNoDownloadsPending');
   });
-  Leanplum.onMessageDisplayed((message: any) => {
-    console.log({message});
-  });
   Leanplum.onVariablesChanged((value: any) => {
     setVariables(value);
   });
@@ -159,3 +162,65 @@ const registerVariablesAndCallbacks = (
     setPath(newPath),
   );
 };
+
+const registerMessageDisplayListener = () => {
+  globalScope.setOnMessageDisplayed = (enable: boolean) => {
+    if (enable) {
+      Leanplum.onMessageDisplayed(data =>
+        console.log('message displayed: ', data),
+      );
+    } else {
+      Leanplum.onMessageDisplayed(null);
+    }
+    globalScope.onMessageDisplayedSet = enable;
+  };
+
+  globalScope.setOnMessageDismissed = (enable: boolean) => {
+    if (enable) {
+      Leanplum.onMessageDismissed(data =>
+        console.log('message dismissed: ', data),
+      );
+    } else {
+      Leanplum.onMessageDismissed(null);
+    }
+    globalScope.onMessageDismissedSet = enable;
+  };
+
+  globalScope.setOnMessageAction = (enable: boolean) => {
+    if (enable) {
+      Leanplum.onMessageAction(data =>
+        console.log('message action: ', data),
+      );
+    } else {
+      Leanplum.onMessageAction(null);
+    }
+    globalScope.onMessageActionSet = enable;
+  };
+
+  globalScope.setOnMessageDisplayed(true);
+  globalScope.setOnMessageDismissed(true);
+  globalScope.setOnMessageAction(true);
+};
+
+const initCleverTap = () => {
+  Leanplum.onCleverTapReady(() => {
+    console.log('onCleverTapReady() invoked');
+    if (Platform.OS === 'android') {
+      CleverTap.createNotificationChannel(
+          'YourChannelId',
+          'Your Channel Name',
+          'Your Channel Description',
+          5,
+          true,
+      );
+    }
+  });
+};
+
+const registerPushClickedListener = () => {
+  console.log("registerPushClickedListener");
+  CleverTap.addListener(CleverTap.CleverTapPushNotificationClicked, (e) => {
+    console.log("CleverTapPushNotificationClicked");
+    console.log(e);
+  });
+}

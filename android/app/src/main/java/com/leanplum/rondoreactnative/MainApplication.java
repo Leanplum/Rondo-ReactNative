@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.Nullable;
+import com.clevertap.android.sdk.CleverTapAPI;
+import com.clevertap.android.sdk.pushnotification.PushConstants;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
@@ -13,7 +15,6 @@ import com.facebook.react.bridge.JSIModulePackage;
 import com.facebook.soloader.SoLoader;
 import com.leanplum.Leanplum;
 import com.leanplum.LeanplumActivityHelper;
-import com.leanplum.LeanplumMiPushHandler;
 import com.leanplum.annotations.Parser;
 
 import com.leanplum.internal.Log;
@@ -90,9 +91,11 @@ public class MainApplication extends Application implements ReactApplication {
         SoLoader.init(this, /* native exopackage */ false);
         initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
 
-        Leanplum.setLogLevel(Log.Level.DEBUG);
         // Using "LP Rondo RN" app from Xiaomi Push Console
-        LeanplumMiPushHandler.setApplication("2882303761520135704", "5882013525704");
+        CleverTapAPI.changeXiaomiCredentials("2882303761520135704", "5882013525704");
+        CleverTapAPI.enableXiaomiPushOn(PushConstants.XIAOMI_MIUI_DEVICES); // using ALL_DEVICES would spawn ":pushservice" process on non-Xiaomi devices
+
+        Leanplum.setLogLevel(Log.Level.DEBUG);
         Leanplum.setApplicationContext(this);
         Parser.parseVariables(this);
         //  For session lifecyle tracking.

@@ -3,6 +3,7 @@ import {AdHocScreen} from './AdHoc.screen';
 import {InboxScreen} from './Inbox.screen';
 import {VariablesScreen} from './Variables.screen';
 import {SdkScreen} from './Sdk.screen';
+import { MigrationScreen } from './Migration.screen';
 
 export enum Screens {
   AdHoc = 'AdHoc',
@@ -17,6 +18,8 @@ export enum Screens {
   Triggers = 'Triggers',
   Messages = 'Messages',
   Push = 'Push',
+  Queue = 'Queue',
+  Migration = 'Migration'
 }
 
 export interface IScreen {
@@ -31,4 +34,5 @@ export const AppTabScreens: IScreen[] = [
   {name: Screens.Inbox, component: InboxScreen, icon: 'inbox-arrow-down'},
   {name: Screens.Variables, component: VariablesScreen, icon: 'variable'},
   {name: Screens.Sdk, component: SdkScreen, icon: 'format-list-bulleted'},
+  {name: Screens.Migration, component: MigrationScreen, icon: 'call-split'}
 ];
