@@ -199,7 +199,12 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     // For use react-navigation
-    implementation 'androidx.appcompat:appcompat:1.2.0-alpha03'
+    implementation ("androidx.appcompat:appcompat:1.3.1") {
+        // Fixes a crash "attempt to invoke FabricViewStateManager.hasStateWrapper() on a null object"
+        version {
+            strictly '1.3.1'
+        }
+    }
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-beta01'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

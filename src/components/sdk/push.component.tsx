@@ -60,6 +60,16 @@ export const PushComponent = () => {
       name: 'pushLocalSamePriorityDifferentTime',
       onPress: () => Leanplum.track('pushLocalSamePriorityDifferentTime'),
     },
+    {
+      id: 12,
+      name: 'register',
+      onPress: () => Leanplum.track('register'),
+    },
+    {
+      id: 13,
+      name: 'registerPush',
+      onPress: () => Leanplum.track('registerPush'),
+    },
   ];
   return <ListComponent sourceData={listData} />;
 };

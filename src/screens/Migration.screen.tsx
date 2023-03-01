@@ -73,6 +73,10 @@ export const MigrationScreen = () => {
                         <Text style={styles.label}>Attribute Mappings: </Text>
                         <Text style={{ color: theme?.colors?.secondary }}>{JSON.stringify(migrationConfig?.attributeMappings)}</Text>
                     </View>
+                    <View style={styles.propertyView}>
+                        <Text style={styles.label}>Identity Keys: </Text>
+                        <Text style={{ color: theme?.colors?.secondary }}>{JSON.stringify(migrationConfig?.identityKeys)}</Text>
+                    </View>
                 </View>
                 <View>
                     <Text style={{ color: theme?.colors?.primary }}>
