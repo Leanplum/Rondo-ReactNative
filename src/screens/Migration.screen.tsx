@@ -8,9 +8,26 @@ import {
 } from 'react-native';
 import { ThemeContext, Button } from 'react-native-elements';
 import { Leanplum, MigrationConfig } from '@leanplum/react-native-sdk';
+import CleverTap from "clevertap-react-native";
 
 export const MigrationScreen = () => {
+    const variables = {
+        "rn_string": "hello world",
+        "rn_int": 10,
+        "rn_bool": true,
+        "rn_dict": {
+            "rn_nested_string": "hello nested",
+            "rn_nested_double": 10.5,
+        },
+        "rn_group.rn_string": "hello world",
+        "rn_group.rn_dict": {
+            "rn_nested_float": 0.5,
+            "rn_nested_number": 32
+        }
+    };
+
     const [migrationConfig, setMigrationConfig] = useState<MigrationConfig>();
+    const [variableData, setVariableData] = useState(null);
   
     useEffect(() => {
         async function initScreen() {
@@ -18,6 +35,26 @@ export const MigrationScreen = () => {
             setMigrationConfig(migrationConfigValue);
           }
           initScreen();
+    }, []);
+
+    useEffect(() => {
+        Leanplum.onCleverTapReady(() => {
+            // CleverTap.defineVariables(variables); // TODO uncomment and remove LP code
+            // CleverTap.onVariablesChanged((vars) => {
+            // });
+            console.log('Leanplum.onCleverTapReady <--- registering the variables');
+            Leanplum.setVariables(variables);
+            Leanplum.onVariablesChanged((vars) => {
+                console.log('Leanplum.onVariablesChanged: ', vars);
+                let newVariables = {...variables};
+                for (let key in vars) {
+                    if (key in newVariables) {
+                        newVariables[key] = vars[key];
+                    }
+                }
+                setVariableData(newVariables);
+            })
+        });
     }, []);
 
     const { theme } = useContext(ThemeContext);
@@ -76,6 +113,41 @@ export const MigrationScreen = () => {
                     <View style={styles.propertyView}>
                         <Text style={styles.label}>Identity Keys: </Text>
                         <Text style={{ color: theme?.colors?.secondary }}>{JSON.stringify(migrationConfig?.identityKeys)}</Text>
+                    </View>
+                </View>
+                <View>
+                    <Text style={{ color: theme?.colors?.primary, marginTop: 10 }}>
+                        Variables
+                    </Text>
+                    <View style={styles.propertyView}>
+                        {variableData && Object.entries(variableData).map(([key, value]) => {
+                            let valueStr;
+                            if (typeof value === 'object' && value !== null) {
+                                valueStr = JSON.stringify(value, null,2);
+                            } else {
+                                valueStr = value;
+                            }
+                            return (
+                                <Text style={[styles.label, {marginTop: 10}]} key={key}>{`${key} = ${valueStr}`}</Text>
+                            );
+                        })}
+                    </View>
+                    <View style={styles.buttonView}>
+                        <Button
+                            title="Fetch Variables"
+                            onPress={() =>
+                                //CleverTap.fetchVariables(result => console.log("Variables fetched with result: " + result))
+                                Leanplum.forceContentUpdate() // TODO revert
+                            }
+                        />
+                    </View>
+                    <View style={styles.buttonView}>
+                        <Button
+                            title="Sync Variables"
+                            onPress={() =>
+                                CleverTap.syncVariables() // TODO use the inProduction flag?
+                            }
+                        />
                     </View>
                 </View>
                 <View>
