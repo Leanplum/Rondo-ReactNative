@@ -135,8 +135,9 @@ export const MigrationScreen = () => {
                         <Button
                             title="Fetch Variables"
                             onPress={() =>
-                                CleverTap.fetchVariables(result => 
-                                    console.log(`[CleverTap] Variables fetched with result: ${result}`))
+                                CleverTap.fetchVariables((err, success) => { 
+                                    console.log(`[CleverTap] Variables fetched with result: ${success}`)
+                                })
                             }
                         />
                     </View>
