@@ -14,6 +14,7 @@ export const MigrationScreen = () => {
     const variables = {
         "rn_string": "hello world",
         "rn_int": 10,
+        "rn_double": 9.1234567890,
         "rn_bool": true,
         "rn_dict": {
             "rn_nested_string": "hello nested",
@@ -39,21 +40,19 @@ export const MigrationScreen = () => {
 
     useEffect(() => {
         Leanplum.onCleverTapReady(() => {
-            // CleverTap.defineVariables(variables); // TODO uncomment and remove LP code
-            // CleverTap.onVariablesChanged((vars) => {
-            // });
-            console.log('Leanplum.onCleverTapReady <--- registering the variables');
-            Leanplum.setVariables(variables);
-            Leanplum.onVariablesChanged((vars) => {
-                console.log('Leanplum.onVariablesChanged: ', vars);
-                let newVariables = {...variables};
+            console.log('Leanplum.onCleverTapReady: Defining variables');
+            CleverTap.defineVariables(variables);
+            setVariableData({...variables});
+            CleverTap.onVariablesChanged((vars) => {
+                console.log('[CleverTap] CleverTap.onVariablesChanged: ', vars);
+                let updatedVariables = {...variables};
                 for (let key in vars) {
-                    if (key in newVariables) {
-                        newVariables[key] = vars[key];
+                    if (key in updatedVariables) {
+                        updatedVariables[key] = vars[key];
                     }
                 }
-                setVariableData(newVariables);
-            })
+                setVariableData(updatedVariables);
+            });
         });
     }, []);
 
@@ -136,8 +135,8 @@ export const MigrationScreen = () => {
                         <Button
                             title="Fetch Variables"
                             onPress={() =>
-                                //CleverTap.fetchVariables(result => console.log("Variables fetched with result: " + result))
-                                Leanplum.forceContentUpdate() // TODO revert
+                                CleverTap.fetchVariables(result => 
+                                    console.log(`[CleverTap] Variables fetched with result: ${result}`))
                             }
                         />
                     </View>
@@ -145,7 +144,7 @@ export const MigrationScreen = () => {
                         <Button
                             title="Sync Variables"
                             onPress={() =>
-                                CleverTap.syncVariables() // TODO use the inProduction flag?
+                                CleverTap.syncVariablesinProd(true) // Sync in prod to support TestFlight builds
                             }
                         />
                     </View>
