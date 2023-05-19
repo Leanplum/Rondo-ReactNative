@@ -14,8 +14,8 @@ target 'RondoApp' do
     :hermes_enabled => false
   )
 
-  # pod 'Leanplum-iOS-Location', '6.0.4'
-  # pod 'Leanplum-iOS-LocationAndBeacons', '6.0.4'
+  # pod 'Leanplum-iOS-Location', '6.1.0'
+  # pod 'Leanplum-iOS-LocationAndBeacons', '6.1.0'
 
   # Enables Flipper.
   #
