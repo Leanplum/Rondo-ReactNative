@@ -1558,6 +1558,7 @@
   integrity sha512-jSUC5sAsOFEsvP9mGiUQFNb2bhndEBs8qf3FBBsScY94KDh3Q7piSRb8EnETzppSuVGV70vNTxjK3V6WnqXF5g==
   dependencies:
     "@expo/config-plugins" "^4.0.6"
+
     clevertap-react-native "1.1.0"
 
 "@marionebl/sander@^0.6.0":
