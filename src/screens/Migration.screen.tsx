@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import {
+    Platform,
     SafeAreaView,
     ScrollView,
     StyleSheet,
@@ -144,9 +145,13 @@ export const MigrationScreen = () => {
                     <View style={styles.buttonView}>
                         <Button
                             title="Sync Variables"
-                            onPress={() =>
-                                CleverTap.syncVariablesinProd(true) // Sync in prod to support TestFlight builds
-                            }
+                            onPress={() => {
+                                if (Platform.OS === 'ios') {
+                                    CleverTap.syncVariablesinProd(true); // Sync in prod to support TestFlight builds
+                                } else {
+                                    CleverTap.syncVariables(); // apk must be in debug
+                                }
+                            }}
                         />
                     </View>
                 </View>
