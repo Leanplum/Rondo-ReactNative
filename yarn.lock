@@ -1552,13 +1552,12 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@leanplum/react-native-sdk@2.1.0-beta1":
-  version "2.1.0-beta1"
-  resolved "https://registry.yarnpkg.com/@leanplum/react-native-sdk/-/react-native-sdk-2.1.0-beta1.tgz#1b0d8070294b96714973f70a446d1efe51279de3"
-  integrity sha512-jSUC5sAsOFEsvP9mGiUQFNb2bhndEBs8qf3FBBsScY94KDh3Q7piSRb8EnETzppSuVGV70vNTxjK3V6WnqXF5g==
+"@leanplum/react-native-sdk@2.1.0-beta4":
+  version "2.1.0-beta4"
+  resolved "https://registry.yarnpkg.com/@leanplum/react-native-sdk/-/react-native-sdk-2.1.0-beta4.tgz#f3322bf84a24cde9331786f60eebb0a0ac6f679b"
+  integrity sha512-TY2S/CVLZvJADJhKJxa41bXM6kJzahoZKuWTkYh2urwnoJsiVGOmwxZH8g+Xxl/htq5BkXcmpO2zOjDeCiB4NQ==
   dependencies:
     "@expo/config-plugins" "^4.0.6"
-
     clevertap-react-native "1.1.0"
 
 "@marionebl/sander@^0.6.0":
