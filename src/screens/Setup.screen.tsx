@@ -9,7 +9,7 @@ import {
   Platform
 } from 'react-native';
 import {Session} from 'components';
-import {startUp, AppsStorage, leanplumStart, EnvsStorage} from 'utils';
+import {startUp, useProductionMode, AppsStorage, leanplumStart, EnvsStorage} from 'utils';
 import {useVariablesContext, useAssetContext} from 'contexts';
 import {Button} from 'react-native-elements';
 import {NavigationStackProp} from 'react-navigation-stack';
@@ -21,11 +21,16 @@ export const SetupScreen = ({
 }: {
   navigation: NavigationStackProp;
 }) => {
-  const [productionMode, setProductionMode] = useState(false);
+  const [productionMode, setProductionMode] = useState(useProductionMode);
   const variablesContext = useVariablesContext();
   const assetContext = useAssetContext();
   useEffect(() => {
-    AppsStorage.getProductionMode().then(mode => setProductionMode(mode === "true"))
+    AppsStorage.getProductionMode().then(mode => {
+      if(mode === null || undefined) {
+        mode = useProductionMode.toString()
+      }
+      setProductionMode(mode === "true")
+    })
     startUp({...variablesContext, ...assetContext});
   }, []);
 
