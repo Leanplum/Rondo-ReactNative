@@ -8,6 +8,8 @@ import {LeanplumEnvConfig, EnvsStorage} from './envs.storage';
 
 const globalScope: any = global;
 
+export const useProductionMode: boolean = true;
+
 const musalaApp: LeanplumAppConfig = {
   appId: 'app_qA781mPlJYjzlZLDlTh68cdNDUOf31kcTg1TCbSXSS0',
   productionKey: 'prod_kInQHXLJ0Dju7QJRocsD5DYMdYAVbdGGwhl6doTfH0k',
@@ -96,8 +98,10 @@ export const leanplumStart = async (
   }
   
   if (productionMode) {
+    console.log("Setting Leanplum production mode");
     Leanplum.setAppIdForProductionMode(app.appId, app.productionKey);
   } else {
+    console.log("Setting Leanplum development mode");
     Leanplum.setAppIdForDevelopmentMode(app.appId, app.developmentKey);
   }
 
@@ -130,7 +134,8 @@ const storeDefaultEnv = async () => {
 const setProductionMode = async () => {
   const mode = await AppsStorage.getProductionMode();
   if(mode === null || undefined) {
-    await AppsStorage.setProductionMode("false")
+    // Use production mode initially
+    await AppsStorage.setProductionMode(useProductionMode.toString())
   } else {
     await AppsStorage.setProductionMode(mode.toString())
   }

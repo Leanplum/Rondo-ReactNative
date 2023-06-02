@@ -2758,6 +2758,13 @@ clevertap-react-native@1.1.0:
   dependencies:
     extract-zip "^1.6.6"
 
+clevertap-react-native@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clevertap-react-native/-/clevertap-react-native-1.1.1.tgz#4504d2fa5531fd9cae955022dc9aca0785730d01"
+  integrity sha512-vSnZncAEXQQMiSGoRF7iKkp9rXfYtPfOHCDjMkzRN9IhTOpPWF0b7ez2SSj3Sed7tg+uc3Xr/erfCo13r67AXQ==
+  dependencies:
+    extract-zip "^1.6.6"
+
 cli-cursor@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-2.1.0.tgz#b35dac376479facc3e94747d41d0d0f5238ffcb5"
