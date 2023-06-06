@@ -16,7 +16,7 @@
     "log-ios": "npx react-native log-ios"
   },
   "dependencies": {
-    "@leanplum/react-native-sdk": "2.1.0-beta4",
+    "@leanplum/react-native-sdk": "2.1.0",
     "clevertap-react-native": "1.1.1",
     "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/masked-view": "^0.1.5",
