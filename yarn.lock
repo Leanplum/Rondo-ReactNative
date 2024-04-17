@@ -1121,13 +1121,13 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@leanplum/react-native-sdk@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@leanplum/react-native-sdk/-/react-native-sdk-2.2.0.tgz#c08720c7b74ae06139f2c1b1538608b968ae8f6d"
-  integrity sha512-fFs0xoKG0lTi4y1ho5tD+L7HsRrNv/PPmWM4bPFoLkvU8B2mplw9EehYSO6nJ9wc9WYPw/VzEFFGXqb52YoKEQ==
+"@leanplum/react-native-sdk@2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@leanplum/react-native-sdk/-/react-native-sdk-2.3.0.tgz#6537358cc198e685cffac97ff8128f65a4c7c8bc"
+  integrity sha512-ruru8A0nBuJ8bWC69HC8Ugbjq3mjnsEwxhIrveqdf9fZZa/MEktzc5i+QRKooVqNiKehHAGjXMxX5pXjScPmNA==
   dependencies:
     "@expo/config-plugins" "^4.0.6"
-    clevertap-react-native "2.0.0"
+    clevertap-react-native "2.2.1"
 
 "@marionebl/sander@^0.6.0":
   version "0.6.1"
@@ -2314,10 +2314,10 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-clevertap-react-native@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/clevertap-react-native/-/clevertap-react-native-2.0.0.tgz#a3ce04ca73328163a43cd610ba2be0e4718ff82e"
-  integrity sha512-svmq/tBnilbV7sYpKPAnBCRWFdNtfMu1RaMSOkIa04Yetgl6QEPsBYDBSPF4BOH928qeu7RRt0IskECoMz9Ryw==
+clevertap-react-native@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/clevertap-react-native/-/clevertap-react-native-2.2.1.tgz#256f8a230f1112f76181823d17c7e6833e010abf"
+  integrity sha512-WGH0hk54EPGJ19o3nZzFpErbvN3kHDgmzG2/QUsnbqrwEPwdDf/4TndtCSO/sUjgwBBoGWGZaledu38Yes+t5Q==
 
 cli-cursor@^2.1.0:
   version "2.1.0"
