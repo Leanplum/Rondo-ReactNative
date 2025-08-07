@@ -45,11 +45,11 @@ public class MainApplication extends Application implements ReactApplication {
                     return "index";
                 }
 
-              @Nullable
-              @Override
-              protected JSIModulePackage getJSIModulePackage() {
-                return new ReanimatedJSIModulePackage();
-              }
+                @Nullable
+                @Override
+                protected JSIModulePackage getJSIModulePackage() {
+                    return new ReanimatedJSIModulePackage();
+                }
             };
 
     /**

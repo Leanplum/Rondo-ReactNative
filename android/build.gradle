@@ -2,11 +2,12 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "33.0.2"
-        minSdkVersion = 21
-        compileSdkVersion = 33
-        targetSdkVersion = 33
-        ndkVersion = "20.1.5948944"
+        buildToolsVersion = "34.0.0"
+        minSdkVersion = 23
+        compileSdkVersion = 34
+        targetSdkVersion = 34
+        ndkVersion = "25.1.8937393"
+        kotlinVersion = "1.9.22"
     }
     repositories {
         google()
@@ -22,11 +23,12 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.1'
+        classpath 'com.android.tools.build:gradle:8.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         // For Firebase Cloud Messaging.
-        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'com.google.gms:google-services:4.4.1'
         // Huawei Messaging
-        classpath 'com.huawei.agconnect:agcp:1.6.5.300'
+        classpath 'com.huawei.agconnect:agcp:1.9.1.301'
     }
 }
 

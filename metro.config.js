@@ -5,18 +5,13 @@
  * @format
  */
 
-const exclusionList = require("metro-config/src/defaults/exclusionList");
+const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+const exclusionList = require('metro-config/src/defaults/exclusionList');
 
-module.exports = {
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: true,
-      },
-    }),
-  },
+const config = {
   resolver: {
-    blacklistRE: exclusionList([/.yalc\/.*/])
+    blockList: exclusionList([/.yalc\/.*/])
   }
 };
+
+module.exports = mergeConfig(getDefaultConfig(__dirname), config);

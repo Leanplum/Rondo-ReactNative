@@ -1,11 +1,11 @@
 rootProject.name = 'RondoApp'
+
+// Manual linking for packages that don't support autolinking
 include ':@leanplum_react-native-sdk'
 project(':@leanplum_react-native-sdk').projectDir = new File(rootProject.projectDir, '../node_modules/@leanplum/react-native-sdk/android')
-include ':@react-native-community_async-storage'
-project(':@react-native-community_async-storage').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/async-storage/android')
-include ':react-native-vector-icons'
-project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
-apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
-include ':app'
+
 include ':clevertap-react-native'
 project(':clevertap-react-native').projectDir = new File(settingsDir, '../node_modules/clevertap-react-native/android')
+
+//apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
